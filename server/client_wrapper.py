@@ -17,31 +17,31 @@ class ClientWrapper:
         self.is_connected = True
     
     #orders the connected client to train using the given parameters
-    def train(self, model_parameters, control_variate, config_dict):
+    def train(self, model_parameters, control_variate, control_variate2, config_dict):
         self.check_disconnection()
-        
+
         #Create a dictionary where model_parameters and control_variate are stored
         data = {}
         data['model_parameters'] = model_parameters
         data['control_variate'] = control_variate
+        data['control_variate2'] = control_variate2
         
         #convert data to bytes
         buffer = BytesIO()
         torch.save(data, buffer)
         buffer.seek(0)
-        data_bytes = buffer.read()       
-             
+        data_bytes = buffer.read()  
+
         #convert config_dict to bytes
         config_dict_bytes = json.dumps(config_dict).encode("utf-8")
-           
+
         #send bytes to client
         train_order_message = TrainOrder(
-            modelParameters = data_bytes,
+            modelParameters = data_bytes, 
             configDict = config_dict_bytes)
         message_to_client = ServerMessage(trainOrder = train_order_message)
         self.send_buffer.put(message_to_client)
-        
-        
+
         #get trained model_parameters and response_dict from client
         client_message = self.recieve_buffer.get()
         train_response_message = client_message.trainResponse

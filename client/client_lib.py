@@ -8,7 +8,7 @@ from datetime import datetime
 
 from net import Net
 from net_lib import test_model, load_data, flush_memory, DEVICE
-from net_lib import train_model, train_fedavg, train_scaffold, train_mimelite
+from net_lib import train_model, train_fedavg, train_scaffold, train_mimelite, train_mime, train_feddyn
 
 from ClientConnection_pb2 import  EvalResponse, TrainResponse
 
@@ -36,6 +36,7 @@ def evaluate(eval_order_message):
     print(config_dict["message"])
     
     state_dict = model_parameters
+    model = Net().to(DEVICE)
     model.load_state_dict(state_dict)
     eval_loss, eval_accuracy = test_model(model, testloader)
 
@@ -48,28 +49,34 @@ def evaluate(eval_order_message):
 def train(train_order_message):
     data_bytes = train_order_message.modelParameters
     data = torch.load( BytesIO(data_bytes), map_location="cpu" )
-    model_parameters, control_variate = data['model_parameters'], data['control_variate']
+    model_parameters, control_variate, control_variate2 = data['model_parameters'], data['control_variate'], data['control_variate2']
     
     config_dict_bytes = train_order_message.configDict
     config_dict = json.loads( config_dict_bytes.decode("utf-8") )
     print(config_dict["message"])
-    
+
+    state_dict = model_parameters
     model = Net().to(DEVICE)
-    model.load_state_dict(model_parameters)
- 
+    model.load_state_dict(state_dict)
     epochs = config_dict["epochs"]
-    
-    if (config_dict['algorithm'] == 'mimelite'):
-        model, control_variate = train_mimelite(model, control_variate, trainloader, epochs)
-    elif (config_dict['algorithm'] == 'scaffold'):
-        model, control_variate = train_scaffold(model, control_variate, trainloader, epochs)
-    elif (config_dict['algorithm'] == 'fedavg'):
-        model = train_fedavg(model, trainloader, epochs)
+    if config_dict["timeout"]:
+        deadline = time.time() + config_dict["timeout"]
     else:
-        model = train_model(model, trainloader, epochs)
+        deadline = None
+    if (config_dict['algorithm'] == 'mimelite'):
+        model, control_variate = train_mimelite(model, control_variate, trainloader, epochs, deadline)
+    elif (config_dict['algorithm'] == 'scaffold'):
+        model, control_variate = train_scaffold(model, control_variate, trainloader, epochs, deadline)
+    elif (config_dict['algorithm'] == 'mime'):
+        model, control_variate = train_mime(model, control_variate, control_variate2, trainloader, epochs, deadline)
+    elif (config_dict['algorithm'] == 'fedavg'):
+        model = train_fedavg(model, trainloader, epochs, deadline)
+    elif (config_dict['algorithm'] == 'feddyn'):
+        model = train_feddyn(model, trainloader, epochs, deadline)
+    else:
+        model = train_model(model, trainloader, epochs, deadline)
 
     trained_model_parameters = model.state_dict()
-    
     #Create a dictionary where model_parameters and control_variate are stored which needs to be sent to the server
     data_to_send = {}
     data_to_send['model_parameters'] = trained_model_parameters

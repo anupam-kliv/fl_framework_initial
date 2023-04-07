@@ -65,8 +65,64 @@ def train_fedavg(net, trainloader, epochs, deadline=None):
                 print("deadline occurred.")
                 break
     return net
+
+def train_feddyn(net, trainloader, epochs, deadline=None):
+    x = deepcopy(net) 
+    prev_grads = torch.load("prev_grads.pt", map_location="cpu")
+    criterion = torch.nn.CrossEntropyLoss()
+    lr = 0.001
+    alpha = 0.01
+    for _ in tqdm(range(epochs)):
+        inputs,labels = iter(trainloader).next()
+        inputs, labels = inputs.float().to(DEVICE), labels.long().to(DEVICE)
+        output = y(inputs)
+        loss = criterion(output, labels) #Calculate the loss with respect to y's output and labels
+        
+        #Dynamic Regularisation
+        lin_penalty = 0.0
+        curr_params = None
+        for param in y.parameters():
+            if not isinstance(curr_params, torch.Tensor):
+                curr_params = param.view(-1)
+            else:
+                curr_params = torch.cat((curr_params, param.view(-1)), dim=0)
+
+        lin_penalty = torch.sum(curr_params * prev_grads)
+        loss -= lin_penalty
+        
+        quad_penalty = 0.0
+        for y, x in zip(y.parameters(), x.parameters()):
+                quad_penalty += torch.nn.functional.mse_loss(y.data, x.data, reduction='sum')
+
+        loss += (alpha/2) * quad_penalty
+
+        gradients = torch.autograd.grad(loss,y.parameters())
+        
+        
+        for param, grad in zip(y.parameters(),gradients):
+            param.data -= lr * grad.data
+
+        if deadline:
+            current_time = time.time()
+            if current_time >= deadline:
+                print("deadline occurred.")
+                break     
+            
+    # Update prev_grads
+        
+    #Calculate the difference between updated model (y) and the received model (x)
+    delta = None
+    for y, x in zip(y.parameters(), x.parameters()):
+        if not isinstance(delta, torch.Tensor):
+            delta = torch.sub(y.data.view(-1), x.data.view(-1))
+        else:
+            delta = torch.cat((delta, torch.sub(y.data.view(-1), x.data.view(-1))),dim=0)
+
+    #Update prev_grads using delta which is scaled by alpha
+    prev_grads = torch.sub(prev_grads, delta, alpha = alpha)
+    torch.save(prev_grads, "prev_grads.pt")
+    return net
               
-  
 def train_mimelite(net, state, trainloader, epochs, deadline=None):
     #In the case of MimeLite, control_variate is nothing but a state like in case of momentum method
     x = deepcopy(net)
@@ -95,12 +151,59 @@ def train_mimelite(net, state, trainloader, epochs, deadline=None):
                 break               
     
     #Compute gradient wrt the received model (x) using the wholde dataset
-    data = DataLoader(trainloader.dataset, batch_size = len(trainloader) * trainloader.batch_size, shuffle = True)      
-    images,labels = iter(data).next()
-    images,labels = images.to(DEVICE), labels.to(DEVICE)
-    output = x(images)
-    loss = criterion(output, labels) #Calculate the loss with respect to y's output and labels            
-    gradient_x = torch.autograd.grad(loss,x.parameters())
+    data = DataLoader(trainloader.dataset, batch_size = len(trainloader) * trainloader.batch_size, shuffle = True)  
+    for images, labels in data:
+        images, labels = images.to(DEVICE), labels.to(DEVICE)
+        output = x(images)
+        loss = criterion(output, labels) #Calculate the loss with respect to y's output and labels            
+        gradient_x = torch.autograd.grad(loss,x.parameters())
+    
+    return net, gradient_x     
+
+def train_mime(net, state, control_variate, trainloader, epochs, deadline=None):
+    #In the case of MimeLite, control_variate is nothing but a state like in case of momentum method
+    x = deepcopy(net)
+    
+    criterion = torch.nn.CrossEntropyLoss()
+    lr = 0.001
+    momentum = 0.9
+    net.train()
+    x.train()
+
+    for epoch in tqdm(range(epochs)):
+        for images, labels in trainloader:
+            images, labels = images.to(DEVICE), labels.to(DEVICE)
+            loss = criterion(net(images), labels)
+            
+            #Compute (full-batch) gradient of loss with respect to net's parameters 
+            grads_y = torch.autograd.grad(loss,net.parameters())
+
+            if (epoch == 0):##Here i think epoch==0 should not be there
+                output = x(images)
+                loss = criterion(output, labels)
+                grads_x = torch.autograd.grad(loss,x.parameters())
+
+            #Update net's parameters using gradients
+            with torch.no_grad():
+                for g_y, g_x, c in zip(grads_y, grads_x, control_variate):
+                    g_y.data -= g_x.data + c 
+
+                for param,grad,s in zip(net.parameters(), grads_y, state):
+                    param.data = param.data - lr * ((1-momentum) * grad.data + momentum * s.data)
+
+        if deadline:
+            current_time = time.time()
+            if current_time >= deadline:
+                print("deadline occurred.")
+                break               
+    
+    #Compute gradient wrt the received model (x) using the wholde dataset
+    data = DataLoader(trainloader.dataset, batch_size = len(trainloader) * trainloader.batch_size, shuffle = True)  
+    for images, labels in data:
+        images, labels = images.to(DEVICE), labels.to(DEVICE)
+        output = x(images)
+        loss = criterion(output, labels) #Calculate the loss with respect to y's output and labels            
+        gradient_x = torch.autograd.grad(loss,x.parameters())
     
     return net, gradient_x            
     

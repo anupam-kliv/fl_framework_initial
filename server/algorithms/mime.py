@@ -1,8 +1,9 @@
 import functools
 from collections import OrderedDict
+from copy import deepcopy
 
 #averages all of the given state dicts
-class mimelite():
+class mime():
 
     def __init__(self, config):
         self.algorithm = "Mime"
@@ -31,7 +32,9 @@ class mimelite():
             
         for state, grad in zip(optimizer_state, avg_grads):
             state.data = self.momentum * state.data + (1 - self.momentum) * grad.data
+        
+        control_variate = avg_grads
             
-        return avg_y, optimizer_state
+        return avg_y, optimizer_state, control_variate
 
         
