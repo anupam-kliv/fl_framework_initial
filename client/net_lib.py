@@ -10,6 +10,7 @@ from tqdm import tqdm
 from copy import deepcopy
 from math import ceil
 import time
+import os
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -68,20 +69,29 @@ def train_fedavg(net, trainloader, epochs, deadline=None):
 
 def train_feddyn(net, trainloader, epochs, deadline=None):
     x = deepcopy(net) 
-    prev_grads = torch.load("prev_grads.pt", map_location="cpu")
+    prev_grads = None
+    if os.path.isfile("model_checkpoints/prev_grads.pt"):
+        prev_grads = torch.load("model_checkpoints/prev_grads.pt", map_location="cpu")
+    else:
+        for param in net.parameters():
+            if not isinstance(prev_grads, torch.Tensor):
+                prev_grads = torch.zeros_like(param.view(-1))
+            else:
+                prev_grads = torch.cat((prev_grads, torch.zeros_like(param.view(-1))), dim=0)
+    
     criterion = torch.nn.CrossEntropyLoss()
     lr = 0.001
     alpha = 0.01
     for _ in tqdm(range(epochs)):
-        inputs,labels = iter(trainloader).next()
+        inputs,labels = next(iter(trainloader))
         inputs, labels = inputs.float().to(DEVICE), labels.long().to(DEVICE)
-        output = y(inputs)
+        output = net(inputs)
         loss = criterion(output, labels) #Calculate the loss with respect to y's output and labels
         
         #Dynamic Regularisation
         lin_penalty = 0.0
         curr_params = None
-        for param in y.parameters():
+        for param in net.parameters():
             if not isinstance(curr_params, torch.Tensor):
                 curr_params = param.view(-1)
             else:
@@ -91,15 +101,14 @@ def train_feddyn(net, trainloader, epochs, deadline=None):
         loss -= lin_penalty
         
         quad_penalty = 0.0
-        for y, x in zip(y.parameters(), x.parameters()):
-                quad_penalty += torch.nn.functional.mse_loss(y.data, x.data, reduction='sum')
+        for y, z in zip(net.parameters(), x.parameters()):
+            quad_penalty += torch.nn.functional.mse_loss(y.data, z.data, reduction='sum')
 
         loss += (alpha/2) * quad_penalty
 
-        gradients = torch.autograd.grad(loss,y.parameters())
+        gradients = torch.autograd.grad(loss,net.parameters())
         
-        
-        for param, grad in zip(y.parameters(),gradients):
+        for param, grad in zip(net.parameters(),gradients):
             param.data -= lr * grad.data
 
         if deadline:
@@ -107,20 +116,18 @@ def train_feddyn(net, trainloader, epochs, deadline=None):
             if current_time >= deadline:
                 print("deadline occurred.")
                 break     
-            
-    # Update prev_grads
         
     #Calculate the difference between updated model (y) and the received model (x)
     delta = None
-    for y, x in zip(y.parameters(), x.parameters()):
+    for y, z in zip(net.parameters(), x.parameters()):
         if not isinstance(delta, torch.Tensor):
-            delta = torch.sub(y.data.view(-1), x.data.view(-1))
+            delta = torch.sub(y.data.view(-1), z.data.view(-1))
         else:
-            delta = torch.cat((delta, torch.sub(y.data.view(-1), x.data.view(-1))),dim=0)
+            delta = torch.cat((delta, torch.sub(y.data.view(-1), z.data.view(-1))),dim=0)
 
     #Update prev_grads using delta which is scaled by alpha
     prev_grads = torch.sub(prev_grads, delta, alpha = alpha)
-    torch.save(prev_grads, "prev_grads.pt")
+    torch.save(prev_grads, "model_checkpoints/prev_grads.pt")
     return net
               
 def train_mimelite(net, state, trainloader, epochs, deadline=None):
