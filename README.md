@@ -13,6 +13,9 @@ _ is a highly dynamic and customizable framework that can accommodate many use c
 * After the server receives the trained weights, it aggregates all of them to form the new model. However, the selection of models for aggregation can be modified.
 * Before aggregation, the server passes the models to a Verification module, which then uses a predefined procedure to generate scores for models, and then returns only those models that have performed above a defined threshold
 * The Verification module can be easily customized.
+<p align="center">
+<img src = "./media/verification module.png" width=650>
+</p>
 
 
 
