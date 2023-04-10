@@ -11,12 +11,6 @@ from tqdm import tqdm
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def load_data():
-    dataset = torch.load("testing_dataset.pt", map_location="cpu")
-    testloader = DataLoader(dataset, batch_size=32)
-    num_examples = {"trainset": len(dataset), "testset": len(dataset)}
-    return testloader, num_examples
-
 def test_model(net, testloader):
     criterion = torch.nn.CrossEntropyLoss()
     correct, total, loss = 0, 0, 0.0

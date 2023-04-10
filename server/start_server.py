@@ -1,7 +1,9 @@
 
 import argparse
+import torch
 
 from server import server_start
+from server_lib import save_intial_model
 
 #the parameters that can be passed while starting the server 
 parser = argparse.ArgumentParser()
@@ -13,7 +15,7 @@ parser.add_argument("--fraction",
     help = "Fraction of clients to select out of the number provided or those available. Float between 0 to 1 inclusive")
 parser.add_argument("--rounds", type=int, default = 1, help = "Total number of communication rounds to perform")
 parser.add_argument("--model_path", 
-    default = "test_model.pt",
+    default = "initial_model.pt",
     help = "The path of the initial server model's state dict")
 parser.add_argument("--epochs", type = int, default = 1, help="Number of epochs each client should perform in each round")
 parser.add_argument("--accept_conn",
@@ -32,6 +34,10 @@ parser.add_argument("--timeout",
     type = int, 
     default=None, 
     help="The time limit each client has when training during each round. Specified in seconds")
+parser.add_argument("--resize_size", type = int, default = 32, help="The resize dimension")
+parser.add_argument("--batch_size", type = int, default = 32, help="The batch size")
+parser.add_argument("--net", type = str, default = "LeNet", help="The network architecture")    
+parser.add_argument("--dataset", type = str, default= "MNIST", help="The datsset ")
 args = parser.parse_args()
 
 configurations = {
@@ -45,9 +51,14 @@ configurations = {
     "verify": args.verify,
     "verification_threshold": args.threshold,
     "timeout": args.timeout,
-
+    "resize_size": args.resize_size,
+    "batch_size": args.batch_size,
+    "net": args.net,
+    "dataset": 'MNIST',
+    "device": torch.device("cuda:0" if torch.cuda.is_available() else "cpu"),
 }
 
 #start the server with the given parameters
 if __name__ == '__main__':
+    save_intial_model(configurations)
     server_start(configurations) 

@@ -5,7 +5,7 @@ from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor, Grayscale, Compose
 
-from net import Net
+from get_data import get_data
 from tqdm import tqdm
 from copy import deepcopy
 from math import ceil
@@ -14,12 +14,16 @@ import os
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def load_data():
-    datasets = torch.load("client_datasets.pt", map_location="cpu")
-    dataset = datasets[2]
-    trainloader = DataLoader(dataset, batch_size=32, shuffle=True)
-    testloader = DataLoader(dataset, batch_size=32)
-    num_examples = {"trainset": len(dataset), "testset": len(dataset)}
+def load_data(config):
+    '''datasets = torch.load("client_datasets.pt", map_location="cpu")
+    print(datasets)
+    dataset = datasets[2]'''
+    trainset, testset = get_data(config)
+    trainloader = DataLoader(trainset, batch_size= config['batch_size'], shuffle=True)
+    testloader = DataLoader(testset, batch_size=config['batch_size'])
+    num_examples = {"trainset": len(trainset), "testset": len(testset)}
+    #print(num_examples)
+    print('Data load is done')
     return trainloader, testloader, num_examples
 
 def flush_memory():

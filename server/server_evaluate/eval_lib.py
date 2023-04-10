@@ -1,15 +1,12 @@
+from server_lib import load_data, get_net, test_model
 
-from .net import Net
-from .net_lib import test_model, load_data, DEVICE
-
-# Load data
-testloader, num_examples = load_data()
-
-# Load model
-model = Net().to(DEVICE)
-
-def server_eval(model_state_dict):
+def server_eval(model_state_dict, config):
+    device = config['device']
+    testloader, _ = load_data(config)
+    model = get_net(config)
+    model = model.to(device)
     model.load_state_dict(model_state_dict)
+    
     eval_loss, eval_accuracy = test_model(model, testloader)
     eval_results = {"eval_loss": eval_loss, "eval_accuracy": eval_accuracy}
     return eval_results

@@ -14,6 +14,7 @@ import json
 import threading
 import torch
 from datetime import datetime
+from server_lib import get_net
 
 #the business logic of the server, i.e what interactions take place with the clients
 def server_runner(client_manager, configurations):
@@ -33,6 +34,10 @@ def server_runner(client_manager, configurations):
     verification = configurations["verify"]
     verification_threshold = configurations["verification_threshold"]
     timeout = configurations["timeout"]
+    dataset = configurations["dataset"]
+    net = configurations["net"]
+    resize_size = configurations["resize_size"]
+    batch_size = configurations["batch_size"]
 
     #create a new directory inside FL_checkpoints and store the aggragted models in each round
     fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
@@ -77,7 +82,7 @@ def server_runner(client_manager, configurations):
         #     client.set_parameters(server_model_state_dict)
         
         print(f"Communication round {round} is starting with {len(clients)} client(s) out of {client_manager.num_connected_clients()}.")
-        config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train"}
+        config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size}
         trained_model_state_dicts = []
         updated_control_variates = []
         with futures.ThreadPoolExecutor(max_workers=5) as executor:
@@ -108,7 +113,7 @@ def server_runner(client_manager, configurations):
 
         #test on server test set
         print("Evaluating on server test set...")
-        eval_result = server_eval(server_model_state_dict)
+        eval_result = server_eval(server_model_state_dict, configurations)
         eval_result["round"] = round
         print("Eval results: ", eval_result)
         #store the results
@@ -127,9 +132,10 @@ def server_start(configurations):
     client_manager = ClientManager()
     client_connection_servicer = ClientConnectionServicer(client_manager)
 
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    channel_opt = [('grpc.max_send_message_length', 512 * 1024 * 1024), ('grpc.max_receive_message_length', 512 * 1024 * 1024)]
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=channel_opt)
     ClientConnection_pb2_grpc.add_ClientConnectionServicer_to_server( client_connection_servicer, server )
-    server.add_insecure_port('localhost:8213')
+    server.add_insecure_port('localhost:8214')
     server.start()
 
     server_runner_thread = threading.Thread(target = server_runner, args = (client_manager, configurations, ))
