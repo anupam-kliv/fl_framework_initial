@@ -17,6 +17,15 @@ _ is a highly dynamic and customizable framework that can accommodate many use c
 <img src = "./media/verification module.png" width=650>
 </p>
 
+## Training timeouts module
+
+* Often in real world scenarios, clients cannot keep training indefinitely. Therefore, a timeout functionality has been implemented.
+* The server can specify a timeout parameter as a Train order configuration. The client will then train till the timeout occurs, and then return the results.
+<p align="center">
+<img src = "./media/timeout module.png" width=650>
+</p>
+
+
 
 
 
