@@ -3,9 +3,12 @@ import os
 import sys
 from get_config import get_config
 import multiprocessing
-import os                
-from server.server import server_start     
-                                                                        
+import os    
+# add main directory to path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))            
+from server.src.server import server_start  
+import time    
+                                                             
 # This block of code enables us to call the script from command line.                                                                                
 def execute(process):
     x,y = process.split(':')
@@ -13,6 +16,8 @@ def execute(process):
         config = get_config('test_algorithms', y)
         server_start(config)
     else:
+        ##sleep 10 seconds to allow server to start
+        time.sleep(10)
         os.system(f'{y}')                                                                                                 
  
 def create_train_test_for_algorithmss():
@@ -24,7 +29,7 @@ def create_train_test_for_algorithmss():
 
         def test_fedavg(self):
             # config = get_config('test_algorithms', 'fedavg')
-            all_processes = ('server:fedavg', 'client:sleep 10s ;cd client ;python client.py')                                                                       
+            all_processes = ('server:fedavg', 'client:cd client ;python client.py')                                                                       
             process_pool = multiprocessing.Pool(processes = 2)                                                        
             process_pool.map(execute, all_processes)
         

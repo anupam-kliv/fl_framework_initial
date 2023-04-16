@@ -1,2 +1,0 @@
-
-{'threshold': 0, 'results': [{'client_id': 'ipv6:[::1]:55628', 'assigned_client_id': 'ipv6:[::1]:55628', 'score': 0.9891361146657944}]}

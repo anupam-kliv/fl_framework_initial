@@ -1,6 +1,22 @@
 # fl_framework_initial
 _ is a highly dynamic and customizable framework that can accommodate many use cases with flexibility by implementing several functionalities over different federated learning algorithms, and essentially creating a plug-and-play architecture to accommodate different use cases.
 
+## Establishing Connection between Server and Clients
+<p align="center">
+<img src = "./media/connec_serv_client.png" width=650>
+</p>
+
+## Communication with clients
+<p align="center">
+<img src = "./media/comm_clie.png" width=650>
+</p>
+
+## Fractional and random subsampling
+* The Client_Manager can be used to sample the already connected clients.
+* A minimum number of clients can be provided, upon which the Client_Manager will wait for that many clients to connect before returning a reference to them. 
+    * A minimum number of clients can be provided, upon which the Client_Manager will wait for that many clients to connect before returning a reference to them. 
+    * The Client_Manager can sample the clients based on their connection order or a random order. A function can also be provided to determine the selection of clients.
+
 ## The framework will be composed of 4 phases, each phase building upon the last:
 
 * **Phase 1: FedAvg**. The framework will be able to efficiently coordinate a server and some clients for a specific number of communication rounds, with granularity in selection of clients included.
