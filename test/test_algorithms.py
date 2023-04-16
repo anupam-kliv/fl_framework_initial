@@ -6,7 +6,8 @@ import multiprocessing
 import os    
 # add main directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))            
-from server.src.server import server_start  
+from server.src.server import server_start 
+from server.src.server_lib import save_intial_model
 import time    
                                                              
 # This block of code enables us to call the script from command line.                                                                                
@@ -25,7 +26,7 @@ def create_train_test_for_algorithmss():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'fedavg')
-            cls.config = config
+            save_intial_model(config)
 
         def test_fedavg(self):
             # config = get_config('test_algorithms', 'fedavg')
