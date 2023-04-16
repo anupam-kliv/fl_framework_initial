@@ -41,7 +41,7 @@ def server_runner(client_manager, configurations):
 
     #create a new directory inside FL_checkpoints and store the aggragted models in each round
     fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
-    save_dir_path = f"FL_checkpoints/{fl_timestamp}"
+    save_dir_path = f"server/src/FL_checkpoints/{fl_timestamp}"
     os.mkdir(save_dir_path)
     torch.save(server_model_state_dict, f"{save_dir_path}/initial_model.pt")
     #create new file inside FL_results to store training results

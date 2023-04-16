@@ -33,53 +33,45 @@ def create_train_test_for_algorithmss():
             process_pool = multiprocessing.Pool(processes = 2)                                                        
             process_pool.map(execute, all_processes)
         
-        # def test_fedadagrad(self):
-        #     config = get_config('test_algorithms', 'fedadagrad')
-        #     all_processes = ('cd server ;python start_server.py', 'sleep 10s ;cd client ;python client.py')                                                                       
-        #     process_pool = multiprocessing.Pool(processes = 2)                                                        
-        #     process_pool.map(execute, all_processes)
+        def test_fedadagrad(self):
+            all_processes = ('server:fedadagrad', 'client:cd client ;python client.py')                                                                    
+            process_pool = multiprocessing.Pool(processes = 2)                                                        
+            process_pool.map(execute, all_processes)
 
-        # def test_fedadam(self):
-        #     config = get_config('test_algorithms', 'fedadam')
-        #     all_processes = ('cd server ;python start_server.py', 'sleep 10s ;cd client ;python client.py')                                                                       
-        #     process_pool = multiprocessing.Pool(processes = 2)                                                        
-        #     process_pool.map(execute, all_processes)
+        def test_fedadam(self):
+            all_processes = ('server:fedadam', 'client:cd client ;python client.py')                                                                      
+            process_pool = multiprocessing.Pool(processes = 2)                                                        
+            process_pool.map(execute, all_processes)
 
-        # def test_fedavgm(self):
-        #     config = get_config('test_algorithms', 'fedavgm')
-        #     all_processes = ('cd server ;python start_server.py', 'sleep 10s ;cd client ;python client.py')                                                                       
-        #     process_pool = multiprocessing.Pool(processes = 2)                                                        
-        #     process_pool.map(execute, all_processes)
+        def test_fedavgm(self):
+            all_processes = ('server:fedavgm', 'client:cd client ;python client.py')                                                                       
+            process_pool = multiprocessing.Pool(processes = 2)                                                        
+            process_pool.map(execute, all_processes)
 
-        # def test_feddyn(self):
-        #     config = get_config('test_algorithms', 'feddyn')
-        #     all_processes = ('cd server ;python start_server.py', 'sleep 10s ;cd client ;python client.py')                                                                       
-        #     process_pool = multiprocessing.Pool(processes = 2)                                                        
-        #     process_pool.map(execute, all_processes)
+        def test_feddyn(self):
+            all_processes = ('server:feddyn', 'client:cd client ;python client.py')                                                                      
+            process_pool = multiprocessing.Pool(processes = 2)                                                        
+            process_pool.map(execute, all_processes)
 
-        # def test_fedyogi(self):
-        #     config = get_config('test_algorithms', 'fedyogi')
-        #     all_processes = ('cd server ;python start_server.py', 'sleep 10s ;cd client ;python client.py')                                                                       
-        #     process_pool = multiprocessing.Pool(processes = 2)                                                        
-        #     process_pool.map(execute, all_processes)
+        def test_fedyogi(self):
+            all_processes = ('server:fedyogi', 'client:cd client ;python client.py')                                                                      
+            process_pool = multiprocessing.Pool(processes = 2)                                                        
+            process_pool.map(execute, all_processes)
 
-        # def test_mime(self):
-        #     config = get_config('test_algorithms', 'mime')
-        #     all_processes = ('cd server ;python start_server.py', 'sleep 10s ;cd client ;python client.py')                                                                       
-        #     process_pool = multiprocessing.Pool(processes = 2)                                                        
-        #     process_pool.map(execute, all_processes)
+        def test_mime(self):
+            all_processes = ('server:mime', 'client:cd client ;python client.py')                                                                      
+            process_pool = multiprocessing.Pool(processes = 2)                                                        
+            process_pool.map(execute, all_processes)
 
-        # def test_mimelite(self):
-        #     config = get_config('test_algorithms', 'mimelite')
-        #     all_processes = ('cd server ;python start_server.py', 'sleep 10s ;cd client ;python client.py')                                                                       
-        #     process_pool = multiprocessing.Pool(processes = 2)                                                        
-        #     process_pool.map(execute, all_processes)
+        def test_mimelite(self):
+            all_processes = ('server:mimelite', 'client:cd client ;python client.py')                                                                    
+            process_pool = multiprocessing.Pool(processes = 2)                                                        
+            process_pool.map(execute, all_processes)
 
-        # def scaffold(self):
-        #     config = get_config('test_algorithms', 'scaffold')
-        #     all_processes = ('cd server ;python start_server.py', 'sleep 10s ;cd client ;python client.py')
-        #     process_pool = multiprocessing.Pool(processes = 2)
-        #     process_pool.map(execute, all_processes)
+        def scaffold(self):
+            all_processes = ('server:scaffold', 'client:cd client ;python client.py')
+            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool.map(execute, all_processes)
             
     return TrainerTest
 

@@ -1,0 +1,1 @@
+{"epochs": 1, "timeout": null, "algorithm": "mimelite", "message": "train", "dataset": "MNIST", "net": "LeNet", "resize_size": 32, "batch_size": 32}

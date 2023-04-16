@@ -15,7 +15,7 @@ parser.add_argument("--fraction",
     help = "Fraction of clients to select out of the number provided or those available. Float between 0 to 1 inclusive")
 parser.add_argument("--rounds", type=int, default = 1, help = "Total number of communication rounds to perform")
 parser.add_argument("--model_path", 
-    default = "initial_model.pt",
+    default = "server/src/initial_model.pt",
     help = "The path of the initial server model's state dict")
 parser.add_argument("--epochs", type = int, default = 1, help="Number of epochs each client should perform in each round")
 parser.add_argument("--accept_conn",

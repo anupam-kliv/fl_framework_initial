@@ -123,6 +123,6 @@ def save_intial_model(config):
     #print(config['initial_model_path'])
     net = get_net(config)
     net = train_model(net, testloader)
-    torch.save(net.state_dict(), 'initial_model.pt')
+    torch.save(net.state_dict(), 'server/src/initial_model.pt')
     print('Initial model is saved')
 
