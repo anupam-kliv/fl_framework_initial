@@ -56,7 +56,7 @@ def create_train_test_for_CIFAR10():
             config = get_config('test_datasets', 'CIFAR10')
             save_intial_model(config)
 
-        def test_FashionMnist(self):
+        def test_CIFAR10(self):
             all_processes = ('server:CIFAR10', 'client:cd client ;python client.py')                                                                       
             process_pool = multiprocessing.Pool(processes = 2)                                                        
             process_pool.map(execute, all_processes)
@@ -70,7 +70,7 @@ def create_train_test_for_CIFAR100():
             config = get_config('test_datasets', 'CIFAR100')
             save_intial_model(config)
 
-        def test_FashionMnist(self):
+        def test_CIFAR100(self):
             all_processes = ('server:CIFAR100', 'client:cd client ;python client.py')                                                                       
             process_pool = multiprocessing.Pool(processes = 2)                                                        
             process_pool.map(execute, all_processes)
