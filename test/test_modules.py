@@ -19,10 +19,13 @@ def execute(process):
     elif x == 'client':
         ##sleep 10 seconds to allow server to start
         time.sleep(10)
-        os.system(f'{y}')   
+        os.system(f'{y}')  
+    elif x == 'client2':
+        time.sleep(12)
+        os.system(f'{y}') 
     else:
-        ##sleep 60 seconds to allow client to join after server has started training
-        time.sleep(60)
+        ##sleep 20 seconds to allow client to join after server has started training
+        time.sleep(20)
         os.system(f'{y}')                                                                                              
  
 def create_train_test_for_verification_module():
@@ -33,7 +36,7 @@ def create_train_test_for_verification_module():
             save_intial_model(config)
 
         def test_verification_module(self):
-            all_processes = ('server:verification', 'client:cd client ;python client.py', 'client:cd client ;python client.py')                                                                       
+            all_processes = ('server:verification', 'client:cd client ;python client.py', 'client2:cd client ;python client.py')                                                                       
             process_pool = multiprocessing.Pool(processes = 3)                                                        
             process_pool.map(execute, all_processes)
 
@@ -47,7 +50,7 @@ def create_train_test_for_timeout_module():
             save_intial_model(config)
 
         def test_verification_module(self):
-            all_processes = ('server:timeout', 'client:cd client ;python client.py', 'client:cd client ;python client.py')                                                                       
+            all_processes = ('server:timeout', 'client:cd client ;python client.py', 'client2:cd client ;python client.py')                                                                       
             process_pool = multiprocessing.Pool(processes = 3)                                                        
             process_pool.map(execute, all_processes)
 
