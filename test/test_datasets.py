@@ -78,16 +78,16 @@ def create_train_test_for_CIFAR100():
     return TrainerTest
 
 
-class TestTrainer1(create_train_test_for_MNIST()):
+class TestTrainer_MNIST(create_train_test_for_MNIST()):
     'Test case for MNIST dataset'
 
-class TestTrainer2(create_train_test_for_FashionMnist()):
+class TestTrainer_FashionMNIST(create_train_test_for_FashionMnist()):
     'Test case for FashionMNIST dataset'
 
-class TestTrainer3(create_train_test_for_CIFAR10()):
+class TestTrainer_CIFAR10(create_train_test_for_CIFAR10()):
     'Test case for CIFAR10 dataset'
 
-class TestTrainer4(create_train_test_for_CIFAR100()):
+class TestTrainer_CIFAR100(create_train_test_for_CIFAR100()):
     'Test case for CIFAR100 dataset'
 
 if __name__ == '__main__':
