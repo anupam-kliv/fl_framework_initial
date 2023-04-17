@@ -18,7 +18,7 @@ def execute(process):
         server_start(config)
     else:
         ##sleep 10 seconds to allow server to start
-        time.sleep(60)
+        time.sleep(10)
         os.system(f'{y}')                                                                                                 
  
 def create_train_test_for_LeNet():
