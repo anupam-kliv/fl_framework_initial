@@ -41,7 +41,19 @@ _ is a highly dynamic and customizable framework that can accommodate many use c
 <img src = "./media/timeout module.png" width=650>
 </p>
 
+## Starting server
 
+```
+python -m server.start_server \
+ --algorithm fedavg \
+ --clients 2
+```
 
+## Starting client
+
+```
+cd client
+python client.py
+```
 
 
