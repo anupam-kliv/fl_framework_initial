@@ -1,14 +1,14 @@
 {
-    "MNIST":{
+    "verification":{
         "algorithm":"fedavg",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
         "epochs":1,
         "accept_conn_after_FL_begin":0 ,
         "verify": 0,
-        "verification_threshold": 0,
+        "verification_threshold": 0.1,
         "timeout": null,
         "resize_size": 32,
         "batch_size": 32,
@@ -16,9 +16,9 @@
         "dataset": "MNIST",
         "device": "cpu"
     },
-    "FashionMNIST":{
+    "timeout":{
         "algorithm":"fedavg",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
@@ -26,45 +26,28 @@
         "accept_conn_after_FL_begin":0 ,
         "verify": 0,
         "verification_threshold": 0,
-        "timeout": null,
+        "timeout": 60,
         "resize_size": 32,
         "batch_size": 32,
         "net": "LeNet",
-        "dataset": "FashionMNIST",
+        "dataset": "MNIST",
         "device": "cpu"
     },
-    "CIFAR10":{
+    "intermediate":{
         "algorithm":"fedavg",
         "num_of_clients":1,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
         "epochs":1,
-        "accept_conn_after_FL_begin":0 ,
+        "accept_conn_after_FL_begin":1 ,
         "verify": 0,
         "verification_threshold": 0,
         "timeout": null,
         "resize_size": 32,
         "batch_size": 32,
         "net": "LeNet",
-        "dataset": "CIFAR10",
-        "device": "cpu"
-    },
-    "CIFAR100":{
-        "algorithm":"fedavg",
-        "num_of_clients":1,
-        "fraction_of_clients":null,
-        "num_of_rounds":1,
-        "initial_model_path":"server/src/initial_model.pt",
-        "epochs":1,
-        "accept_conn_after_FL_begin":0 ,
-        "verify": 0,
-        "verification_threshold": 0,
-        "timeout": null,
-        "resize_size": 32,
-        "batch_size": 32,
-        "net": "LeNet",
-        "dataset": "CIFAR100",
+        "dataset": "MNIST",
         "device": "cpu"
     }
 }
