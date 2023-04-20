@@ -56,4 +56,10 @@ cd client
 python client.py
 ```
 
+## Running tests
+
+```
+python test/test_algorithms.py
+```
+
 
