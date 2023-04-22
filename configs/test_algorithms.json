@@ -14,7 +14,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "fedadagrad":{
         "algorithm":"fedadagrad",
@@ -31,7 +32,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "fedadam":{
         "algorithm":"fedadam",
@@ -48,7 +50,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "fedavgm":{
         "algorithm":"fedavgm",
@@ -65,7 +68,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "feddyn":{
         "algorithm":"feddyn",
@@ -82,7 +86,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "fedyogi":{
         "algorithm":"fedyogi",
@@ -99,7 +104,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "mime":{
         "algorithm":"mime",
@@ -116,7 +122,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "mimelite":{
         "algorithm":"mimelite",
@@ -133,7 +140,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "scaffold":{
         "algorithm":"scaffold",
@@ -150,6 +158,7 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     }
 }
