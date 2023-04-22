@@ -30,7 +30,7 @@ def create_train_test_for_fedavg():
 
         def test_fedavg(self):
             all_processes = ('server:fedavg', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
             
     return TrainerTest
@@ -44,7 +44,7 @@ def create_train_test_for_fedadagrad():
 
         def test_fedadagrad(self):
             all_processes = ('server:fedadagrad', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
             
     return TrainerTest
@@ -58,7 +58,7 @@ def create_train_test_for_fedadam():
         
         def test_fedadam(self):
             all_processes = ('server:fedadam', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
         
     return TrainerTest
@@ -72,7 +72,7 @@ def create_train_test_for_fedavgm():
 
         def test_fedavgm(self):
             all_processes = ('server:fedavgm', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
             
     return TrainerTest
@@ -86,7 +86,7 @@ def create_train_test_for_feddyn():
 
         def test_feddyn(self):
             all_processes = ('server:feddyn', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
             
     return TrainerTest
@@ -100,7 +100,7 @@ def create_train_test_for_fedyogi():
         
         def test_fedyogi(self):
             all_processes = ('server:fedyogi', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
     
     return TrainerTest
@@ -114,7 +114,7 @@ def create_train_test_for_mime():
 
         def test_mime(self):
             all_processes = ('server:mime', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
             
     return TrainerTest
@@ -128,7 +128,7 @@ def create_train_test_for_mimelite():
 
         def test_mimelite(self):
             all_processes = ('server:mimelite', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
             
     return TrainerTest
@@ -142,7 +142,7 @@ def create_train_test_for_scaffold():
 
         def test_scaffold(self):
             all_processes = ('server:scaffold', 'client:cd client ;python client.py')
-            process_pool = multiprocessing.Pool(processes = 2)
+            process_pool = multiprocessing.get_context('spawn').Pool(processes = 2)
             process_pool.map(execute, all_processes)
             
     return TrainerTest
