@@ -38,6 +38,7 @@ def server_runner(client_manager, configurations):
     net = configurations["net"]
     resize_size = configurations["resize_size"]
     batch_size = configurations["batch_size"]
+    niid = configurations["niid"]
 
     #create a new directory inside FL_checkpoints and store the aggragted models in each round
     fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
@@ -82,7 +83,7 @@ def server_runner(client_manager, configurations):
         #     client.set_parameters(server_model_state_dict)
         
         print(f"Communication round {round} is starting with {len(clients)} client(s) out of {client_manager.num_connected_clients()}.")
-        config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size}
+        config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size, "niid": niid}
         trained_model_state_dicts = []
         updated_control_variates = []
         with futures.ThreadPoolExecutor(max_workers=5) as executor:

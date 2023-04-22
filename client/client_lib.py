@@ -68,6 +68,7 @@ def train(train_order_message):
     tracker = EmissionsTracker(output_dir = save_dir_path)
     tracker.start()
     trainloader, testloader, _ = load_data(config_dict)
+    print("training started")
     if (config_dict['algorithm'] == 'mimelite'):
         model, control_variate = train_mimelite(model, control_variate, trainloader, epochs, deadline)
     elif (config_dict['algorithm'] == 'scaffold'):
@@ -80,7 +81,7 @@ def train(train_order_message):
         model = train_feddyn(model, trainloader, epochs, deadline)
     else:
         model = train_model(model, trainloader, epochs, deadline)
-
+    print("training finished")
     emissions: float = tracker.stop()
     print(f"Emissions: {emissions} kg")
 

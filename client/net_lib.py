@@ -6,6 +6,8 @@ from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor, Grayscale, Compose
 
 from get_data import get_data
+from distribution import data_distribution
+from data_utils import customDataset
 from tqdm import tqdm
 from copy import deepcopy
 from math import ceil
@@ -19,12 +21,27 @@ def load_data(config):
     print(datasets)
     dataset = datasets[2]'''
     trainset, testset = get_data(config)
-    trainloader = DataLoader(trainset, batch_size= config['batch_size'], shuffle=True)
+    data_distribution(config, trainset)
+    print('Data Distribution is Done!')
+    data_path = os.path.join(os.getcwd(), 'Distribution/', config['dataset'], 'data_split_niid_'+ str(config['niid'])+'.pt')
+    clientID = 1
+    datasets = customDataset(config,  trainset, data_path, clientID)
+    #print(config['niid'])
+    #print(data_path)
+    #datasets = torch.load(data_path, map_location="cpu")['datapoints'][0]
+
+    trainloader = DataLoader(datasets, batch_size= config['batch_size'], shuffle=True)
     testloader = DataLoader(testset, batch_size=config['batch_size'])
-    num_examples = {"trainset": len(trainset), "testset": len(testset)}
-    #print(num_examples)
+    num_examples = {"trainset": len(datasets), "testset": len(testset)}
+    # print(num_examples)
     print('Data load is done')
     return trainloader, testloader, num_examples
+    # trainloader = DataLoader(trainset, batch_size= config['batch_size'], shuffle=True)
+    # testloader = DataLoader(testset, batch_size=config['batch_size'])
+    # num_examples = {"trainset": len(trainset), "testset": len(testset)}
+    # #print(num_examples)
+    # print('Data load is done')
+    # return trainloader, testloader, num_examples
 
 def flush_memory():
     torch.cuda.empty_cache()
