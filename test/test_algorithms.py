@@ -1,8 +1,8 @@
 import unittest
 import os
 import sys
-from get_config import get_config
-import multiprocessing
+from misc import get_config
+import torch.multiprocessing as multiprocessing
 import os    
 # add main directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))            

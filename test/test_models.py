@@ -1,7 +1,7 @@
 import unittest
 import os
 import sys
-from get_config import get_config
+from misc import get_config
 import multiprocessing
 import os    
 # add main directory to path
