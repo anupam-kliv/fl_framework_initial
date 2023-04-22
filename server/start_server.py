@@ -38,6 +38,7 @@ parser.add_argument("--resize_size", type = int, default = 32, help="The resize 
 parser.add_argument("--batch_size", type = int, default = 32, help="The batch size")
 parser.add_argument("--net", type = str, default = "LeNet", help="The network architecture")    
 parser.add_argument("--dataset", type = str, default= "MNIST", help="The datsset ")
+parser.add_argument("--niid", type = int,default=2, help="value should be [0, 5]")
 args = parser.parse_args()
 
 configurations = {
@@ -56,6 +57,7 @@ configurations = {
     "net": args.net,
     "dataset": 'MNIST',
     "device": torch.device("cuda:0" if torch.cuda.is_available() else "cpu"),
+    "niid": args.niid
 }
 
 #start the server with the given parameters
