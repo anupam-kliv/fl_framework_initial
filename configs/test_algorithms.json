@@ -19,7 +19,7 @@
     },
     "fedadagrad":{
         "algorithm":"fedadagrad",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":2,
         "initial_model_path":"server/src/initial_model.pt",
@@ -37,7 +37,7 @@
     },
     "fedadam":{
         "algorithm":"fedadam",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
@@ -55,7 +55,7 @@
     },
     "fedavgm":{
         "algorithm":"fedavgm",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
@@ -73,7 +73,7 @@
     },
     "feddyn":{
         "algorithm":"feddyn",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
@@ -91,7 +91,7 @@
     },
     "fedyogi":{
         "algorithm":"fedyogi",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
@@ -109,7 +109,7 @@
     },
     "mime":{
         "algorithm":"mime",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
@@ -127,7 +127,7 @@
     },
     "mimelite":{
         "algorithm":"mimelite",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",
@@ -145,7 +145,7 @@
     },
     "scaffold":{
         "algorithm":"scaffold",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",

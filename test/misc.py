@@ -6,7 +6,7 @@ from server.src.server import server_start
 import threading
 import time
 from torch.multiprocessing import Process
-
+from torch import multiprocessing
 def get_config(action, action2, config_path=""):
 
     root_path = os.path.dirname(
@@ -22,9 +22,10 @@ def get_config(action, action2, config_path=""):
 def execute(process):
     os.system(f'{process}')    
 
-def tester(config , no_of_clients , s1):
-    # run server in a multiprocess process
-    server = Process(target=execute, args=('python test/test_server.py --infile configs/'+s1,))
+def tester(config , no_of_clients):
+
+    multiprocessing.set_start_method('spawn', force=True)
+    server = Process(target=server_start, args=(config,))
     clients = []
     server.start()
     time.sleep(5)
@@ -37,6 +38,5 @@ def tester(config , no_of_clients , s1):
     for i in range(no_of_clients):
         clients[i].join()
     server.join()
-
 
         
