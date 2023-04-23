@@ -71,7 +71,7 @@ def server_runner(client_manager, configurations):
         print("Control Variate is not in use")
 
     #run FL for given rounds
-    config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size, "niid": niid, "carbon-tracker":carbon}
+    config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size, "niid": niid, "carbon_tracker":carbon}
     client_manager.accepting_connections = accept_conn_after_FL_begin
     for round in range(1, communication_rounds + 1):
         clients = client_manager.random_select(client_manager.num_connected_clients(), fraction_of_clients) 
