@@ -39,6 +39,7 @@ def server_runner(client_manager, configurations):
     resize_size = configurations["resize_size"]
     batch_size = configurations["batch_size"]
     niid = configurations["niid"]
+    carbon=configurations["carbon"]
 
     #create a new directory inside FL_checkpoints and store the aggragted models in each round
     fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
@@ -70,6 +71,7 @@ def server_runner(client_manager, configurations):
         print("Control Variate is not in use")
 
     #run FL for given rounds
+    config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size, "niid": niid, "carbon-tracker":carbon}
     client_manager.accepting_connections = accept_conn_after_FL_begin
     for round in range(1, communication_rounds + 1):
         clients = client_manager.random_select(client_manager.num_connected_clients(), fraction_of_clients) 
@@ -83,7 +85,6 @@ def server_runner(client_manager, configurations):
         #     client.set_parameters(server_model_state_dict)
         
         print(f"Communication round {round} is starting with {len(clients)} client(s) out of {client_manager.num_connected_clients()}.")
-        config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size, "niid": niid}
         trained_model_state_dicts = []
         updated_control_variates = []
         with futures.ThreadPoolExecutor(max_workers=5) as executor:
