@@ -22,9 +22,11 @@ def get_config(action, action2, config_path=""):
 def execute(process):
     os.system(f'{process}')    
 
-def tester(config , no_of_clients):
+def tester(config , no_of_clients, late=None):
 
     multiprocessing.set_start_method('spawn', force=True)
+    if late:
+        no_of_clients -= 1
     server = Process(target=server_start, args=(config,))
     clients = []
     server.start()
@@ -34,8 +36,12 @@ def tester(config , no_of_clients):
         clients.append(client)
         client.start()
         time.sleep(2)
-        
-    for i in range(no_of_clients):
+    if late:
+        time.sleep(6)
+        client = Process(target=execute, args=(f'cd client ;python client.py',))
+        clients.append(client)
+        client.start()
+    for i in range(len(clients)):
         clients[i].join()
     server.join()
 
