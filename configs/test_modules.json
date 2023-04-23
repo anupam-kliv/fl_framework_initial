@@ -14,7 +14,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "timeout":{
         "algorithm":"fedavg",
@@ -31,7 +32,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "intermediate":{
         "algorithm":"fedavg",
@@ -48,6 +50,7 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     }
 }

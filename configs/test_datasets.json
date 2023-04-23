@@ -14,7 +14,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "MNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "FashionMNIST":{
         "algorithm":"fedavg",
@@ -31,7 +32,8 @@
         "batch_size": 32,
         "net": "LeNet",
         "dataset": "FashionMNIST",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "CIFAR10":{
         "algorithm":"fedavg",
@@ -46,9 +48,10 @@
         "timeout": null,
         "resize_size": 32,
         "batch_size": 32,
-        "net": "LeNet",
+        "net": "resnet18",
         "dataset": "CIFAR10",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     },
     "CIFAR100":{
         "algorithm":"fedavg",
@@ -63,8 +66,9 @@
         "timeout": null,
         "resize_size": 32,
         "batch_size": 32,
-        "net": "LeNet",
+        "net": "resnet18",
         "dataset": "CIFAR100",
-        "device": "cpu"
+        "device": "cpu",
+        "niid": 2
     }
 }
