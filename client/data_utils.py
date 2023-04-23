@@ -7,7 +7,6 @@ from PIL import Image
 from torch.utils import data
 from torchvision import transforms
 import pickle
-
 class customDataset(data.Dataset):
 
     def __init__(
@@ -15,7 +14,7 @@ class customDataset(data.Dataset):
         config,
         trainset,
         data_path,
-        clientID = 1,
+        clientID = 0,
         aug = False,
         
     ):
@@ -64,7 +63,6 @@ class customDataset(data.Dataset):
         image = self.trainset[self.data_idxs[index]][0]
         #label = self.file[1][self.data_idxs[index]]
         label = self.trainset[self.data_idxs[index]][1]
-        # print(image)
 
         return image, label
         
