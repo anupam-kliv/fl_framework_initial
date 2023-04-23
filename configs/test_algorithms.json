@@ -1,7 +1,7 @@
 {
     "fedavg":{
         "algorithm":"fedavg",
-        "num_of_clients":1,
+        "num_of_clients":2,
         "fraction_of_clients":null,
         "num_of_rounds":1,
         "initial_model_path":"server/src/initial_model.pt",

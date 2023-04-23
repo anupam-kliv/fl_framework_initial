@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from server.src.server import server_start 
 import threading
 import time
-import torch.multiprocessing as multiprocessing
+from torch.multiprocessing import Process
 
 def get_config(action, action2, config_path=""):
 
@@ -20,25 +20,23 @@ def get_config(action, action2, config_path=""):
     return config
 
 def execute(process):
-    x, y = process.split(':')
-    if x =='server':
-        y1, y2 = y.split(',')
-        config = get_config(y1,y2)
-        server_start(config)
-    else:
-        y1, y2= y.split(',')
-        time.sleep(y2)
-        os.system(f'{y1}')    
+    os.system(f'{process}')    
 
-def tester(config , no_of_clients = 1, t = 5):
-    all_processes = ['server:'+config]
-    print(all_processes)
-    for _ in range(no_of_clients):
-        # all_processes = all_processes+('client:cd client ;python client.py,'+str(t))
-        all_processes.append('client:cd client ;python client.py,'+str(t))
-        print(all_processes)
-        t = t+2
-    process_pool = multiprocessing.Pool(processes = no_of_clients + 1)
-    process_pool.map(execute, all_processes)
-   
+def tester(config , no_of_clients = 1):
+    # run server in a multiprocess process
+    server = Process(target=server_start, args=(config,))
+    clients = []
+    server.start()
+    time.sleep(5)
+    for i in range(no_of_clients):
+        client = Process(target=execute, args=(f'cd client ;python client.py',))
+        clients.append(client)
+        client.start()
+        time.sleep(2)
+        
+    for i in range(no_of_clients):
+        clients[i].join()
+    server.join()
+
+
         
