@@ -47,10 +47,9 @@ while keep_going:
             set_parameters_response_message = set_parameters(set_parameters_order_message)
             message_to_server = ClientMessage(setParamsResponse = set_parameters_response_message)
             client_buffer.put(message_to_server)
-            print("parameters successfuly set")
 
         if server_message.HasField("disconnectOrder"):
-            print("recieve disconnect order")
+            print("Current FL process is done ")
             disconnect_order_message = server_message.disconnectOrder
             message = disconnect_order_message.message
             print(message)
@@ -59,3 +58,4 @@ while keep_going:
                 keep_going = False
                 break
             wait_time = reconnect_time
+            
