@@ -24,9 +24,6 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
 save_dir_path = f"model_checkpoints/{fl_timestamp}"
 os.mkdir(save_dir_path)
-# torch.save(model.state_dict(), f"{save_dir_path}/initial_model.pt")
-
-#the different functions that can be performed by the client
 
 def evaluate(eval_order_message):
     model_parameters_bytes = eval_order_message.modelParameters
@@ -34,9 +31,9 @@ def evaluate(eval_order_message):
 
     config_dict_bytes = eval_order_message.configDict
     config_dict = json.loads( config_dict_bytes.decode("utf-8") )
-    print(config_dict["message"])
     
     state_dict = model_parameters
+    print("Evaluation:",config_dict)
     model = get_net(config= config_dict)
     model.load_state_dict(state_dict)
     _, testloader, _ = load_data(config_dict)
@@ -56,7 +53,6 @@ def train(train_order_message):
     config_dict_bytes = train_order_message.configDict
     config_dict = json.loads( config_dict_bytes.decode("utf-8") )
     carbon_tracker = config_dict["carbon_tracker"]
-    print(config_dict["message"])
 
     model = get_net(config= config_dict)
     model.load_state_dict(model_parameters)
@@ -93,9 +89,9 @@ def train(train_order_message):
 	    print(f"Emissions: {emissions} kg")
 
     myJSON = json.dumps(config_dict)
-    with open("config.json", "w") as jsonfile:
+    json_path = save_dir_path + "/config.json"
+    with open(json_path, "w") as jsonfile:
         jsonfile.write(myJSON)
-        print("config file saved!")
     
     trained_model_parameters = model.state_dict()
     #Create a dictionary where model_parameters and control_variate are stored which needs to be sent to the server
