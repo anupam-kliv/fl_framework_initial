@@ -15,7 +15,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "fedadagrad":{
         "algorithm":"fedadagrad",
@@ -33,7 +34,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "fedadam":{
         "algorithm":"fedadam",
@@ -51,7 +53,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "fedavgm":{
         "algorithm":"fedavgm",
@@ -69,7 +72,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "feddyn":{
         "algorithm":"feddyn",
@@ -87,7 +91,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "fedyogi":{
         "algorithm":"fedyogi",
@@ -105,7 +110,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "mime":{
         "algorithm":"mime",
@@ -123,7 +129,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "mimelite":{
         "algorithm":"mimelite",
@@ -141,7 +148,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "scaffold":{
         "algorithm":"scaffold",
@@ -159,6 +167,7 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     }
 }

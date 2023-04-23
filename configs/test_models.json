@@ -15,7 +15,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "resnet18":{
         "algorithm":"mime",
@@ -33,7 +34,8 @@
         "net": "resnet18",
         "dataset": "CIFAR10",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "resnet50":{
         "algorithm":"mime",
@@ -51,7 +53,8 @@
         "net": "resnet50",
         "dataset": "CIFAR10",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "vgg16":{
         "algorithm":"mime",
@@ -69,7 +72,8 @@
         "net": "vgg16",
         "dataset": "CIFAR10",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "AlexNet":{
         "algorithm":"mime",
@@ -87,6 +91,7 @@
         "net": "AlexNet",
         "dataset": "CIFAR10",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     }
 }

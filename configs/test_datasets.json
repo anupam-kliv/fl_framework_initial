@@ -15,7 +15,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "FashionMNIST":{
         "algorithm":"fedavg",
@@ -33,7 +34,8 @@
         "net": "LeNet",
         "dataset": "FashionMNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "CIFAR10":{
         "algorithm":"fedavg",
@@ -51,7 +53,8 @@
         "net": "resnet18",
         "dataset": "CIFAR10",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "CIFAR100":{
         "algorithm":"fedavg",
@@ -69,6 +72,7 @@
         "net": "resnet18",
         "dataset": "CIFAR100",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     }
 }

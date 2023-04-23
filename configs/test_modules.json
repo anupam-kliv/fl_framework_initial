@@ -15,7 +15,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "timeout":{
         "algorithm":"fedavg",
@@ -33,7 +34,8 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     },
     "intermediate":{
         "algorithm":"fedavg",
@@ -51,6 +53,7 @@
         "net": "LeNet",
         "dataset": "MNIST",
         "device": "cpu",
-        "niid": 2
+        "niid": 2,
+        "carbon": 0
     }
 }
