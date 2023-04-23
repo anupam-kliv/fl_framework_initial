@@ -278,13 +278,3 @@ def test_model(net, testloader):
     loss /= len(testloader.dataset)
     accuracy = correct / total
     return loss, accuracy
-
-
-
-# trainloader, testloader, num_examples = load_data()
-# model = Net().to(DEVICE)
-# torch.save(model.state_dict(), "test_state_dict.pth")
-# model.load_state_dict(torch.load('trained_model.pt'))
-# train_model(model, trainloader, 3)
-# print(test_model(model, testloader))
-# # torch.save(model.state_dict(), 'trained_model.pt')
