@@ -5,7 +5,7 @@ import json
 import time
 import os 
 from datetime import datetime
-from codecarbon import EmissionsTracker
+from codecarbon import EmissionsTracker, OfflineEmissionsTracker
 from net import get_net
 from net_lib import test_model, load_data, flush_memory, DEVICE
 from net_lib import train_model, train_fedavg, train_scaffold, train_mimelite, train_mime, train_feddyn
@@ -55,6 +55,7 @@ def train(train_order_message):
     
     config_dict_bytes = train_order_message.configDict
     config_dict = json.loads( config_dict_bytes.decode("utf-8") )
+    carbon_tracker = config_dict["carbon_tracker"]
     print(config_dict["message"])
 
     model = get_net(config= config_dict)
@@ -65,8 +66,12 @@ def train(train_order_message):
         deadline = time.time() + config_dict["timeout"]
     else:
         deadline = None
-    tracker = EmissionsTracker(output_dir = save_dir_path)
-    tracker.start()
+    
+    #Run code carbon if the carbon-tracker flag is True
+    if (carbon_tracker==1):
+	    tracker = OfflineEmissionsTracker(country_iso_code="IND", output_dir = save_dir_path)
+	    tracker.start()
+            
     trainloader, testloader, _ = load_data(config_dict)
     print("training started")
     if (config_dict['algorithm'] == 'mimelite'):
@@ -82,8 +87,10 @@ def train(train_order_message):
     else:
         model = train_model(model, trainloader, epochs, deadline)
     print("training finished")
-    emissions: float = tracker.stop()
-    print(f"Emissions: {emissions} kg")
+
+    if (carbon_tracker==1):
+	    emissions: float = tracker.stop()
+	    print(f"Emissions: {emissions} kg")
 
     myJSON = json.dumps(config_dict)
     with open("config.json", "w") as jsonfile:
