@@ -92,13 +92,15 @@ def train_feddyn(net, trainloader, epochs, deadline=None):
     x = deepcopy(net) 
     prev_grads = None
     if os.path.isfile("model_checkpoints/prev_grads.pt"):
-        prev_grads = torch.load("model_checkpoints/prev_grads.pt", map_location="cpu")
+        prev_grads = torch.load("model_checkpoints/prev_grads.pt", map_location=DEVICE)
     else:
         for param in net.parameters():
             if not isinstance(prev_grads, torch.Tensor):
                 prev_grads = torch.zeros_like(param.view(-1))
+                prev_grads.to(DEVICE)
             else:
                 prev_grads = torch.cat((prev_grads, torch.zeros_like(param.view(-1))), dim=0)
+                prev_grads.to(DEVICE)
     
     criterion = torch.nn.CrossEntropyLoss()
     lr = 0.001
