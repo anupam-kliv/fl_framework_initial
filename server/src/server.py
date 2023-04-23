@@ -43,46 +43,38 @@ def server_runner(client_manager, configurations):
 
     #create a new directory inside FL_checkpoints and store the aggragted models in each round
     fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
-    save_dir_path = f"server/src/FL_checkpoints/{fl_timestamp}"
-    os.mkdir(save_dir_path)
+    save_dir_path=f"server/src/results/{dataset}/{algorithm}/{niid}/{fl_timestamp}"
+    if not os.path.exists(save_dir_path):
+    	os.makedirs(save_dir_path)
     torch.save(server_model_state_dict, f"{save_dir_path}/initial_model.pt")
+    myJSON = json.dumps(configurations)
+    json_path = save_dir_path + "/information.json"
+    with open(json_path, "w") as jsonfile:
+        jsonfile.write(myJSON)
     #create new file inside FL_results to store training results
     with open(f"{save_dir_path}/FL_results.txt", "w") as file:
         pass
-    print(f"FL has started, will run for {communication_rounds} rounds...")
     
     #Initialize the aggregation algorithm
     exec(f"from .algorithms.{algorithm} import {algorithm}")
     aggregator = eval(algorithm)(configurations)
-    print(f"{algorithm} is used for aggregation")
 
     #If the algorithm is either scaffold or mimelite, then we need to make use of control variate
     if (algorithm == 'scaffold' or algorithm == 'mimelite'):
         control_variate = [torch.zeros_like(server_model_state_dict[key]) for key in server_model_state_dict.keys()] #At initialization, control variate should be zero as mentioned in the paper
         control_variate2 = None
-        print("Control Variate is used")
     elif (algorithm == 'mime'):
         control_variate = [torch.zeros_like(server_model_state_dict[key]) for key in server_model_state_dict.keys()]
         control_variate2 = [torch.zeros_like(server_model_state_dict[key]) for key in server_model_state_dict.keys()]
-        print("Control Variates are used")
     else:
         control_variate = None
         control_variate2 = None
-        print("Control Variate is not in use")
 
     #run FL for given rounds
     config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size, "niid": niid, "carbon_tracker":carbon}
     client_manager.accepting_connections = accept_conn_after_FL_begin
     for round in range(1, communication_rounds + 1):
         clients = client_manager.random_select(client_manager.num_connected_clients(), fraction_of_clients) 
-        
-        # for client in clients:
-        #     print(client.client_id)
-        #     results = client.evaluate( server_model_state_dict, config_dict )
-        #     print(results)
-        
-        # for client in clients:
-        #     client.set_parameters(server_model_state_dict)
         
         print(f"Communication round {round} is starting with {len(clients)} client(s) out of {client_manager.num_connected_clients()}.")
         trained_model_state_dicts = []
@@ -145,3 +137,4 @@ def server_start(configurations):
     server_runner_thread.join()
 
     server.stop(None)
+    
