@@ -18,8 +18,8 @@ def create_train_test_for_fedavg():
             save_intial_model(config)
 
         def test_fedavg(self):
-            config = get_config('test_algorithms', 'fedavg')
-            tester(config, 2)
+            config = get_config('test_algorithms', 'fedavg',)
+            tester(config, 2,  'test_algorithms.json')
             
     return TrainerTest
 

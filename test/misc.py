@@ -22,9 +22,9 @@ def get_config(action, action2, config_path=""):
 def execute(process):
     os.system(f'{process}')    
 
-def tester(config , no_of_clients = 1):
+def tester(config , no_of_clients , s1):
     # run server in a multiprocess process
-    server = Process(target=server_start, args=(config,))
+    server = Process(target=execute, args=('python test/test_server.py --infile configs/'+s1,))
     clients = []
     server.start()
     time.sleep(5)
