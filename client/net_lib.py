@@ -17,31 +17,14 @@ import os
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_data(config):
-    '''datasets = torch.load("client_datasets.pt", map_location="cpu")
-    print(datasets)
-    dataset = datasets[2]'''
     trainset, testset = get_data(config)
     data_distribution(config, trainset)
-    print('Data Distribution is Done!')
     data_path = os.path.join(os.getcwd(), 'Distribution/', config['dataset'], 'data_split_niid_'+ str(config['niid'])+'.pt')
-    clientID = 1
-    datasets = customDataset(config,  trainset, data_path, clientID)
-    #print(config['niid'])
-    #print(data_path)
-    #datasets = torch.load(data_path, map_location="cpu")['datapoints'][0]
-
+    datasets = customDataset(config,  trainset, data_path)
     trainloader = DataLoader(datasets, batch_size= config['batch_size'], shuffle=True)
     testloader = DataLoader(testset, batch_size=config['batch_size'])
     num_examples = {"trainset": len(datasets), "testset": len(testset)}
-    # print(num_examples)
-    print('Data load is done')
     return trainloader, testloader, num_examples
-    # trainloader = DataLoader(trainset, batch_size= config['batch_size'], shuffle=True)
-    # testloader = DataLoader(testset, batch_size=config['batch_size'])
-    # num_examples = {"trainset": len(trainset), "testset": len(testset)}
-    # #print(num_examples)
-    # print('Data load is done')
-    # return trainloader, testloader, num_examples
 
 def flush_memory():
     torch.cuda.empty_cache()
@@ -216,7 +199,7 @@ def train_mime(net, state, control_variate, trainloader, epochs, deadline=None):
             #Update net's parameters using gradients
             with torch.no_grad():
                 for g_y, g_x, c in zip(grads_y, grads_x, control_variate):
-                    g_y.data -= g_x.data + c 
+                    g_y.data -= g_x.data + c.to(DEVICE) 
 
                 for param,grad,s in zip(net.parameters(), grads_y, state):
                     param.data = param.data - lr * ((1-momentum) * grad.data + momentum * s.data)
