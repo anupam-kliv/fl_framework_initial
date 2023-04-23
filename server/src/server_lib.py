@@ -131,6 +131,7 @@ def test_model(net, testloader):
     criterion = torch.nn.CrossEntropyLoss()
     correct, total, loss = 0, 0, 0.0
     net.eval()
+    net.to(device)
     with torch.no_grad():
         for images, labels in tqdm(testloader) :
             images, labels = images.to(device), labels.to(device)
