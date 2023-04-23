@@ -8,6 +8,7 @@ class scaffold():
         self.algorithm = "SCAFFOLD"
         self.lr = 1.0
         self.fraction = config["fraction_of_clients"]
+        self.fraction = 1.0 if self.fraction is None else self.fraction
     
     def aggregate(self,server_model_state_dict, control_variate, state_dicts, updated_control_variates):
         
