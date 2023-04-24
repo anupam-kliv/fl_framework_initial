@@ -3,6 +3,7 @@ import json
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))        
 from server.src.server import server_start 
+from client.src.client import client_start
 import threading
 import time
 from torch.multiprocessing import Process
@@ -32,13 +33,13 @@ def tester(config , no_of_clients, late=None):
     server.start()
     time.sleep(5)
     for i in range(no_of_clients):
-        client = Process(target=execute, args=(f'cd client ;python client.py',))
+        client = Process(target=client_start)
         clients.append(client)
         client.start()
         time.sleep(2)
     if late:
         time.sleep(6)
-        client = Process(target=execute, args=(f'cd client ;python client.py',))
+        client = Process(target=client_start)
         clients.append(client)
         client.start()
     for i in range(len(clients)):

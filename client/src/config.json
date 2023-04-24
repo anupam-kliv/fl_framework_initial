@@ -1,0 +1,1 @@
+{"epochs": 1, "timeout": null, "algorithm": "fedadagrad", "message": "train", "dataset": "MNIST", "net": "LeNet", "resize_size": 32, "batch_size": 32, "niid": 2, "carbon_tracker": 0}
