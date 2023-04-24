@@ -13,7 +13,7 @@ from client_lib import train, evaluate, set_parameters
 
 keep_going = True
 wait_time = 0
-device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
 while keep_going:
     #wait for specified time before reconnecting
