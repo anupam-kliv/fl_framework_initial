@@ -34,7 +34,7 @@ class ClientManager:
         if num_of_clients == None and fraction == None:
             num_of_clients = len(self.client_list)
         client_list = self.client_list
-        if len(client_list) < num_of_clients:
+        if len(client_list) <= num_of_clients:
             return client_list
         else:
             selected_clients_list = random.sample(client_list, k=num_of_clients)
