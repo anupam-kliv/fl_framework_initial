@@ -47,7 +47,9 @@ def server_runner(client_manager, configurations):
     if not os.path.exists(save_dir_path):
     	os.makedirs(save_dir_path)
     torch.save(server_model_state_dict, f"{save_dir_path}/initial_model.pt")
-    myJSON = json.dumps(configurations)
+    configurations1 = configurations.copy()
+    configurations1['device'] = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+    myJSON = json.dumps(configurations1)
     json_path = save_dir_path + "/information.json"
     with open(json_path, "w") as jsonfile:
         jsonfile.write(myJSON)
