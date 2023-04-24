@@ -92,6 +92,9 @@ def train(train_order_message):
     json_path = save_dir_path + "/config.json"
     with open(json_path, "w") as jsonfile:
         jsonfile.write(myJSON)
+    json_path = "config.json"
+    with open(json_path, "w") as jsonfile:
+        jsonfile.write(myJSON)
     
     trained_model_parameters = model.state_dict()
     #Create a dictionary where model_parameters and control_variate are stored which needs to be sent to the server
