@@ -1,4 +1,4 @@
-# fl_framework_initial
+# Federated Learning Framework
 _ is a highly dynamic and customizable framework that can accommodate many use cases with flexibility by implementing several functionalities over different federated learning algorithms, and essentially creating a plug-and-play architecture to accommodate different use cases.
 
 ## Establishing Connection between Server and Clients
