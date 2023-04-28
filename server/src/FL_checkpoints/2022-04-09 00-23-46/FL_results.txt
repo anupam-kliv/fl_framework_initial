@@ -1,1 +1,0 @@
-{'eval_loss': 0.0013449472208105363, 'eval_accuracy': 0.9869, 'round': 1}

@@ -43,7 +43,7 @@ def server_runner(client_manager, configurations):
 
     #create a new directory inside FL_checkpoints and store the aggragted models in each round
     fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
-    save_dir_path=f"server/src/results/{dataset}/{algorithm}/{niid}/{fl_timestamp}"
+    save_dir_path=f"results/{dataset}/{algorithm}/{niid}/{fl_timestamp}"
     if not os.path.exists(save_dir_path):
     	os.makedirs(save_dir_path)
     torch.save(server_model_state_dict, f"{save_dir_path}/initial_model.pt")
@@ -128,7 +128,7 @@ def server_start(configurations):
     client_manager = ClientManager()
     client_connection_servicer = ClientConnectionServicer(client_manager)
 
-    channel_opt = [('grpc.max_send_message_length', 512 * 1024 * 1024), ('grpc.max_receive_message_length', 512 * 1024 * 1024)]
+    channel_opt = [('grpc.max_send_message_length', -1), ('grpc.max_receive_message_length', -1)]
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=channel_opt)
     ClientConnection_pb2_grpc.add_ClientConnectionServicer_to_server( client_connection_servicer, server )
     server.add_insecure_port('localhost:8214')

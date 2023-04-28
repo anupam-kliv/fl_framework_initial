@@ -12,18 +12,11 @@ from .net_lib import train_model, train_fedavg, train_scaffold, train_mimelite, 
 
 from .ClientConnection_pb2 import  EvalResponse, TrainResponse
 
-# Load data
-# trainloader, testloader, num_examples = load_data()
-# print("data was loaded")
-
-# # Load model
-# model = Net().to(DEVICE)
-
 #create a new directory inside FL_checkpoints and store the aggragted models in each round
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
-save_dir_path = f"client/src/model_checkpoints/{fl_timestamp}"
-os.mkdir(save_dir_path)
+save_dir_path = f"model_checkpoints/{fl_timestamp}"
+os.makedirs(save_dir_path)
 
 def evaluate(eval_order_message):
     model_parameters_bytes = eval_order_message.modelParameters
@@ -92,7 +85,7 @@ def train(train_order_message):
     json_path = save_dir_path + "/config.json"
     with open(json_path, "w") as jsonfile:
         jsonfile.write(myJSON)
-    json_path = "client/src/config.json"
+    json_path = "config.json"
     with open(json_path, "w") as jsonfile:
         jsonfile.write(myJSON)
     
@@ -122,7 +115,7 @@ def train(train_order_message):
 def set_parameters(set_parameters_order_message):
     model_parameters_bytes = set_parameters_order_message.modelParameters
     model_parameters = torch.load( BytesIO(model_parameters_bytes), map_location="cpu" )
-    with open("client/src/config.json", "r") as jsonfile:
+    with open("config.json", "r") as jsonfile:
         config_dict = json.load(jsonfile)
     model = get_net(config= config_dict).to(device)
     model.load_state_dict(model_parameters)

@@ -19,7 +19,7 @@ DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 def load_data(config):
     trainset, testset = get_data(config)
     data_distribution(config, trainset)
-    data_path = os.path.join(os.getcwd(), 'client/src/Distribution/', config['dataset'], 'data_split_niid_'+ str(config['niid'])+'.pt')
+    data_path = os.path.join(os.getcwd(), 'Distribution/', config['dataset'], 'data_split_niid_'+ str(config['niid'])+'.pt')
     datasets = customDataset(config,  trainset, data_path)
     trainloader = DataLoader(datasets, batch_size= config['batch_size'], shuffle=True)
     testloader = DataLoader(testset, batch_size=config['batch_size'])
@@ -74,8 +74,8 @@ def train_fedavg(net, trainloader, epochs, deadline=None):
 def train_feddyn(net, trainloader, epochs, deadline=None):
     x = deepcopy(net) 
     prev_grads = None
-    if os.path.isfile("client/src/model_checkpoints/prev_grads.pt"):
-        prev_grads = torch.load("client/src/model_checkpoints/prev_grads.pt", map_location=DEVICE)
+    if os.path.isfile("model_checkpoints/prev_grads.pt"):
+        prev_grads = torch.load("model_checkpoints/prev_grads.pt", map_location=DEVICE)
     else:
         for param in net.parameters():
             if not isinstance(prev_grads, torch.Tensor):
@@ -133,7 +133,7 @@ def train_feddyn(net, trainloader, epochs, deadline=None):
 
     #Update prev_grads using delta which is scaled by alpha
     prev_grads = torch.sub(prev_grads, delta, alpha = alpha)
-    torch.save(prev_grads, "client/src/model_checkpoints/prev_grads.pt")
+    torch.save(prev_grads, "model_checkpoints/prev_grads.pt")
     return net
               
 def train_mimelite(net, state, trainloader, epochs, deadline=None):

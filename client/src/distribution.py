@@ -4,7 +4,7 @@ import torch, random, os
 def data_distribution(config, trainset):
     labels = []
     base_dir = os.getcwd()
-    storepath = os.path.join(base_dir, 'client/src/Distribution/', config['dataset']+'/')
+    storepath = os.path.join(base_dir, 'Distribution/', config['dataset']+'/')
     seed = 10
     random.seed(seed)
     num_users = 2
