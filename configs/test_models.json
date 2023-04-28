@@ -1,6 +1,6 @@
 {
     "LeNet":{
-        "algorithm":"mime",
+        "algorithm":"fedavg",
         "num_of_clients":1,
         "fraction_of_clients":null,
         "num_of_rounds":1,
@@ -19,7 +19,7 @@
         "carbon": 0
     },
     "resnet18":{
-        "algorithm":"mime",
+        "algorithm":"fedavg",
         "num_of_clients":1,
         "fraction_of_clients":null,
         "num_of_rounds":1,
@@ -38,7 +38,7 @@
         "carbon": 0
     },
     "resnet50":{
-        "algorithm":"mime",
+        "algorithm":"fedavg",
         "num_of_clients":1,
         "fraction_of_clients":null,
         "num_of_rounds":1,
@@ -57,7 +57,7 @@
         "carbon": 0
     },
     "vgg16":{
-        "algorithm":"mime",
+        "algorithm":"fedavg",
         "num_of_clients":1,
         "fraction_of_clients":null,
         "num_of_rounds":1,
@@ -76,7 +76,7 @@
         "carbon": 0
     },
     "AlexNet":{
-        "algorithm":"mime",
+        "algorithm":"fedavg",
         "num_of_clients":1,
         "fraction_of_clients":null,
         "num_of_rounds":1,
