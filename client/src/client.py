@@ -22,8 +22,8 @@ def client_start():
         
         #create new gRPC channel to the server
         channel = grpc.insecure_channel("localhost:8214", options=[
-            ('grpc.max_send_message_length', 50 * 1024 * 1024),
-            ('grpc.max_receive_message_length', 50 * 1024 * 1024)
+            ('grpc.max_send_message_length', -1),
+            ('grpc.max_receive_message_length', -1)
             ])
         stub = ClientConnection_pb2_grpc.ClientConnectionStub(channel)
         client_buffer = Queue(maxsize = 1)
