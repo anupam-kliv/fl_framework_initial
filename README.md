@@ -83,10 +83,10 @@ Files architecture of Feder. These contents may be helpful for users to understa
 
 ## The framework will be composed of 4 modules, each module building upon the last:
 
-* **Module 1: Verification module**[docs](https://feder.readthedocs.io/en/latest/overview.html#verification-module)
-* **Module 2: Timeout module**[docs](https://feder.readthedocs.io/en/latest/overview.html#timeout-module)
-* **Module 3: Intermediate client connections module**[docs](https://feder.readthedocs.io/en/latest/overview.html#intermediate-client-connections-module)
-* **Module 4: Carbon emission tracking module**[docs](https://feder.readthedocs.io/en/latest/overview.html#carbon-emissions-tracking-module)
+* **Module 1: Verification module** [docs](https://feder.readthedocs.io/en/latest/overview.html#verification-module)
+* **Module 2: Timeout module** [docs](https://feder.readthedocs.io/en/latest/overview.html#timeout-module)
+* **Module 3: Intermediate client connections module** [docs](https://feder.readthedocs.io/en/latest/overview.html#intermediate-client-connections-module)
+* **Module 4: Carbon emission tracking module** [docs](https://feder.readthedocs.io/en/latest/overview.html#carbon-emissions-tracking-module)
 
 ## Running tests
 
@@ -96,3 +96,48 @@ Various unit tests are available in the `test` directory. To run any tests, run 
 cd test
 python test_algorithms.py
 ```
+
+## Federated Learning Algorithms
+
+Following federated learning algorithms are implemented in this framework:
+
+| Method              | Paper                                                        | Publication  | Official code                                        |
+| ------------------- | ------------------------------------------------------------ | ------------ | ---------------------------------------------------- |
+| FedAvg              | [Communication-Efficient Learning of Deep Networks from Decentralized Data](http://proceedings.mlr.press/v54/mcmahan17a/mcmahan17a.pdf) | AISTATS'2017 |                                                      |         |
+| FedDyn              | [Federated Learning Based on Dynamic Regularization](https://openreview.net/forum?id=B7v4QMR6Z9w) | ICLR' 2021   | [Code](https://github.com/alpemreacar/FedDyn)        |          |
+| Scaffold           | [SCAFFOLD: Stochastic Controlled Averaging for Federated Learning]() | ICML'2020    ||
+| Personalized-FedAvg | [Improving Federated Learning Personalization via Model Agnostic Meta Learning](https://arxiv.org/pdf/1909.12488.pdf) |    Pre-print      |                                                      |
+| FedAdagrad          | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                       |
+| FedAdam       | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                      |
+| FedYogi    | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                      |
+| Mime       | [Mime: Mimicking Centralized Stochastic Algorithms in Federated Learning](https://arxiv.org/pdf/2008.03606.pdf) | ICML'2020    |                                                      |
+| Mimelite       | [Mime: Mimicking Centralized Stochastic Algorithms in Federated Learning](https://arxiv.org/pdf/2008.03606.pdf) | ICML'2020    |                                                      |
+
+## Datasets & Data Partition
+
+Sophisticated in the real world, FL needs to handle various kind of data distribution scenarios, including iid and non-iid scenarios. Though there already exists some datasets and partition schemes for published data benchmark, it still can be very messy and hard for researchers to partition datasets according to their specific research problems, and maintain partition results during simulation.
+
+### Data Partition
+
+We provide multiple data partition schemes used in recent FL papers[[1]](#1)[[2]](#2)[[3]](#3). Here we show the data partition visualization of several common used datasets as the examples.
+
+#### 1. Balanced IID partition
+
+Each client has same number of samples, and same distribution for all class samples. 
+
+### Datasets Supported
+
+| Dataset                | Training samples         | Test samples       | Classes 
+| ---------------------- | ------------------------ | ------------------ | ------------------ |
+| MNIST                  | 60,000                   | 10,000             | 10                 |
+| CIFAR-10               | 50,000                   | 10,000             | 10                 |
+| CIFAR-100              | 50,000                   | 10,000             | 100                |
+| FashionMnist           | 60,000                   | 10,000             | 10                 |
+
+## Contact
+
+Project Investigator: [Prof. ](https://scholar.google.com/citations?user=gF0H9nEAAAAJ&hl=en) (xuzenglin@hit.edu.cn).
+
+For technical issues related to __Feder__ development, please contact our development team through Github issues or email:
+
+- [Name Sirname](https://scholar.google.com/citations): _____@gmail.com
