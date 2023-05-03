@@ -83,10 +83,10 @@ Files architecture of Feder. These contents may be helpful for users to understa
 
 ## The framework will be composed of 4 modules, each module building upon the last:
 
-* **Module 1: Verification module**
-* **Module 2: Timeout module**
-* **Module 3: Intermediate client connections module**
-* **Module 4: Carbon emission tracking module**
+* **Module 1: Verification module**[docs](https://feder.readthedocs.io/en/latest/overview.html#verification-module)
+* **Module 2: Timeout module**[docs](https://feder.readthedocs.io/en/latest/overview.html#timeout-module)
+* **Module 3: Intermediate client connections module**[docs](https://feder.readthedocs.io/en/latest/overview.html#intermediate-client-connections-module)
+* **Module 4: Carbon emission tracking module**[docs](https://feder.readthedocs.io/en/latest/overview.html#carbon-emissions-tracking-module)
 
 ## Running tests
 
