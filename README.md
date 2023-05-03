@@ -1,6 +1,64 @@
 # Federated Learning Framework
+
 [![License](.media/license.svg)](https://opensource.org/licenses/Apache-2.0)
+
 It is a highly dynamic and customizable framework that can accommodate many use cases with flexibility by implementing several functionalities over different federated learning algorithms, and essentially creating a plug-and-play architecture to accommodate different use cases.
+
+## Installation
+
+- Install the latest version from source code:
+```
+$ git clone git@github.com:feder.git
+$ cd Feder
+$ pip install -r requirements.txt
+```
+
+- Install the stable version (old version) via pip:
+```
+# assign the version feder==1.1.2
+$ pip install feder
+```
+## Architecture
+Files architecture of Feder. These contents may be helpful for users to understand our repo.
+
+```
+├── client
+│   ├── src
+|   |   ├── client_lib
+|   |   ├── client
+|   |   ├── ClientConnection_pb2_grpc
+|   |   ├── ClientConnection_pb2
+|   |   ├── data_utils
+|   |   ├── distribution
+|   |   ├── get_data
+|   |   ├── net_lib
+|   |   ├── net
+│   └── start_client
+├── server
+│   ├── src
+|   |   ├── algorithms
+|   |   ├── server_evaluate
+|   |   ├── client_connection_servicer
+|   |   ├── client_manager
+|   |   ├── client_wrapper
+|   |   ├── ClientConnection_pb2_grpc
+|   |   ├── ClientConnection_pb2
+|   |   ├── server_lib
+|   |   ├── server
+|   |   ├── verification
+│   └── start_server
+├── tests
+|   ├── misc
+│   ├── test_algorithms
+|   ├── test_datasets
+│   ├── test_models
+│   ├── test_modules
+│   ├── test_results
+│   └── test_scalability
+└── tutorials
+    ├── Code_Carbon_Tutorial.ipynb
+    └── ...
+```
 
 ## Establishing Connection between Server and Clients
 <p align="center">
