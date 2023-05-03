@@ -134,6 +134,10 @@ Each client has same number of samples, and same distribution for all class samp
 | CIFAR-100              | 50,000                   | 10,000             | 100                |
 | FashionMnist           | 60,000                   | 10,000             | 10                 |
 
+### Custom Dataset Support
+
+We also provide a simple way to add your own dataset to the framework. Look into [docs](https://feder.readthedocs.io/en/latest/tutorials/dataset.html#adding-support-for-new-datasets) for more details.
+
 ## Contact
 
 Project Investigator: [Prof. ](https://scholar.google.com/citations?user=gF0H9nEAAAAJ&hl=en) (xuzenglin@hit.edu.cn).
