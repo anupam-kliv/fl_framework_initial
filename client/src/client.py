@@ -14,7 +14,7 @@ from .client_lib import train, evaluate, set_parameters
 def client_start():
     keep_going = True
     wait_time = 0
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
+    #device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") 
 
     while keep_going:
         #wait for specified time before reconnecting
@@ -26,8 +26,9 @@ def client_start():
             ('grpc.max_receive_message_length', -1)
             ])
         stub = ClientConnection_pb2_grpc.ClientConnectionStub(channel)
-        client_buffer = Queue(maxsize = 1)
-
+        client_buffer = Queue(maxsize = 10)
+        print("Connected with server")
+        
         #wait for incoming messages from the server in client_buffer
         #then according to fields present in them call the appropraite function
         for server_message in stub.Connect( iter(client_buffer.get, None) ):

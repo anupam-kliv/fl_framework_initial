@@ -1,4 +1,3 @@
-
 from .client_manager import ClientManager
 from .client_connection_servicer import ClientConnectionServicer
 
@@ -18,7 +17,7 @@ from .server_lib import get_net
 
 #the business logic of the server, i.e what interactions take place with the clients
 def server_runner(client_manager, configurations):
-    print("\nStarted server runner")
+    print("\nServer Running")
 
     #get hyperparameters from the passed configurations dict
     config_dict = {"message": "eval"}
@@ -43,13 +42,11 @@ def server_runner(client_manager, configurations):
 
     #create a new directory inside FL_checkpoints and store the aggragted models in each round
     fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
-    save_dir_path=f"results/{dataset}/{algorithm}/{niid}/{fl_timestamp}"
+    save_dir_path=f"server_results/{dataset}/{algorithm}/{niid}/{fl_timestamp}"
     if not os.path.exists(save_dir_path):
     	os.makedirs(save_dir_path)
     torch.save(server_model_state_dict, f"{save_dir_path}/initial_model.pt")
-    configurations1 = configurations.copy()
-    configurations1['device'] = 'cuda:0' if torch.cuda.is_available() else 'cpu'
-    myJSON = json.dumps(configurations1)
+    myJSON = json.dumps(configurations)
     json_path = save_dir_path + "/information.json"
     with open(json_path, "w") as jsonfile:
         jsonfile.write(myJSON)
@@ -60,6 +57,7 @@ def server_runner(client_manager, configurations):
     #Initialize the aggregation algorithm
     exec(f"from .algorithms.{algorithm} import {algorithm}")
     aggregator = eval(algorithm)(configurations)
+
 
     #If the algorithm is either scaffold or mimelite, then we need to make use of control variate
     if (algorithm == 'scaffold' or algorithm == 'mimelite'):
@@ -73,12 +71,13 @@ def server_runner(client_manager, configurations):
         control_variate2 = None
 
     #run FL for given rounds
-    config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size, "niid": niid, "carbon_tracker":carbon}
     client_manager.accepting_connections = accept_conn_after_FL_begin
+    config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, 	"batch_size":batch_size, "niid": niid, "carbon-tracker":carbon}
     for round in range(1, communication_rounds + 1):
         clients = client_manager.random_select(client_manager.num_connected_clients(), fraction_of_clients) 
         
-        print(f"Communication round {round} is starting with {len(clients)} client(s) out of {client_manager.num_connected_clients()}.")
+        
+        print(f"\nCommunication round {round}/{communication_rounds} is starting with {len(clients)}/{client_manager.num_connected_clients()} client(s).")
         trained_model_state_dicts = []
         updated_control_variates = []
         with futures.ThreadPoolExecutor(max_workers=5) as executor:
@@ -88,12 +87,11 @@ def server_runner(client_manager, configurations):
                 trained_model_state_dicts.append(trained_model_state_dict)
                 updated_control_variates.append(updated_control_variate)
                 print(f"Training results (client {clients[client_index].client_id}): ", results)
-        print("Recieved all trained model parameters.")
         
         if verification:
             print("Performing verification round...")
             selected_state_dicts = verify(clients, trained_model_state_dicts, save_dir_path, threshold=verification_threshold)
-            print(f"Aggregating {len(selected_state_dicts)}/{len(trained_model_state_dicts)} clients that scored above the threshold.")
+            print(f"\nAggregating {len(selected_state_dicts)}/{len(trained_model_state_dicts)} clients that scored above the threshold.")
         else:
             selected_state_dicts = trained_model_state_dicts
 
@@ -116,12 +114,13 @@ def server_runner(client_manager, configurations):
         with open(f"{save_dir_path}/FL_results.txt", "a") as file:
             file.write( str(eval_result) + "\n" )
 
-    # #sync all connected clients with current global model and order them to disconnect
+    #sync all connected clients with current global model and order them to disconnect
     for client in client_manager.random_select():
         client.set_parameters(server_model_state_dict)
         client.disconnect()
     torch.save(server_model_state_dict, initial_model_path)
     print("Server runner stopped.")
+
 
 #starts the gRPC server and then runs server_runner concurrently
 def server_start(configurations):
@@ -139,4 +138,3 @@ def server_start(configurations):
     server_runner_thread.join()
 
     server.stop(None)
-    

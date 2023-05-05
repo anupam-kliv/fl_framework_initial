@@ -1,4 +1,3 @@
-
 import torch
 from io import BytesIO
 import json
@@ -9,13 +8,15 @@ from codecarbon import EmissionsTracker, OfflineEmissionsTracker
 from .net import get_net
 from .net_lib import test_model, load_data, flush_memory, DEVICE
 from .net_lib import train_model, train_fedavg, train_scaffold, train_mimelite, train_mime, train_feddyn
+from torch.utils.data import DataLoader
+from .get_data import get_data
 
 from .ClientConnection_pb2 import  EvalResponse, TrainResponse
 
 #create a new directory inside FL_checkpoints and store the aggragted models in each round
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") #device id  of this should be same in net_lib device
 fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
-save_dir_path = f"model_checkpoints/{fl_timestamp}"
+save_dir_path = f"client_checkpoints/{fl_timestamp}"
 os.makedirs(save_dir_path)
 
 def evaluate(eval_order_message):
@@ -27,9 +28,17 @@ def evaluate(eval_order_message):
     
     state_dict = model_parameters
     print("Evaluation:",config_dict)
-    model = get_net(config= config_dict)
+    with open("config.json", "r") as jsonfile:
+        config_dict = json.load(jsonfile)
+    model = get_net(config= config_dict).to(device)
     model.load_state_dict(state_dict)
-    _, testloader, _ = load_data(config_dict)
+    
+    _, testset = get_data(config= config_dict)
+    testloader = DataLoader(testset, batch_size=config_dict['batch_size'])
+    
+    #_, testloader, _ = load_data(config_dict)
+    
+    
     eval_loss, eval_accuracy = test_model(model, testloader)
 
     response_dict = {"eval_loss": eval_loss, "eval_accuracy": eval_accuracy}
@@ -45,7 +54,7 @@ def train(train_order_message):
     
     config_dict_bytes = train_order_message.configDict
     config_dict = json.loads( config_dict_bytes.decode("utf-8") )
-    carbon_tracker = config_dict["carbon_tracker"]
+    carbon_tracker = config_dict["carbon-tracker"]
 
     model = get_net(config= config_dict)
     model.load_state_dict(model_parameters)
@@ -62,7 +71,7 @@ def train(train_order_message):
 	    tracker.start()
             
     trainloader, testloader, _ = load_data(config_dict)
-    print("training started")
+    print("Training started")
     if (config_dict['algorithm'] == 'mimelite'):
         model, control_variate = train_mimelite(model, control_variate, trainloader, epochs, deadline)
     elif (config_dict['algorithm'] == 'scaffold'):
@@ -75,7 +84,6 @@ def train(train_order_message):
         model = train_feddyn(model, trainloader, epochs, deadline)
     else:
         model = train_model(model, trainloader, epochs, deadline)
-    print("training finished")
 
     if (carbon_tracker==1):
 	    emissions: float = tracker.stop()
@@ -99,7 +107,7 @@ def train(train_order_message):
     buffer.seek(0)
     data_to_send_bytes = buffer.read()   
 
-    print("train eval")
+    print("Evaluation")
     train_loss, train_accuracy = test_model(model, testloader)
     response_dict = {"train_loss": train_loss, "train_accuracy": train_accuracy}
     response_dict_bytes = json.dumps(response_dict).encode("utf-8")

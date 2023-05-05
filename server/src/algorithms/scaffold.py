@@ -8,7 +8,6 @@ class scaffold():
         self.algorithm = "SCAFFOLD"
         self.lr = 1.0
         self.fraction = config["fraction_of_clients"]
-        self.fraction = 1.0 if self.fraction is None else self.fraction
     
     def aggregate(self,server_model_state_dict, control_variate, state_dicts, updated_control_variates):
         
@@ -35,6 +34,9 @@ class scaffold():
             server_model_state_dict[key] += self.lr * delta_x[key]
         
         for i in range(len(control_variate)):
+            '''print(control_variate[i])
+            print(self.fraction)
+            print(delta_c[i])'''
             control_variate[i] += self.fraction * delta_c[i]
             
         return server_model_state_dict, control_variate

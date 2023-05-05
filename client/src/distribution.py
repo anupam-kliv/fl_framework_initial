@@ -7,7 +7,7 @@ def data_distribution(config, trainset):
     storepath = os.path.join(base_dir, 'Distribution/', config['dataset']+'/')
     seed = 10
     random.seed(seed)
-    num_users = 2
+    num_users = 5
     
     #Calculate the number of samples present per class
     for i in range(len(trainset)):
@@ -38,7 +38,6 @@ def data_distribution(config, trainset):
             data_presence_indicator = np.random.choice([0, 1], (num_classes, num_users), p=[j*q_step, 1-(j*q_step)])
             if len(np.where(np.sum(data_presence_indicator, axis=0) == 0)[0])>0:
                 for i in np.where(np.sum(data_presence_indicator, axis=0) == 0)[0]:
-                    print("Zero client number: ", i)
                     zero_array = data_presence_indicator[:,i]
                     zero_array[np.random.choice(len(zero_array),1)] =1
                     data_presence_indicator[:,i] = zero_array

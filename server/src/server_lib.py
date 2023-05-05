@@ -1,43 +1,88 @@
 import torch
+import os
 from tqdm import tqdm
 from torchvision import transforms,datasets
 from torch.utils.data import DataLoader
 import torch.nn as nn
 import torchvision.models as models
+import torch.utils.data as data
+import numpy as np
+from PIL import Image
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") #serverlib and eval_lib should be on the same device
 
 def load_data(config):
-    trainset, testset = get_data(config)
+    testset = get_data(config)
     testloader = DataLoader(testset, batch_size=config['batch_size'])
-    num_examples = {"trainset": len(trainset), "testset": len(testset)}
-    #print(num_examples)
-    print('Data load is done') 
+    num_examples = {"testset": len(testset)}
     return testloader, num_examples
 
 ### Load different dataset
 def get_data(config):
-    print("Dataset Name: ",config['dataset'])
+    dataset_path="./server_dataset"
+    if not os.path.exists(dataset_path):
+            os.makedirs(dataset_path)    
     if config['dataset'] == 'MNIST':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        trainset = datasets.MNIST(root='./MNIST', train=True, download=True, transform=apply_transform)
-        testset = datasets.MNIST(root='./MNIST', train=False, download=True, transform=apply_transform)
+        testset = datasets.MNIST(root='./server_dataset/MNIST', train=False, download=True, transform=apply_transform)
     if config['dataset'] == 'FashionMNIST':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        trainset = datasets.FashionMNIST(root='./FashionMNIST', train=True, download=True, transform=apply_transform)
-        testset = datasets.FashionMNIST(root='./FashionMNIST', train=False, download=True, transform=apply_transform)
+        testset = datasets.FashionMNIST(root='./server_dataset/FashionMNIST', train=False, download=True, transform=apply_transform)
 
     if config['dataset'] == 'CIFAR10':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        trainset = datasets.CIFAR10(root='./CIFAR10', train=True, download=True, transform=apply_transform)
-        testset = datasets.CIFAR10(root='./CIFAR10', train=False, download=True, transform=apply_transform)
+        testset = datasets.CIFAR10(root='./server_dataset/CIFAR10', train=False, download=True, transform=apply_transform)
 
     if config['dataset'] == 'CIFAR100':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        trainset = datasets.CIFAR100(root='./CIFAR100', train=True, download=True, transform=apply_transform)
-        testset = datasets.CIFAR100(root='./CIFAR100', train=False, download=True, transform=apply_transform)
+        testset = datasets.CIFAR100(root='./server_dataset/CIFAR100', train=False, download=True, transform=apply_transform)
 
-    return trainset, testset
+    if config['dataset'] == 'CUSTOM':
+        apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
+        testset = customDataset(root='./server_custom_dataset/CUSTOM/test', transform=apply_transform)
+
+    return testset
+
+class customDataset(data.Dataset):
+    def __init__(self, root, transform=None):
+
+        self.root = root
+        samples = sample_return(root)
+        
+        self.samples = samples
+
+        self.transform = transform
+    
+    def __getitem__(self, index):
+        img, label= self.samples[index]
+
+        img = np.load(img)
+ 
+        img = Image.fromarray(img)
+
+        if self.transform is not None:
+            img = self.transform(img)
+
+
+        return img, label
+    
+    def __len__(self):
+        return len(self.samples)
+
+def sample_return(root):
+    newdataset = []
+    labels = {'Breast': 0, 'Chestxray':1, 'Oct': 2, 'Tissue': 3}
+    for image in os.listdir(root):
+        label=[]
+        #print(image)
+        path = os.path.join(root, image)
+        #print(path)
+        labels_str = image.split('_')[0]
+        label = labels[labels_str]
+        item = (path, label)
+        newdataset.append(item)
+    return newdataset
+
 
 
 class LeNet(nn.Module):
@@ -71,7 +116,7 @@ class LeNet(nn.Module):
 
 def get_net(config):
     if config["net"] == 'LeNet':
-        if config['dataset'] in ['MNIST', 'FashionMNIST']:
+        if config['dataset'] in ['MNIST', 'FashionMNIST', 'CUSTOM']:
             net = LeNet(in_channels=1, num_classes=10)
         elif config['dataset'] == 'CIFAR10':
             net = LeNet(in_channels=3, num_classes=10)
@@ -105,22 +150,15 @@ def get_net(config):
             net = models.alexnet(num_classes=10)
         else:
             net = models.alexnet(num_classes=100)
-    print('model is loaded')
     return net
 
 def train_model(net, trainloader):
-    #print('tranning is started')
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
     net.train()
-    #for images, labels in trainloader:
-        #images, labels = images.to(device), labels.to(device)
-        #print(images.shape)
     dataiter = iter(trainloader)
-    #print(dataiter)
     images, labels = next(dataiter)
     outputs = net(images)
-    #print(outputs.shape)
     optimizer.zero_grad()
     loss = criterion(outputs, labels)
     loss.backward()
@@ -131,7 +169,6 @@ def test_model(net, testloader):
     criterion = torch.nn.CrossEntropyLoss()
     correct, total, loss = 0, 0, 0.0
     net.eval()
-    net.to(device)
     with torch.no_grad():
         for images, labels in tqdm(testloader) :
             images, labels = images.to(device), labels.to(device)
@@ -146,9 +183,8 @@ def test_model(net, testloader):
 
 def save_intial_model(config):
     testloader, _ = load_data(config)
-    #print(config['initial_model_path'])
     net = get_net(config)
     net = train_model(net, testloader)
     torch.save(net.state_dict(), 'initial_model.pt')
-    print('Initial model is saved')
+
 

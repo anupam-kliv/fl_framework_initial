@@ -1,7 +1,8 @@
+import torch
 from ..server_lib import load_data, get_net, test_model
 
 def server_eval(model_state_dict, config):
-    device = config['device']
+    device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
     testloader, _ = load_data(config)
     model = get_net(config)
     model = model.to(device)

@@ -1,7 +1,5 @@
-
 import torch.nn as nn
 import torch.nn.functional as F
-#from task_5.server.get_config import get_config
 import torchvision.models as models
 
 class LeNet(nn.Module):
@@ -35,7 +33,7 @@ class LeNet(nn.Module):
 
 def get_net(config):
     if config["net"] == 'LeNet':
-        if config['dataset'] in ['MNIST', 'FashionMNIST']:
+        if config['dataset'] in ['MNIST', 'FashionMNIST', 'CUSTOM']:
             net = LeNet(in_channels=1, num_classes=10)
         elif config['dataset'] == 'CIFAR10':
             net = LeNet(in_channels=3, num_classes=10)
@@ -69,5 +67,4 @@ def get_net(config):
             net = models.alexnet(num_classes=10)
         else:
             net = models.alexnet(num_classes=100)
-    print('model is loaded')
     return net

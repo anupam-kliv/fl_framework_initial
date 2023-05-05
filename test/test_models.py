@@ -17,6 +17,7 @@ def create_train_test_for_LeNet():
             save_intial_model(config)
 
         def test_LeNet(self):
+            print("\n==========================LeNet Testing==========================")
             config = get_config('test_models', 'LeNet')
             tester(config,1)
 
@@ -30,6 +31,7 @@ def create_train_test_for_resnet18():
             save_intial_model(config)
 
         def test_resnet18(self):
+            print("\n==========================Resnet18 Testing==========================")
             config = get_config('test_models', 'resnet18')
             tester(config,1)
 
@@ -43,6 +45,7 @@ def create_train_test_for_resnet50():
             save_intial_model(config)
 
         def test_resnet18(self):
+            print("\n==========================Resnet50 Testing==========================")
             config = get_config('test_models', 'resnet50')
             tester(config,1)
 
@@ -56,6 +59,7 @@ def create_train_test_for_vgg16():
             save_intial_model(config)
 
         def test_vgg16(self):
+            print("\n==========================VGG 16 Testing==========================")
             config = get_config('test_models', 'vgg16')
             tester(config,1)
 
@@ -69,6 +73,7 @@ def create_train_test_for_AlexNet():
             save_intial_model(config)
 
         def test_vgg16(self):
+            print("\n==========================AlexNet Testing==========================")
             config = get_config('test_models', 'AlexNet')
             tester(config,1)
 
