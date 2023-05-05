@@ -4,6 +4,19 @@
 
 It is a highly dynamic and customizable framework that can accommodate many use cases with flexibility by implementing several functionalities over different federated learning algorithms, and essentially creating a plug-and-play architecture to accommodate different use cases.
 
+## Supported Devices
+
+Feder has been extensively tested on and works with the following devices:
+
+* Intel CPUs
+* Nvidia GPUs
+* AMD CPUs
+* Nvidia Jetson
+* Raspberry Pi
+* Intel NUC
+
+With Feder, it is possible to operate the server and clients on separate devices or on a single device through various means, such as utilizing different terminals or implementing multiprocessing.
+
 ## Installation
 
 - Install the latest version from source code:
