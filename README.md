@@ -14,7 +14,7 @@ Feder has been extensively tested on and works with the following devices:
 * Raspberry Pi
 * Intel NUC
 
-With Feder, it is possible to operate the server and clients on separate devices or on a single device through various means, such as utilizing different terminals or implementing multiprocessing.
+With Feder, it is possible to operate the server and clients on **separate devices** or on a **single device** through various means, such as utilizing different terminals or implementing multiprocessing.
 
 ## Installation
 
