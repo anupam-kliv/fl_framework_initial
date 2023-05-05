@@ -10,7 +10,6 @@ Feder has been extensively tested on and works with the following devices:
 
 * Intel CPUs
 * Nvidia GPUs
-* AMD CPUs
 * Nvidia Jetson
 * Raspberry Pi
 * Intel NUC
