@@ -152,14 +152,109 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 ## Performance Evaluation
 
-### Results of various Federated Learning algorithms available in the framework
+### Results/Accuracy of various Federated Learning algorithms available in the framework
+
+#### 1. FedAvg
+
+| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
+| --------------- | ------- | ------------ | ----------- | ----------- |
+| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
+|         | 2    |  0.4         | 0.4         | 0.4         |
+|         | 3    |  0.2         | 0.2         | 0.2         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
+|         | 2     |  0.2         | 0.2         | 0.2         |
+|         | 3     |  0.1         | 0.1         | 0.1         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+
+#### 2. FedDyn
+
+| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
+| --------------- | ------- | ------------ | ----------- | ----------- |
+| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
+|         | 2    |  0.4         | 0.4         | 0.4         |
+|         | 3    |  0.2         | 0.2         | 0.2         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
+|         | 2     |  0.2         | 0.2         | 0.2         |
+|         | 3     |  0.1         | 0.1         | 0.1         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+
+#### 3. Scaffold
+
+| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
+| --------------- | ------- | ------------ | ----------- | ----------- |
+| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
+|         | 2    |  0.4         | 0.4         | 0.4         |
+|         | 3    |  0.2         | 0.2         | 0.2         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
+|         | 2     |  0.2         | 0.2         | 0.2         |
+|         | 3     |  0.1         | 0.1         | 0.1         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+
+#### 4. FedAdam
+
+| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
+| --------------- | ------- | ------------ | ----------- | ----------- |
+| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
+|         | 2    |  0.4         | 0.4         | 0.4         |
+|         | 3    |  0.2         | 0.2         | 0.2         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
+|         | 2     |  0.2         | 0.2         | 0.2         |
+|         | 3     |  0.1         | 0.1         | 0.1         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+
+#### 5. FedAdagrad
+
+| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
+| --------------- | ------- | ------------ | ----------- | ----------- |
+| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
+|         | 2    |  0.4         | 0.4         | 0.4         |
+|         | 3    |  0.2         | 0.2         | 0.2         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
+|         | 2     |  0.2         | 0.2         | 0.2         |
+|         | 3     |  0.1         | 0.1         | 0.1         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+
+#### 6. Mime
+
+| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
+| --------------- | ------- | ------------ | ----------- | ----------- |
+| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
+|         | 2    |  0.4         | 0.4         | 0.4         |
+|         | 3    |  0.2         | 0.2         | 0.2         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
+|         | 2     |  0.2         | 0.2         | 0.2         |
+|         | 3     |  0.1         | 0.1         | 0.1         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+
+#### 7. Mimelite
+
+| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
+| --------------- | ------- | ------------ | ----------- | ----------- |
+| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
+|         | 2    |  0.4         | 0.4         | 0.4         |
+|         | 3    |  0.2         | 0.2         | 0.2         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
+| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
+|         | 2     |  0.2         | 0.2         | 0.2         |
+|         | 3     |  0.1         | 0.1         | 0.1         |
+|         | 4     |  0.1         | 0.1         | 0.1         |
 
 
+### Plotting accuracy of different algorithms for MNIST with _ clients
 
+<br/>
 
 <div align="center">
-  <img width="30%" alt="" src="media/Accuracy.jpeg">
+  <img width="60%" alt="" src="media/Accuracy.jpeg">
 </div>
+
+<br/>
 
 ## Contact
 
