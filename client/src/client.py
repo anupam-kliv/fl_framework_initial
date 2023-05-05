@@ -11,9 +11,11 @@ from .ClientConnection_pb2 import ClientMessage
 
 from .client_lib import train, evaluate, set_parameters
 
-def client_start():
+def client_start(config):
     keep_going = True
     wait_time = 0
+    ip_address = config["ip_address"]
+    device = torch.device(config["device"])
     #device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") 
 
     while keep_going:
@@ -21,7 +23,7 @@ def client_start():
         time.sleep(wait_time)
         
         #create new gRPC channel to the server
-        channel = grpc.insecure_channel("localhost:8214", options=[
+        channel = grpc.insecure_channel(ip_address, options=[
             ('grpc.max_send_message_length', -1),
             ('grpc.max_receive_message_length', -1)
             ])
@@ -34,19 +36,19 @@ def client_start():
         for server_message in stub.Connect( iter(client_buffer.get, None) ):
             if server_message.HasField("evalOrder"):
                 eval_order_message = server_message.evalOrder
-                eval_response_message = evaluate(eval_order_message)
+                eval_response_message = evaluate(eval_order_message, device)
                 message_to_server = ClientMessage(evalResponse = eval_response_message)
                 client_buffer.put(message_to_server)
 
             if server_message.HasField("trainOrder"):
                 train_order_message = server_message.trainOrder
-                train_response_message = train(train_order_message)
+                train_response_message = train(train_order_message, device)
                 message_to_server = ClientMessage(trainResponse = train_response_message)
                 client_buffer.put(message_to_server)
 
             if server_message.HasField("setParamsOrder"):
                 set_parameters_order_message = server_message.setParamsOrder
-                set_parameters_response_message = set_parameters(set_parameters_order_message)
+                set_parameters_response_message = set_parameters(set_parameters_order_message, device)
                 message_to_server = ClientMessage(setParamsResponse = set_parameters_response_message)
                 client_buffer.put(message_to_server)
 

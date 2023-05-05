@@ -14,12 +14,12 @@ from .get_data import get_data
 from .ClientConnection_pb2 import  EvalResponse, TrainResponse
 
 #create a new directory inside FL_checkpoints and store the aggragted models in each round
-device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") #device id  of this should be same in net_lib device
+# device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") #device id  of this should be same in net_lib device
 fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
 save_dir_path = f"client_checkpoints/{fl_timestamp}"
 os.makedirs(save_dir_path)
 
-def evaluate(eval_order_message):
+def evaluate(eval_order_message, device):
     model_parameters_bytes = eval_order_message.modelParameters
     model_parameters = torch.load( BytesIO(model_parameters_bytes), map_location="cpu" )
 
@@ -47,7 +47,7 @@ def evaluate(eval_order_message):
     return eval_response_message
 
 
-def train(train_order_message):
+def train(train_order_message, device):
     data_bytes = train_order_message.modelParameters
     data = torch.load( BytesIO(data_bytes), map_location="cpu" )
     model_parameters, control_variate, control_variate2 = data['model_parameters'], data['control_variate'], data['control_variate2']
@@ -120,7 +120,7 @@ def train(train_order_message):
     return train_response_message
 
 #replace current model with the model provided
-def set_parameters(set_parameters_order_message):
+def set_parameters(set_parameters_order_message, device):
     model_parameters_bytes = set_parameters_order_message.modelParameters
     model_parameters = torch.load( BytesIO(model_parameters_bytes), map_location="cpu" )
     with open("config.json", "r") as jsonfile:

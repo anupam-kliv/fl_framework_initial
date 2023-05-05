@@ -16,7 +16,7 @@ from .distribution import data_distribution
 from .get_data import customDataset, get_data
 
 
-DEVICE = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") #device id  of this should be same in client_lib device
+# DEVICE = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") #device id  of this should be same in client_lib device
 
 def load_data(config):
     trainset, testset = get_data(config)
@@ -40,7 +40,7 @@ def load_data(config):
 def flush_memory():
     torch.cuda.empty_cache()
 
-def train_model(net, trainloader, epochs, deadline=None):
+def train_model(net, trainloader, epochs, device, deadline=None):
 
 	"""
 	Trains a neural network model on a given dataset using SGD optimizer with Cross Entropy Loss criterion.
@@ -63,7 +63,7 @@ def train_model(net, trainloader, epochs, deadline=None):
 	# Train the model for the specified number of epochs
 	for _ in tqdm(range(epochs)):
 		for images, labels in trainloader:
-			images, labels = images.to(DEVICE), labels.to(DEVICE)
+			images, labels = images.to(device), labels.to(device)
 			optimizer.zero_grad()
 			loss = criterion(net(images), labels)
 			loss.backward()
@@ -81,7 +81,7 @@ def train_model(net, trainloader, epochs, deadline=None):
 
 	return net
 
-def train_fedavg(net, trainloader, epochs, deadline=None):
+def train_fedavg(net, trainloader, epochs, device, deadline=None):
 	"""
 	Trains a given neural network using the Federated Averaging (FedAvg) algorithm.
 
@@ -105,7 +105,7 @@ def train_fedavg(net, trainloader, epochs, deadline=None):
 	for epoch in tqdm(range(epochs)):
 		for images, labels in trainloader:
 		    # Move data to device (GPU or CPU)
-		    images, labels = images.to(DEVICE), labels.to(DEVICE)
+		    images, labels = images.to(device), labels.to(device)
 
 		    # Zero the gradients
 		    optimizer.zero_grad()
@@ -133,7 +133,7 @@ def train_fedavg(net, trainloader, epochs, deadline=None):
 	return net
 
 
-def train_feddyn(net, trainloader, epochs, deadline=None):
+def train_feddyn(net, trainloader, epochs, device, deadline=None):
 	"""
 	Trains a given neural network using the FedDyn algorithm.
 
@@ -149,22 +149,22 @@ def train_feddyn(net, trainloader, epochs, deadline=None):
 	x = deepcopy(net) 
 	prev_grads = None
 	if os.path.isfile("client_checkpoints/prev_grads.pt"):
-		prev_grads = torch.load("client_checkpoints/prev_grads.pt", map_location=DEVICE)
+		prev_grads = torch.load("client_checkpoints/prev_grads.pt", map_location=device)
 	else:
 		for param in net.parameters():
 		    if not isinstance(prev_grads, torch.Tensor):
 		    	prev_grads = torch.zeros_like(param.view(-1))
-		    	prev_grads.to(DEVICE)
+		    	prev_grads.to(device)
 		    else:
 		    	prev_grads = torch.cat((prev_grads, torch.zeros_like(param.view(-1))), dim=0)
-		    	prev_grads.to(DEVICE)
+		    	prev_grads.to(device)
 
 	criterion = torch.nn.CrossEntropyLoss()
 	lr = 0.001
 	alpha = 0.01
 	for _ in tqdm(range(epochs)):
 		inputs,labels = next(iter(trainloader))
-		inputs, labels = inputs.float().to(DEVICE), labels.long().to(DEVICE)
+		inputs, labels = inputs.float().to(device), labels.long().to(device)
 		output = net(inputs)
 		loss = criterion(output, labels) #Calculate the loss with respect to y's output and labels
 
@@ -210,7 +210,7 @@ def train_feddyn(net, trainloader, epochs, deadline=None):
 	torch.save(prev_grads, "client_checkpoints/prev_grads.pt")
 	return net              
 
-def train_mimelite(net, state, trainloader, epochs, deadline=None):
+def train_mimelite(net, state, trainloader, epochs, device, deadline=None):
 	"""
 	Trains a given neural network using the MimeLite algorithm.
 
@@ -234,7 +234,7 @@ def train_mimelite(net, state, trainloader, epochs, deadline=None):
 
 	for _ in tqdm(range(epochs)):
 		for images, labels in trainloader:
-		    images, labels = images.to(DEVICE), labels.to(DEVICE)
+		    images, labels = images.to(device), labels.to(device)
 		    loss = criterion(net(images), labels)
 		    
 		    #Compute (full-batch) gradient of loss with respect to net's parameters 
@@ -242,7 +242,7 @@ def train_mimelite(net, state, trainloader, epochs, deadline=None):
 		    #Update net's parameters using gradients
 		    with torch.no_grad():
 		    	for param,grad,s in zip(net.parameters(), grads, state):
-		    		param.data = param.data - lr * ((1-momentum) * grad.data + momentum * s.to(DEVICE).data)
+		    		param.data = param.data - lr * ((1-momentum) * grad.data + momentum * s.to(device).data)
 
 		if deadline:
 		    current_time = time.time()
@@ -253,14 +253,14 @@ def train_mimelite(net, state, trainloader, epochs, deadline=None):
 	#Compute gradient wrt the received model (x) using the wholde dataset
 	data = DataLoader(trainloader.dataset, batch_size = len(trainloader) * trainloader.batch_size, shuffle = True)  
 	for images, labels in data:
-		images, labels = images.to(DEVICE), labels.to(DEVICE)
+		images, labels = images.to(device), labels.to(device)
 		output = x(images)
 		loss = criterion(output, labels) #Calculate the loss with respect to y's output and labels            
 		gradient_x = torch.autograd.grad(loss,x.parameters())
 
 	return net, gradient_x     
 
-def train_mime(net, state, control_variate, trainloader, epochs, deadline=None):
+def train_mime(net, state, control_variate, trainloader, epochs, device, deadline=None):
 	"""
 	Trains a given neural network using the Mime algorithm.
 
@@ -283,7 +283,7 @@ def train_mime(net, state, control_variate, trainloader, epochs, deadline=None):
 	#control_variate = control_variate.to(DEVICE)
 	for epoch in tqdm(range(epochs)):
 		for images, labels in trainloader:
-		    images, labels = images.to(DEVICE), labels.to(DEVICE)
+		    images, labels = images.to(device), labels.to(device)
 		    loss = criterion(net(images), labels)
 		    
 		    #Compute (full-batch) gradient of loss with respect to net's parameters 
@@ -297,10 +297,10 @@ def train_mime(net, state, control_variate, trainloader, epochs, deadline=None):
 		    #Update net's parameters using gradients
 		    with torch.no_grad():
 		    	for g_y, g_x, c in zip(grads_y, grads_x, control_variate):
-		    		g_y.data -= g_x.data + c.to(DEVICE)
+		    		g_y.data -= g_x.data + c.to(device)
 		    	
 		    	for param,grad,s in zip(net.parameters(), grads_y, state):
-		    		param.data = param.data - lr * ((1-momentum) * grad.data + momentum * s.to(DEVICE).data)
+		    		param.data = param.data - lr * ((1-momentum) * grad.data + momentum * s.to(device).data)
 
 		if deadline:
 		    current_time = time.time()
@@ -311,14 +311,14 @@ def train_mime(net, state, control_variate, trainloader, epochs, deadline=None):
 	#Compute gradient wrt the received model (x) using the wholde dataset
 	data = DataLoader(trainloader.dataset, batch_size = len(trainloader) * trainloader.batch_size, shuffle = True)  
 	for images, labels in data:
-		images, labels = images.to(DEVICE), labels.to(DEVICE)
+		images, labels = images.to(device), labels.to(device)
 		output = x(images)
 		loss = criterion(output, labels) #Calculate the loss with respect to y's output and labels            
 		gradient_x = torch.autograd.grad(loss,x.parameters())
 
 	return net, gradient_x            
     
-def train_scaffold(net, server_c, trainloader, epochs, deadline=None):
+def train_scaffold(net, server_c, trainloader, epochs, device, deadline=None):
 	"""
 	Trains a given neural network using the Scaffold algorithm.
 
@@ -339,7 +339,7 @@ def train_scaffold(net, server_c, trainloader, epochs, deadline=None):
 
 	for _ in tqdm(range(epochs)):
 		for images, labels in trainloader:
-		    images, labels = images.to(DEVICE), labels.to(DEVICE)
+		    images, labels = images.to(device), labels.to(device)
 		    loss = criterion(net(images), labels)
 		    
 		    #Compute (full-batch) gradient of loss with respect to net's parameters 
@@ -348,7 +348,7 @@ def train_scaffold(net, server_c, trainloader, epochs, deadline=None):
 		    #Update y's parameters using gradients, client_c and server_c [Algorithm line no:10]
 
 		    for param,grad,s_c,c_c in zip(net.parameters(),grads,server_c,client_c):
-		    	s_c, c_c = s_c.to(DEVICE), c_c.to(DEVICE)
+		    	s_c, c_c = s_c.to(device), c_c.to(device)
 		    	param.data = param.data - lr * (grad.data + (s_c.data - c_c.data))
 			
 		if deadline:
@@ -365,21 +365,21 @@ def train_scaffold(net, server_c, trainloader, epochs, deadline=None):
 
 	a = (ceil(len(trainloader.dataset) / trainloader.batch_size) * epochs * lr)
 	for n_c, c_l, c_g, diff in zip(new_client_c, client_c, server_c, net.parameters()):
-		c_l = c_l.to(DEVICE)
-		c_g = c_g.to(DEVICE)
+		c_l = c_l.to(device)
+		c_g = c_g.to(device)
 		n_c.data += c_l.data - c_g.data - diff.data / a
 		    
 	#Calculate delta_c which equals to new_client_c-client_c
 	for d_c, n_c_l, c_l in zip(delta_c, new_client_c, client_c):
-		d_c = d_c.to(DEVICE)
-		c_l = c_l.to(DEVICE)
+		d_c = d_c.to(device)
+		c_l = c_l.to(device)
 		d_c.data.add_(n_c_l.data - c_l.data)
 
 
 	return net, delta_c
 
 
-def test_model(net, testloader):
+def test_model(net, testloader, device):
 	"""Evaluate the performance of a model on a test dataset.
 
 	Args:
@@ -394,7 +394,7 @@ def test_model(net, testloader):
 	test_loss, correct, total = 0.0, 0, 0
 	with torch.no_grad():
 		for images, labels in tqdm(testloader):
-		    images, labels = images.to(DEVICE), labels.to(DEVICE)
+		    images, labels = images.to(device), labels.to(device)
 		    outputs = net(images)
 		    test_loss += criterion(outputs, labels).item()
 		    _, predicted = torch.max(outputs.data, 1)
