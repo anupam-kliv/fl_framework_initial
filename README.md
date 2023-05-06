@@ -188,10 +188,153 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 ### Results/Accuracy of various Federated Learning algorithms available in the framework
 
-|----------------|---|-|-|-|------|----|-|-|-|--------------|--------|-|-|-|-------|------|-|-|-|----------|
-| Dataset        | MNIST| | | |   | FashionMNIST        ||||| CIFAR10          ||||| CIFAR100          |||||
-|                |k=1|2|3|4|5     |   1|2|3|4|5             |       1|2|3|4|5      |     1|2|3|4|5         |
-|================|---|-|-|-|------|----|-|-|-|--------------|--------|-|-|-|-------|------|-|-|-|----------|
+<p align="center">
+<table style="margin: auto">
+    <thead>
+        <tr>
+            <th>Dataset</th>
+            <th colspan=3>MNIST</th>
+            <th colspan=3>CIFAR-10</th>
+            <th colspan=3>CIFAR-100</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td  style="text-align: center" >Algorithm </td>
+            <td  style="text-align: center">K=1</td>
+            <td  style="text-align: center">K=2</td>
+            <td  style="text-align: center">K=3</td>
+            <td  style="text-align: center">K=1</td>
+            <td  style="text-align: center">K=2</td>
+            <td  style="text-align: center">K=3</td>
+            <td  style="text-align: center">K=1</td>
+            <td  style="text-align: center">K=2</td>
+            <td  style="text-align: center">K=3</td>
+        </tr>
+        <tr>
+            <td>FedAvg </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>FedAvgM </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td>FedAdam </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td>FedAdagrad </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td>FedYogi </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+ <tr>
+            <td>Mime </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Mimelite </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td>FedDyn </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td>Scaffold </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+         <tr>
+            <td>Personalized-FedAvg </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+             <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+</p>
+
 
 ### Visualizing the accuracy os some algorithms against different Non-IID distributions
 
