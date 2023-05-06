@@ -131,19 +131,45 @@ Sophisticated in the real world, FL needs to handle various kind of data distrib
 
 ### Data Partition
 
-We provide multiple data partition schemes used in recent FL papers[[1]](#1)[[2]](#2)[[3]](#3). Here we show the data partition visualization of several common used datasets as the examples.
+We provide multiple Non-IID data partition schemes. Here we show the data partition visualization of several common used datasets as the examples.
 
 #### Balanced IID partition
 
 Each client has same number of samples, and same distribution for all class samples. 
 
+<div align="left">
+  <img src="media/class_stats_0.png" width="300" />
+  <img src="media/sample_stats_0.png" width="300" /> 
+</div>
+
+
 #### Non-IID partition 2
+
+<div align="left">
+    <img src="media/class_stats_1.png" width="300" />
+    <img src="media/sample_stats_1.png" width="300" />
+</div>
 
 #### Non-IID partition 3
 
+<div align="left">
+    <img src="media/class_stats_2.png" width="300" />
+    <img src="media/sample_stats_2.png" width="300" />
+</div>
+
 #### Non-IID partition 4
 
+<div align="left">
+    <img src="media/class_stats_3.png" width="300" />
+    <img src="media/sample_stats_3.png" width="300" />
+</div>
+
 #### Non-IID partition 5
+
+<div align="left">
+    <img src="media/class_stats_4.png" width="300" />
+    <img src="media/sample_stats_4.png" width="300" />
+</div>
 
 ### Datasets Supported
 
@@ -343,7 +369,7 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
   <img width="40%" alt="" src="media/Accuracy.png" >
 </div>
 
-### Visualizing the accuracy os some algorithms against different Non-IID distributions
+### Visualizing the accuracy of some algorithms against different Non-IID distributions
 
 <div align="left">
   <img src="media/Al_0.png" width="230" />
