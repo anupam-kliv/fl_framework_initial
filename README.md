@@ -184,9 +184,9 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 ---
 
-## Performance Evaluation
+## Performance Evaluation under different Non-IID setting
 
-### Results/Accuracy of various Federated Learning algorithms available in the framework
+### Accuracy of various FL algorithms available in the framework with a few dataset
 
 <p align="center">
 <table style="margin: auto">
