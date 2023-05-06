@@ -1,6 +1,6 @@
 # Federated Learning Framework
 
-[![License](.media/license.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License](./media/license.svg)](https://opensource.org/licenses/Apache-2.0)
 
 It is a highly dynamic and customizable framework that can accommodate many use cases with flexibility by implementing several functionalities over different federated learning algorithms, and essentially creating a plug-and-play architecture to accommodate different use cases.
 
@@ -172,8 +172,6 @@ Each client has same number of samples, and same distribution for all class samp
 </div>
 
 ### Datasets Supported
-
-
 
 | Dataset                | Training samples         | Test samples       | Classes 
 | ---------------------- | ------------------------ | ------------------ | ------------------ |
