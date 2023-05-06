@@ -133,9 +133,17 @@ Sophisticated in the real world, FL needs to handle various kind of data distrib
 
 We provide multiple data partition schemes used in recent FL papers[[1]](#1)[[2]](#2)[[3]](#3). Here we show the data partition visualization of several common used datasets as the examples.
 
-#### 1. Balanced IID partition
+#### Balanced IID partition
 
 Each client has same number of samples, and same distribution for all class samples. 
+
+#### Non-IID partition 2
+
+#### Non-IID partition 3
+
+#### Non-IID partition 4
+
+#### Non-IID partition 5
 
 ### Datasets Supported
 
