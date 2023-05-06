@@ -125,18 +125,6 @@ Following federated learning algorithms are implemented in this framework:
 | Mime       | [Mime: Mimicking Centralized Stochastic Algorithms in Federated Learning](https://arxiv.org/pdf/2008.03606.pdf) | ICML'2020    |                                                      
 | Mimelite       | [Mime: Mimicking Centralized Stochastic Algorithms in Federated Learning](https://arxiv.org/pdf/2008.03606.pdf) | ICML'2020    |                                                      
 
-## Models Supported
-
-* LeNet
-* ResNet18
-* ResNet50
-* VGG16
-* AlexNet
-
-### Custom Model Support
-
-We also provide a simple way to add your own models to the framework. Look into [docs](https://feder.readthedocs.io/en/latest/tutorials/dataset.html#adding-support-for-new-datasets) for more details.
-
 ## Datasets & Data Partition
 
 Sophisticated in the real world, FL needs to handle various kind of data distribution scenarios, including iid and non-iid scenarios. Though there already exists some datasets and partition schemes for published data benchmark, it still can be very messy and hard for researchers to partition datasets according to their specific research problems, and maintain partition results during simulation.
@@ -161,6 +149,20 @@ Each client has same number of samples, and same distribution for all class samp
 ### Custom Dataset Support
 
 We also provide a simple way to add your own dataset to the framework. Look into [docs](https://feder.readthedocs.io/en/latest/tutorials/dataset.html#adding-support-for-new-datasets) for more details.
+
+## Models Supported
+
+**Feder** has support for the following Deep Learning models, which are loaded from `torchvision.models`:
+
+* LeNet
+* ResNet18
+* ResNet50
+* VGG16
+* AlexNet
+
+### Custom Model Support
+
+We also provide a simple way to add your own models to the framework. Look into [docs](https://feder.readthedocs.io/en/latest/tutorials/dataset.html#adding-support-for-new-datasets) for more details.
 
 ## Carbon emission tracking
 
