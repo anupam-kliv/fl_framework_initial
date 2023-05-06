@@ -345,7 +345,7 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 ### Visualizing the accuracy os some algorithms against different Non-IID distributions
 
-<div align="center">
+<div align="left">
   <img src="media/Al_0.png" width="230" />
   <img src="media/Al_1.png" width="230" /> 
   <img src="media/Al_3.png" width="230" />
@@ -354,7 +354,7 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 ### Plotting accuracy of different algorithms for MNIST with different Non-IID distribution
 
-<div align="center">
+<div align="left">
   <img src="media/niid_1.png" width="220" />
   <img src="media/niid_2.png" width="220" />
   <img src="media/niid_3.png" width="220" />
