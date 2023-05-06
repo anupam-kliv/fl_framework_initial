@@ -205,6 +205,8 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 <br/>
 
+### Comparing accuracy of different algorithm with different Non-IID distributions
+
 <div align="center">
   <img width="60%" alt="" src="media/Accuracy.png" >
 </div>
