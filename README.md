@@ -113,17 +113,17 @@ python test_algorithms.py
 
 Following federated learning algorithms are implemented in this framework:
 
-| Method              | Paper                                                        | Publication  | Official code                                        |
-| ------------------- | ------------------------------------------------------------ | ------------ | ---------------------------------------------------- |
-| FedAvg              | [Communication-Efficient Learning of Deep Networks from Decentralized Data](http://proceedings.mlr.press/v54/mcmahan17a/mcmahan17a.pdf) | AISTATS'2017 |                                                      |         |
-| FedDyn              | [Federated Learning Based on Dynamic Regularization](https://openreview.net/forum?id=B7v4QMR6Z9w) | ICLR' 2021   | [Code](https://github.com/alpemreacar/FedDyn)        |          |
-| Scaffold           | [SCAFFOLD: Stochastic Controlled Averaging for Federated Learning]() | ICML'2020    ||
-| Personalized-FedAvg | [Improving Federated Learning Personalization via Model Agnostic Meta Learning](https://arxiv.org/pdf/1909.12488.pdf) |    Pre-print      |                                                      |
-| FedAdagrad          | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                       |
-| FedAdam       | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                      |
-| FedYogi    | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                      |
-| Mime       | [Mime: Mimicking Centralized Stochastic Algorithms in Federated Learning](https://arxiv.org/pdf/2008.03606.pdf) | ICML'2020    |                                                      |
-| Mimelite       | [Mime: Mimicking Centralized Stochastic Algorithms in Federated Learning](https://arxiv.org/pdf/2008.03606.pdf) | ICML'2020    |                                                      |
+| Method              | Paper                                                        | Publication                                     |
+| ------------------- | ------------------------------------------------------------ | ---------------------------------------------------- |
+| FedAvg              | [Communication-Efficient Learning of Deep Networks from Decentralized Data](http://proceedings.mlr.press/v54/mcmahan17a/mcmahan17a.pdf) | AISTATS'2017 |                                                      
+| FedDyn              | [Federated Learning Based on Dynamic Regularization](https://openreview.net/forum?id=B7v4QMR6Z9w) | ICLR' 2021   |          
+| Scaffold           | [SCAFFOLD: Stochastic Controlled Averaging for Federated Learning]() | ICML'2020    |
+| Personalized-FedAvg | [Improving Federated Learning Personalization via Model Agnostic Meta Learning](https://arxiv.org/pdf/1909.12488.pdf) |    Pre-print      |                                                      
+| FedAdagrad          | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                       
+| FedAdam       | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                      
+| FedYogi    | [Adaptive Federated Optimization](https://arxiv.org/pdf/2003.00295.pdf) | ICML'2020    |                                                      
+| Mime       | [Mime: Mimicking Centralized Stochastic Algorithms in Federated Learning](https://arxiv.org/pdf/2008.03606.pdf) | ICML'2020    |                                                      
+| Mimelite       | [Mime: Mimicking Centralized Stochastic Algorithms in Federated Learning](https://arxiv.org/pdf/2008.03606.pdf) | ICML'2020    |                                                      
 
 ## Datasets & Data Partition
 
@@ -166,107 +166,40 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 ### Results/Accuracy of various Federated Learning algorithms available in the framework
 
-#### 1. FedAvg
+|----------------|---|-|-|-|------|----|-|-|-|--------------|--------|-|-|-|-------|------|-|-|-|----------|
+| Dataset        | MNIST| | | |   | FashionMNIST        ||||| CIFAR10          ||||| CIFAR100          |||||
+|                |k=1|2|3|4|5     |   1|2|3|4|5             |       1|2|3|4|5      |     1|2|3|4|5         |
+|================|---|-|-|-|------|----|-|-|-|--------------|--------|-|-|-|-------|------|-|-|-|----------|
 
-| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
-| --------------- | ------- | ------------ | ----------- | ----------- |
-| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
-|         | 2    |  0.4         | 0.4         | 0.4         |
-|         | 3    |  0.2         | 0.2         | 0.2         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
-|         | 2     |  0.2         | 0.2         | 0.2         |
-|         | 3     |  0.1         | 0.1         | 0.1         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
+### Visualizing the accuracy os some algorithms against different Non-IID distributions
 
-#### 2. FedDyn
+<p float="left">
+  <img src="media/Al_0.png" width="280" />
+  <img src="media/Al_1.png" width="280" /> 
+  <img src="media/Al_3.png" width="280" />
+  <img src="media/Al_4.png" width="280" />
+</p>
 
-| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
-| --------------- | ------- | ------------ | ----------- | ----------- |
-| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
-|         | 2    |  0.4         | 0.4         | 0.4         |
-|         | 3    |  0.2         | 0.2         | 0.2         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
-|         | 2     |  0.2         | 0.2         | 0.2         |
-|         | 3     |  0.1         | 0.1         | 0.1         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
+### Plotting accuracy of different algorithms for MNIST with different Non-IID distribution
 
-#### 3. Scaffold
-
-| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
-| --------------- | ------- | ------------ | ----------- | ----------- |
-| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
-|         | 2    |  0.4         | 0.4         | 0.4         |
-|         | 3    |  0.2         | 0.2         | 0.2         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
-|         | 2     |  0.2         | 0.2         | 0.2         |
-|         | 3     |  0.1         | 0.1         | 0.1         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-
-#### 4. FedAdam
-
-| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
-| --------------- | ------- | ------------ | ----------- | ----------- |
-| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
-|         | 2    |  0.4         | 0.4         | 0.4         |
-|         | 3    |  0.2         | 0.2         | 0.2         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
-|         | 2     |  0.2         | 0.2         | 0.2         |
-|         | 3     |  0.1         | 0.1         | 0.1         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-
-#### 5. FedAdagrad
-
-| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
-| --------------- | ------- | ------------ | ----------- | ----------- |
-| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
-|         | 2    |  0.4         | 0.4         | 0.4         |
-|         | 3    |  0.2         | 0.2         | 0.2         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
-|         | 2     |  0.2         | 0.2         | 0.2         |
-|         | 3     |  0.1         | 0.1         | 0.1         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-
-#### 6. Mime
-
-| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
-| --------------- | ------- | ------------ | ----------- | ----------- |
-| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
-|         | 2    |  0.4         | 0.4         | 0.4         |
-|         | 3    |  0.2         | 0.2         | 0.2         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
-|         | 2     |  0.2         | 0.2         | 0.2         |
-|         | 3     |  0.1         | 0.1         | 0.1         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-
-#### 7. Mimelite
-
-| Dataset         | Non-IID |  50 Clients  | 100 Clients | 250 Clients 
-| --------------- | ------- | ------------ | ----------- | ----------- |
-| MNIST           | 1     |  0.8         | 0.8         | 0.8         |
-|         | 2    |  0.4         | 0.4         | 0.4         |
-|         | 3    |  0.2         | 0.2         | 0.2         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-| CIFAR-10        | 1     |  0.4         | 0.4         | 0.4         |
-|         | 2     |  0.2         | 0.2         | 0.2         |
-|         | 3     |  0.1         | 0.1         | 0.1         |
-|         | 4     |  0.1         | 0.1         | 0.1         |
-
-
-### Plotting accuracy of different algorithms for MNIST with _ clients
+<p float='left'>
+  <img src="media/niid_1.png" width="280" />
+  <img src="media/niid_2.png" width="280" />
+  <img src="media/niid_3.png" width="280" />
+  <img src="media/niid_4.png" width="280" />
+</p>
 
 <br/>
 
 <div align="center">
-  <img width="60%" alt="" src="media/Accuracy.jpeg">
+  <img width="60%" alt="" src="media/Accuracy.png" >
 </div>
 
 <br/>
+
+## References
+
+1. code carbon, 
 
 ## Contact
 
