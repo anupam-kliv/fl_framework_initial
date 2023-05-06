@@ -199,7 +199,9 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 ## References
 
-1. code carbon, 
+<a id="1">[1]</a> Schmidt, V., Goyal, K., Joshi, A., Feld, B., Conell, L., Laskaris, N., Blank, D., Wilson, J., Friedler, S., & Luccioni, S. (2021). CodeCarbon: Estimate and Track Carbon Emissions from Machine Learning Computing. https://doi.org/10.5281/zenodo.4658424
+
+<a id="2">[2]</a>
 
 ## Contact
 
