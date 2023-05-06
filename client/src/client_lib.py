@@ -2,7 +2,7 @@ import torch
 from io import BytesIO
 import json
 import time
-import os 
+import os
 from datetime import datetime
 from codecarbon import EmissionsTracker, OfflineEmissionsTracker
 from .net import get_net
@@ -25,20 +25,20 @@ def evaluate(eval_order_message, device):
 
     config_dict_bytes = eval_order_message.configDict
     config_dict = json.loads( config_dict_bytes.decode("utf-8") )
-    
+
     state_dict = model_parameters
     print("Evaluation:",config_dict)
     with open("config.json", "r") as jsonfile:
         config_dict = json.load(jsonfile)
     model = get_net(config= config_dict).to(device)
     model.load_state_dict(state_dict)
-    
+
     _, testset = get_data(config= config_dict)
     testloader = DataLoader(testset, batch_size=config_dict['batch_size'])
-    
+
     #_, testloader, _ = load_data(config_dict)
-    
-    
+
+
     eval_loss, eval_accuracy = test_model(model, testloader)
 
     response_dict = {"eval_loss": eval_loss, "eval_accuracy": eval_accuracy}
@@ -51,7 +51,7 @@ def train(train_order_message, device):
     data_bytes = train_order_message.modelParameters
     data = torch.load( BytesIO(data_bytes), map_location="cpu" )
     model_parameters, control_variate, control_variate2 = data['model_parameters'], data['control_variate'], data['control_variate2']
-    
+
     config_dict_bytes = train_order_message.configDict
     config_dict = json.loads( config_dict_bytes.decode("utf-8") )
     carbon_tracker = config_dict["carbon-tracker"]
@@ -64,12 +64,12 @@ def train(train_order_message, device):
         deadline = time.time() + config_dict["timeout"]
     else:
         deadline = None
-    
+
     #Run code carbon if the carbon-tracker flag is True
     if (carbon_tracker==1):
 	    tracker = OfflineEmissionsTracker(country_iso_code="IND", output_dir = save_dir_path)
 	    tracker.start()
-            
+
     trainloader, testloader, _ = load_data(config_dict)
     print("Training started")
     if (config_dict['algorithm'] == 'mimelite'):
@@ -96,7 +96,7 @@ def train(train_order_message, device):
     json_path = "config.json"
     with open(json_path, "w") as jsonfile:
         jsonfile.write(myJSON)
-    
+
     trained_model_parameters = model.state_dict()
     #Create a dictionary where model_parameters and control_variate are stored which needs to be sent to the server
     data_to_send = {}
@@ -105,7 +105,7 @@ def train(train_order_message, device):
     buffer = BytesIO()
     torch.save(data_to_send, buffer)
     buffer.seek(0)
-    data_to_send_bytes = buffer.read()   
+    data_to_send_bytes = buffer.read()
 
     print("Evaluation")
     train_loss, train_accuracy = test_model(model, testloader)
@@ -113,7 +113,7 @@ def train(train_order_message, device):
     response_dict_bytes = json.dumps(response_dict).encode("utf-8")
 
     train_response_message = TrainResponse(
-        modelParameters = data_to_send_bytes, 
+        modelParameters = data_to_send_bytes,
         responseDict = response_dict_bytes)
 
     save_model_state(model)

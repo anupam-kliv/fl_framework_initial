@@ -16,12 +16,12 @@ def client_start(config):
     wait_time = 0
     ip_address = config["ip_address"]
     device = torch.device(config["device"])
-    #device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") 
+    #device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
 
     while keep_going:
         #wait for specified time before reconnecting
         time.sleep(wait_time)
-        
+
         #create new gRPC channel to the server
         channel = grpc.insecure_channel(ip_address, options=[
             ('grpc.max_send_message_length', -1),
@@ -30,7 +30,7 @@ def client_start(config):
         stub = ClientConnection_pb2_grpc.ClientConnectionStub(channel)
         client_buffer = Queue(maxsize = 10)
         print("Connected with server")
-        
+
         #wait for incoming messages from the server in client_buffer
         #then according to fields present in them call the appropraite function
         for server_message in stub.Connect( iter(client_buffer.get, None) ):
@@ -62,4 +62,4 @@ def client_start(config):
                     keep_going = False
                     break
                 wait_time = reconnect_time
-            
+

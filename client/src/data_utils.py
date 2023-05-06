@@ -16,9 +16,9 @@ class distributionDataloader(data.Dataset):
         data_path,
         clientID = 0,
         aug = False,
-        
+
     ):
-        
+
         self.aug = aug
         self.config = config
         self.img_size = config["resize_size"]
@@ -28,8 +28,8 @@ class distributionDataloader(data.Dataset):
         self.clientID = clientID
         self.mean = 33.3184
         self.stdv = 78.5675
-               
-        
+
+
         self.data_idxs = torch.load(data_path)['datapoints'][clientID]
 
 
@@ -41,4 +41,4 @@ class distributionDataloader(data.Dataset):
         label = self.trainset[self.data_idxs[index]][1]
 
         return image, label
-        
+

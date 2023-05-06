@@ -17,8 +17,8 @@ def get_data(config):
     if config['dataset'] != 'CUSTOM':
         dataset_path = "client_dataset"
         if not os.path.exists(dataset_path):
-            os.makedirs(dataset_path)  
-    
+            os.makedirs(dataset_path)
+
     # Get the train and test datasets for each supported dataset
     if config['dataset'] == 'MNIST':
         # Apply transformations to the images
@@ -47,7 +47,7 @@ def get_data(config):
     else:
         # Raise an error if an unsupported dataset is specified
         raise ValueError("Unsupported dataset type: {}".format(config['dataset']))
-    
+
     # Return the train and test datasets
     return trainset, testset
 
@@ -63,11 +63,11 @@ class customDataset(data.Dataset):
 
         self.root = root
         samples = sample_return(root)
-        
+
         self.samples = samples
 
         self.transform = transform
-    
+
     def __getitem__(self, index):
         """
         Retrieves a sample from the dataset at the given index.
@@ -80,7 +80,7 @@ class customDataset(data.Dataset):
         img, label= self.samples[index]
 
         img = np.load(img)
- 
+
         img = Image.fromarray(img)
 
         if self.transform is not None:
@@ -88,7 +88,7 @@ class customDataset(data.Dataset):
 
 
         return img, label
-    
+
     def __len__(self):
         return len(self.samples)
 
