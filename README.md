@@ -31,6 +31,16 @@ $ pip install -r requirements.txt
 $ pip install feder
 ```
 
+## Documentation
+
+Website documentation has been made availbale for **Feder**. Please visit [Feder Documentation](https://feder.readthedocs.io/en/latest/index.html) for more details.
+
+1. [Overview](https://feder.readthedocs.io/en/latest/overview.html)
+2. [Installation](https://feder.readthedocs.io/en/latest/installation.html)
+3. [Tutorials](https://feder.readthedocs.io/en/latest/tutorials.html)
+4. [Contribution](https://feder.readthedocs.io/en/latest/contribution.html)
+5. [API Reference](https://feder.readthedocs.io/en/latest/api.html)
+
 ## Starting server
 
 ```
