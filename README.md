@@ -188,7 +188,7 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
 
 ### Accuracy of various FL algorithms available in the framework with a few dataset
 
-<p align="center">
+<div align="center">
 <table style="margin: auto">
     <thead>
         <tr>
@@ -333,7 +333,7 @@ In Feder CodeCarbon package is used to estimate the carbon emissions generated b
         </tr>
     </tbody>
 </table>
-</p>
+</div>
 
 ### Comparing accuracy of different algorithm with different Non-IID distributions
 
