@@ -6,7 +6,7 @@ class fedavg():
 
     def __init__(self, config):
         self.algorithm = "FedAvg"
-    
+
     def aggregate(self,server_state_dict,state_dicts):
         #server_state_dict is of no use in FedAvg, to maintain consistency with other algorithms; it is provided as an argument
         result_state_dict = OrderedDict()
@@ -15,5 +15,5 @@ class fedavg():
             current_key_sum = functools.reduce( lambda accumulator, tensor: accumulator + tensor, current_key_tensors )
             current_key_average = current_key_sum / len(state_dicts)
             result_state_dict[key] = current_key_average
-            
+
         return result_state_dict

@@ -21,7 +21,7 @@ def load_data(config):
 def get_data(config):
     dataset_path="./server_dataset"
     if not os.path.exists(dataset_path):
-            os.makedirs(dataset_path)    
+            os.makedirs(dataset_path)
     if config['dataset'] == 'MNIST':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
         testset = datasets.MNIST(root='./server_dataset/MNIST', train=False, download=True, transform=apply_transform)
@@ -48,16 +48,16 @@ class customDataset(data.Dataset):
 
         self.root = root
         samples = sample_return(root)
-        
+
         self.samples = samples
 
         self.transform = transform
-    
+
     def __getitem__(self, index):
         img, label= self.samples[index]
 
         img = np.load(img)
- 
+
         img = Image.fromarray(img)
 
         if self.transform is not None:
@@ -65,7 +65,7 @@ class customDataset(data.Dataset):
 
 
         return img, label
-    
+
     def __len__(self):
         return len(self.samples)
 
@@ -91,7 +91,7 @@ class LeNet(nn.Module):
         self.conv1 = nn.Conv2d(in_channels, 6, kernel_size=5)
         self.pool1 = nn.MaxPool2d(kernel_size=2,stride=2)
         self.conv2 = nn.Conv2d(6, 16, kernel_size=5)
-        self.pool2 = nn.MaxPool2d(kernel_size=2,stride=2)        
+        self.pool2 = nn.MaxPool2d(kernel_size=2,stride=2)
         self.fc1 = nn.Linear(400, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, num_classes)
@@ -107,7 +107,7 @@ class LeNet(nn.Module):
         x = self.pool2(x)
         x = x.view(-1, 400)
         x = self.fc1(x)
-        x = self.relu(x) 
+        x = self.relu(x)
         x = self.fc2(x)
         x = self.relu(x)
         x = self.fc3(x)
@@ -186,5 +186,3 @@ def save_intial_model(config):
     net = get_net(config)
     net = train_model(net, testloader)
     torch.save(net.state_dict(), 'initial_model.pt')
-
-

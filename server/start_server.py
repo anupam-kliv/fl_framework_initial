@@ -4,7 +4,7 @@ import torch
 from src.server import server_start
 from src.server_lib import save_intial_model
 
-#the parameters that can be passed while starting the server 
+#the parameters that can be passed while starting the server
 parser = argparse.ArgumentParser()
 parser.add_argument("--algorithm", type=str, default = "fedavg", help="Aggregation algorithm")
 parser.add_argument("--clients", type=int, default = 2, help="Number of clients to select")
@@ -18,7 +18,7 @@ parser.add_argument("--threshold",type = float,default = 0, help = "Minimum scor
 parser.add_argument("--timeout", type = int, default=None, help="The time limit each client has when training during each round. Specified in seconds")
 parser.add_argument("--resize_size", type = int, default = 32, help="The resize dimension")
 parser.add_argument("--batch_size", type = int, default = 32, help="The batch size")
-parser.add_argument("--net", type = str, default = "LeNet", help="The network architecture")    
+parser.add_argument("--net", type = str, default = "LeNet", help="The network architecture")
 parser.add_argument("--dataset", type = str, default= "FashionMNIST", help="datsset name. Use CUSTOME if you want to use local dataset ")
 parser.add_argument("--niid", type = int,default=1, help="value should be [1, 5]")
 parser.add_argument("--carbon", type = int,default=0, help="set to 1 if carbon emission need to be track at client side")
@@ -45,4 +45,4 @@ configurations = {
 #start the server with the given parameters
 if __name__ == '__main__':
     save_intial_model(configurations)
-    server_start(configurations) 
+    server_start(configurations)

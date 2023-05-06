@@ -5,17 +5,17 @@ import json
 
 from .ClientConnection_pb2 import ServerMessage, TrainOrder, EvalOrder, SetParamsOrder, DisconnectOrder
 
-#serves as an abstraction of the actual connected client. 
+#serves as an abstraction of the actual connected client.
 #methods called here are called on the actual client with the same inputs and outputs
 class ClientWrapper:
     def __init__(self, send_buffer, recieve_buffer, client_id):
         #data is placed in this buffer to send to client
-        self.send_buffer = send_buffer 
+        self.send_buffer = send_buffer
         #data recieved from client is extracted from this buffer
-        self.recieve_buffer = recieve_buffer 
+        self.recieve_buffer = recieve_buffer
         self.client_id = client_id
         self.is_connected = True
-    
+
     #orders the connected client to train using the given parameters
     def train(self, model_parameters, control_variate, control_variate2, config_dict):
         self.check_disconnection()
@@ -25,19 +25,19 @@ class ClientWrapper:
         data['model_parameters'] = model_parameters
         data['control_variate'] = control_variate
         data['control_variate2'] = control_variate2
-        
+
         #convert data to bytes
         buffer = BytesIO()
         torch.save(data, buffer)
         buffer.seek(0)
-        data_bytes = buffer.read()  
+        data_bytes = buffer.read()
 
         #convert config_dict to bytes
         config_dict_bytes = json.dumps(config_dict).encode("utf-8")
 
         #send bytes to client
         train_order_message = TrainOrder(
-            modelParameters = data_bytes, 
+            modelParameters = data_bytes,
             configDict = config_dict_bytes)
         message_to_client = ServerMessage(trainOrder = train_order_message)
         self.send_buffer.put(message_to_client)
@@ -51,7 +51,7 @@ class ClientWrapper:
         response_dict_bytes = train_response_message.responseDict
         response_dict = json.loads( response_dict_bytes.decode("utf-8") )
         return trained_model_parameters, updated_control_variate, response_dict
-    
+
     #orders the connected client to evaluate the given parameters
     def evaluate(self, model_parameters, config_dict):
         self.check_disconnection()
@@ -64,7 +64,7 @@ class ClientWrapper:
         config_dict_bytes = json.dumps(config_dict).encode("utf-8")
         #send bytes to client
         eval_order_message = EvalOrder(
-            modelParameters = model_parameters_bytes, 
+            modelParameters = model_parameters_bytes,
             configDict = config_dict_bytes)
         message_to_client = ServerMessage(evalOrder = eval_order_message)
         self.send_buffer.put(message_to_client)
@@ -94,11 +94,12 @@ class ClientWrapper:
 
     def is_disconnected(self):
         return not self.is_connected
-    
-    #orders the client to disconnect. if a reconnect is specified (in seconds), 
+
+    #orders the client to disconnect. if a reconnect is specified (in seconds),
     #the client will attempt to reconnect after that time
     def disconnect(self, reconnect_time = 0, message = "Thank you for participating."):
         self.check_disconnection()
         disconnect_order_message = DisconnectOrder(reconnectTime = reconnect_time, message = message)
         message_to_client = ServerMessage(disconnectOrder = disconnect_order_message)
         self.send_buffer.put(message_to_client)
+        

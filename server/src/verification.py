@@ -12,7 +12,7 @@ def verify(clients, trained_model_state_dicts, save_dir_path, threshold = 0):
     client_ids_shuffled = random_derangement(client_ids)
     for i, client_id in zip( range(len(verification_dict)), verification_dict.keys() ):
         verification_dict[client_id]["assigned_client_id"] = client_ids_shuffled[i]
-    
+
     with futures.ThreadPoolExecutor(max_workers = 20) as executor:
         result_futures = []
 
@@ -21,13 +21,13 @@ def verify(clients, trained_model_state_dicts, save_dir_path, threshold = 0):
             assigned_client = verification_dict[assigned_client_id]["client_wrapper_object"]
             model_to_verify = verification_dict[client_id]["model"]
             result_futures.append( executor.submit(assigned_client.evaluate, model_to_verify, config_dict) )
-        
+
         verification_results = [result_future.result() for result_future in futures.as_completed(result_futures)]
 
         for client_id, index in zip(verification_dict.keys(), range(len(verification_results))):
             verification_dict[client_id]["score"] = verification_results[index]["eval_accuracy"]
 
-   
+
     selected_client_models, ignored_client_models = [], []
     for client_id in verification_dict.keys():
         if verification_dict[client_id]["score"] >= threshold:
@@ -36,7 +36,7 @@ def verify(clients, trained_model_state_dicts, save_dir_path, threshold = 0):
         else:
             ignored_client_models.append(verification_dict[client_id]["model"])
             verification_dict[client_id]["selected"] = False
-    
+
     #saves the client_id, its score, which client verified and fraction for the selected and ignored clients
     results_to_store = []
     for client_id in verification_dict.keys():

@@ -11,7 +11,7 @@ def read_values(txt_path):
 
     Returns:
         tuple: Accuracy and round values as lists.
-    """   
+    """
     accuracy = []
     rounds = []
     with open(txt_path) as f:
@@ -63,7 +63,7 @@ def plot_round_vs_accuracy_2(algorithm_values, niids):
 
     for i, algorithm_value in enumerate(algorithm_values):
         plt.figure()
-        
+
         plt.xlabel('Rounds')
         plt.ylabel('Accuracy')
         for niid in range(len(niids)):
@@ -103,7 +103,7 @@ def plot_niid_vs_accuracy(algorithm_values, niids):
 
 
 if __name__ == '__main__':
-    
+
     # Check if the result directory exists
     results_path = '../server_results'
     if os.path.exists(results_path)==False:
@@ -130,9 +130,8 @@ if __name__ == '__main__':
                 results_file_path = os.path.join(niid_path, latest_run, 'FL_results.txt')
                 values = read_values(results_ile_path)   # Assumes read_values function is defined elsewhere
                 algorithm_values[-1].append((algorithm_name, values))
-        
+
         # Plot the results
         plot_round_vs_accuracy_1(algorithm_values, niids) # Assumes plot_round_vs_accuracy_1 function is defined elsewhere
         plot_round_vs_accuracy_2(algorithm_values, niids) # Assumes plot_round_vs_accuracy_2 function is defined elsewhere
         plot_niid_vs_accuracy(algorithm_values, niids) # Assumes plot_round_vs_accuracy_2 function is defined elsewhere
-

@@ -475,5 +475,3 @@ _CLIENTCONNECTION = _descriptor.ServiceDescriptor(
 _sym_db.RegisterServiceDescriptor(_CLIENTCONNECTION)
 
 DESCRIPTOR.services_by_name['ClientConnection'] = _CLIENTCONNECTION
-
-# @@protoc_insertion_point(module_scope)

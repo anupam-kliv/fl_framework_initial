@@ -8,10 +8,10 @@ class scaffold():
         self.algorithm = "SCAFFOLD"
         self.lr = 1.0
         self.fraction = config["fraction_of_clients"]
-    
+
     def aggregate(self,server_model_state_dict, control_variate, state_dicts, updated_control_variates):
-        
-        keys = server_model_state_dict.keys() #List of keys in a state_dict   
+
+        keys = server_model_state_dict.keys() #List of keys in a state_dict
         #Averages the differences that we got by subtracting the server_model from client_model (delta_y)
         delta_x = OrderedDict()
         for key in keys:
@@ -19,7 +19,7 @@ class scaffold():
             current_key_sum = functools.reduce( lambda accumulator, tensor: accumulator + tensor, current_key_tensors )
             current_key_average = current_key_sum / len(state_dicts)
             delta_x[key] = current_key_average
-            
+
         #Average all the  in gradients_x
         delta_c = []
         for i in range(len(control_variate)):
@@ -29,16 +29,14 @@ class scaffold():
             current_average = current_sum / len(updated_control_variates)
             delta_c.append(current_average)
 
-            
+
         for key in keys:
             server_model_state_dict[key] += self.lr * delta_x[key]
-        
+
         for i in range(len(control_variate)):
             '''print(control_variate[i])
             print(self.fraction)
             print(delta_c[i])'''
             control_variate[i] += self.fraction * delta_c[i]
-            
-        return server_model_state_dict, control_variate
 
-        
+        return server_model_state_dict, control_variate

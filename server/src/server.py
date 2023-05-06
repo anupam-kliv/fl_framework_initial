@@ -24,7 +24,7 @@ def server_runner(client_manager, configurations):
     algorithm = configurations["algorithm"]
     num_of_clients = configurations["num_of_clients"]
     fraction_of_clients = configurations["fraction_of_clients"]
-    clients = client_manager.random_select(num_of_clients, fraction_of_clients) 
+    clients = client_manager.random_select(num_of_clients, fraction_of_clients)
     communication_rounds = configurations["num_of_rounds"]
     initial_model_path = configurations["initial_model_path"]
     server_model_state_dict = torch.load(initial_model_path, map_location="cpu")
@@ -53,7 +53,7 @@ def server_runner(client_manager, configurations):
     #create new file inside FL_results to store training results
     with open(f"{save_dir_path}/FL_results.txt", "w") as file:
         pass
-    
+
     #Initialize the aggregation algorithm
     exec(f"from .algorithms.{algorithm} import {algorithm}")
     aggregator = eval(algorithm)(configurations)
@@ -74,9 +74,9 @@ def server_runner(client_manager, configurations):
     client_manager.accepting_connections = accept_conn_after_FL_begin
     config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, 	"batch_size":batch_size, "niid": niid, "carbon-tracker":carbon}
     for round in range(1, communication_rounds + 1):
-        clients = client_manager.random_select(client_manager.num_connected_clients(), fraction_of_clients) 
-        
-        
+        clients = client_manager.random_select(client_manager.num_connected_clients(), fraction_of_clients)
+
+
         print(f"\nCommunication round {round}/{communication_rounds} is starting with {len(clients)}/{client_manager.num_connected_clients()} client(s).")
         trained_model_state_dicts = []
         updated_control_variates = []
@@ -87,7 +87,7 @@ def server_runner(client_manager, configurations):
                 trained_model_state_dicts.append(trained_model_state_dict)
                 updated_control_variates.append(updated_control_variate)
                 print(f"Training results (client {clients[client_index].client_id}): ", results)
-        
+
         if verification:
             print("Performing verification round...")
             selected_state_dicts = verify(clients, trained_model_state_dicts, save_dir_path, threshold=verification_threshold)
@@ -102,7 +102,7 @@ def server_runner(client_manager, configurations):
             server_model_state_dict, control_variate = aggregator.aggregate(server_model_state_dict, control_variate, selected_state_dicts, updated_control_variates)
         else:
             server_model_state_dict = aggregator.aggregate(server_model_state_dict,selected_state_dicts)
-        
+
         torch.save(server_model_state_dict, f"{save_dir_path}/round_{round}_aggregated_model.pt")
 
         #test on server test set
