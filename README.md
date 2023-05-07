@@ -65,27 +65,31 @@ python client.py
 
 ### Server
 
-* algorithm: specifies the aggregation algorithm (default: "fedavg")
-* clients: specifies number of clients selected per round (default: 2)
-* fraction: specifies fraction of clients selected (default: 1, accepts 0-1)
-* rounds: specifies total number of rounds (default: 2)
-* model_path: specifies initial server model path (default: "initial_model.pt")
-* epochs: specifies client epochs per round (default: 1)
-* accept_conn: determines if connections accepted after FL begins (default: 1)
-* verify: specifies if verification module runs before rounds (default: 0)
-* threshold: specifies minimum verification score (default: 0, accepts 0-1)
-* timeout: specifies client training time limit per round (default: None)
-* resize_size: specifies dataset resize dimension (default: 32)
-* batch_size: specifies dataset batch size (default: 32)
-* net: specifies network architecture (default: "LeNet")
-* dataset: specifies dataset name (default: "FashionMNIST", "CUSTOM" uses local dataset)
-* niid: specifies data distribution among clients (default: 1 or 5)
-* carbon: specifies if carbon emissions tracked at client side (default: 0)
+| Argument   | Description                                                  | Default |
+| ---------- | ------------------------------------------------------------ | ------- |
+| algorithm  | specifies the aggregation algorithm                          | fedavg  |
+| clients    | specifies number of clients selected per round              | 2       |
+| fraction   | specifies fraction of clients selected                      | 1       |
+| rounds     | specifies total number of rounds                            | 2       |
+| model_path | specifies initial server model path                         | initial_model.pt |
+| epochs     | specifies client epochs per round                           | 1       |
+| accept_conn| determines if connections accepted after FL begins          | 1       |
+| verify     | specifies if verification module runs before rounds         | 0       |
+| threshold  | specifies minimum verification score                        | 0       |
+| timeout    | specifies client training time limit per round              | None    |
+| resize_size| specifies dataset resize dimension                          | 32      |
+| batch_size | specifies dataset batch size                                | 32      |
+| net        | specifies network architecture                              | LeNet   |
+| dataset    | specifies dataset name                                      | FashionMNIST |
+| niid       | specifies data distribution among clients                   | 1       |
+| carbon     | specifies if carbon emissions tracked at client side        | 0       |
 
 ### Client
 
-* server_ip: specifies server IP address (default: "localhost:8214")
-* device: specifies device (default: "cpu")
+| Argument   | Description                                                  | Default |
+| ---------- | ------------------------------------------------------------ | ------- |
+| server_ip  | specifies server IP address                                 | localhost:8214 |
+| device     | specifies device                                            | cpu     |
 
 ## Architecture
 Files architecture of Feder. These contents may be helpful for users to understand our repo.
