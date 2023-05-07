@@ -3,7 +3,7 @@
         "server":{
             "algorithm":"fedavg",
             "num_of_clients":2,
-            "fraction_of_clients":null,
+            "fraction_of_clients":1,
             "num_of_rounds":1,
             "initial_model_path":"initial_model.pt",
             "epochs":1,
@@ -28,7 +28,7 @@
         "server":{
             "algorithm":"fedavg",
             "num_of_clients":2,
-            "fraction_of_clients":null,
+            "fraction_of_clients":1,
             "num_of_rounds":1,
             "initial_model_path":"initial_model.pt",
             "epochs":1,
@@ -53,7 +53,7 @@
         "server":{
             "algorithm":"fedavg",
             "num_of_clients":1,
-            "fraction_of_clients":null,
+            "fraction_of_clients":1,
             "num_of_rounds":2,
             "initial_model_path":"initial_model.pt",
             "epochs":1,
