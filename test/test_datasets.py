@@ -14,7 +14,7 @@ def create_train_test_for_MNIST():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_datasets', 'MNIST')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_MNIST(self):
             print("\n==========================MNIST Testing==========================")
@@ -28,7 +28,7 @@ def create_train_test_for_FashionMnist():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_datasets', 'FashionMNIST')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_FashionMnist(self):
             print("\n==========================FashionMNIST Testing==========================")
@@ -42,7 +42,7 @@ def create_train_test_for_CIFAR10():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_datasets', 'CIFAR10')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_CIFAR10(self):
             print("\n==========================CIFAR10 Testing==========================")
@@ -56,7 +56,7 @@ def create_train_test_for_CIFAR100():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_datasets', 'CIFAR100')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_CIFAR100(self):
             print("\n==========================CIFAR100 Testing==========================")
@@ -70,7 +70,7 @@ def create_train_test_for_CUSTOM():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_datasets', 'CUSTOM')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_CIFAR100(self):
             print("\n==========================CUSTOM Dataset Testing==========================")

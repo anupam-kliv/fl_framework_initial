@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 from codecarbon import EmissionsTracker, OfflineEmissionsTracker
 from .net import get_net
-from .net_lib import test_model, load_data, flush_memory, DEVICE
+from .net_lib import test_model, load_data, flush_memory
 from .net_lib import train_model, train_fedavg, train_scaffold, train_mimelite, train_mime, train_feddyn
 from torch.utils.data import DataLoader
 from .get_data import get_data
@@ -108,7 +108,7 @@ def train(train_order_message, device):
     data_to_send_bytes = buffer.read()
 
     print("Evaluation")
-    train_loss, train_accuracy = test_model(model, testloader)
+    train_loss, train_accuracy = test_model(model, testloader, device)
     response_dict = {"train_loss": train_loss, "train_accuracy": train_accuracy}
     response_dict_bytes = json.dumps(response_dict).encode("utf-8")
 

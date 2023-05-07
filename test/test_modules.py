@@ -13,7 +13,7 @@ def create_train_test_for_verification_module():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_modules', 'verification')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_verification_module(self):
             print("\n==========================Verfication Module Testing==========================")
@@ -27,7 +27,7 @@ def create_train_test_for_timeout_module():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_modules', 'timeout')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_timeout_module(self):
             print("\n==========================Timeout Module Testing==========================")
@@ -41,7 +41,7 @@ def create_train_test_for_intermediate_connection_module():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_modules', 'intermediate')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_intermediate_module(self):
             print("\n==========================Intermediate Client Module Testing==========================")
@@ -53,11 +53,11 @@ def create_train_test_for_intermediate_connection_module():
 class TestTrainer_verification(create_train_test_for_verification_module()):
     'Test case for verification module'
 
-#class TestTrainer_timeout(create_train_test_for_timeout_module()):
-#    'Test case for timeout module'
+class TestTrainer_timeout(create_train_test_for_timeout_module()):
+   'Test case for timeout module'
 
-#class TestTrainer_intermediate(create_train_test_for_intermediate_connection_module()):
-#    'Test case for intermediate client connections module'
+class TestTrainer_intermediate(create_train_test_for_intermediate_connection_module()):
+   'Test case for intermediate client connections module'
 
 if __name__ == '__main__':
 

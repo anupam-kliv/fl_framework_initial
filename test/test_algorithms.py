@@ -9,7 +9,7 @@ def create_train_test_for_fedavg():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'fedavg')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_fedavg(self):
             print("\n==========================Fed Avg==========================")
@@ -23,7 +23,7 @@ def create_train_test_for_fedadagrad():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'fedadagrad')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_fedadagrad(self):
             print("\n==========================Fed Adagrad==========================")
@@ -37,7 +37,7 @@ def create_train_test_for_fedadam():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'fedadam')
-            save_intial_model(config)
+            save_intial_model(config['server'])
         
         def test_fedadam(self):
             print("\n==========================Fed Adam==========================")
@@ -51,7 +51,7 @@ def create_train_test_for_fedavgm():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'fedavgm')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_fedavgm(self):
             print("\n==========================Fed Avgm==========================")
@@ -65,7 +65,7 @@ def create_train_test_for_feddyn():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'feddyn')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_feddyn(self):
             print("\n==========================Fed Dyn==========================")
@@ -79,7 +79,7 @@ def create_train_test_for_fedyogi():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'fedyogi')
-            save_intial_model(config)
+            save_intial_model(config['server'])
         
         def test_fedyogi(self):
             print("\n==========================Fed Yogi==========================")
@@ -93,7 +93,7 @@ def create_train_test_for_mime():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'mime')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_mime(self):
             print("\n==========================Mime==========================")
@@ -107,7 +107,7 @@ def create_train_test_for_mimelite():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'mimelite')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_mimelite(self):
             print("\n==========================MimeLite==========================")
@@ -121,7 +121,7 @@ def create_train_test_for_scaffold():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'scaffold')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_scaffold(self):
             print("\n==========================Scaffold==========================")
@@ -131,29 +131,29 @@ def create_train_test_for_scaffold():
     return TrainerTest
 
 
-#class TestTrainer_fedavg(create_train_test_for_fedavg()):
-#    'Test case for fedavg'
+class TestTrainer_fedavg(create_train_test_for_fedavg()):
+   'Test case for fedavg'
 
-#class TestTrainer_fedadagrad(create_train_test_for_fedadagrad()):
-#    'Test case for fedadagrad'
+class TestTrainer_fedadagrad(create_train_test_for_fedadagrad()):
+   'Test case for fedadagrad'
 
-#class TestTrainer_fedadam(create_train_test_for_fedadam()):
-#    'Test case for fedadam'
+class TestTrainer_fedadam(create_train_test_for_fedadam()):
+   'Test case for fedadam'
 
-#class TestTrainer_fedavgm(create_train_test_for_fedavgm()):
-#    'Test case for fedavgm'
+class TestTrainer_fedavgm(create_train_test_for_fedavgm()):
+   'Test case for fedavgm'
 
-#class TestTrainer_feddyn(create_train_test_for_feddyn()):
-#    'Test case for feddyn'
+class TestTrainer_feddyn(create_train_test_for_feddyn()):
+   'Test case for feddyn'
 
-#class TestTrainer_fedyogi(create_train_test_for_fedyogi()):
-#    'Test case for fedyogi'
+class TestTrainer_fedyogi(create_train_test_for_fedyogi()):
+   'Test case for fedyogi'
 
-#class TestTrainer_mime(create_train_test_for_mime()):
-#    'Test case for mime'
+class TestTrainer_mime(create_train_test_for_mime()):
+   'Test case for mime'
 
-#class TestTrainer_mimelite(create_train_test_for_mimelite()):
-#    'Test case for mimelite'
+class TestTrainer_mimelite(create_train_test_for_mimelite()):
+   'Test case for mimelite'
 
 class TestTrainer_scaffold(create_train_test_for_scaffold()):
     'Test case for scaffold'

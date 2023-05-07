@@ -28,22 +28,37 @@ def tester(config , no_of_clients, late=None):
     multiprocessing.set_start_method('spawn', force=True)
     if late:
         no_of_clients -= 1
-    server = Process(target=server_start, args=(config,))
+    server = Process(target=server_start, args=(config['server'],))
     clients = []
     server.start()
     time.sleep(5)
     for i in range(no_of_clients):
-        client = Process(target=client_start)
+        client = Process(target=client_start, args=(config['client'],))
         clients.append(client)
         client.start()
         time.sleep(2)
     if late:
-        time.sleep(6)
-        client = Process(target=client_start)
+        time.sleep(3)
+        client = Process(target=client_start, args=(config['client'],))
         clients.append(client)
         client.start()
     for i in range(len(clients)):
         clients[i].join()
     server.join()
 
-        
+def get_result(dataset, algorithm):
+    dir_path = './server_results/'+dataset+'/'+algorithm
+    lst = os.listdir(dir_path)
+    lst.sort()
+    lst = lst[-1]
+    dir_path = dir_path+'/'+lst
+    lst = os.listdir(dir_path)
+    lst.sort()
+    lst = lst[-1]
+    print(lst)
+    with open (f'{dir_path}/{lst}/FL_results.txt', 'r') as file:
+        for line in file:
+            pass
+        result_dict = eval(line)
+    return result_dict
+    

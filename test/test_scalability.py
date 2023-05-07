@@ -11,7 +11,7 @@ def create_train_test_for_four_clients():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '4')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_four_clients(self):
             print("\n========================== Testing  for #client=4 ==========================")
@@ -25,7 +25,7 @@ def create_train_test_for_six_clients():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '6')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_six_clients(self):
             print("\n========================== Testing  for #client=6 ==========================")
@@ -39,7 +39,7 @@ def create_train_test_for_eight_clients():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '8')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_eight_clients(self):
             print("\n========================== Testing  for #client=8 ==========================")
@@ -53,7 +53,7 @@ def create_train_test_for_ten_clients():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '10')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_ten_clients(self):
             print("\n========================== Testing  for #client=10 ==========================")
@@ -67,7 +67,7 @@ def create_train_test_for_five_rounds():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '5_rounds')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_five_communication_rounds(self):
             print("\n========================== Testing  for Communication Rounds=5 ==========================")
@@ -81,7 +81,7 @@ def create_train_test_for_ten_rounds():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '10_rounds')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_ten_communication_rounds(self):
             print("\n========================== Testing  for Communication Rounds=10 ==========================")
@@ -95,7 +95,7 @@ def create_train_test_for_twenty_rounds():
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '20_rounds')
-            save_intial_model(config)
+            save_intial_model(config['server'])
 
         def test_twenty_communication_rounds(self):
             print("\n========================== Testing  for Communication Rounds=20 ==========================")

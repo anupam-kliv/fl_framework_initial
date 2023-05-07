@@ -7,7 +7,8 @@ parser.add_argument("--device", type=str, default = "cpu", help="Device to run t
 args = parser.parse_args()
 
 configs = {
-    "ip_address": args.ip
+    "ip_address": args.ip,
+    "device": args.device
 }
 
 if __name__ == '__main__':
