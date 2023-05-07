@@ -148,26 +148,26 @@ We provide multiple Non-IID data partition schemes. Here we show the data partit
 Each client has same number of samples, and same distribution for all class samples. 
 
 <div align="left">
-  <img src="media/class_stats_0.png" width="300" />
-  <img src="media/sample_stats_0.png" width="300" /> 
+  <img src="media/data_distribution/class_stats_0.png" width="300" />
+  <img src="media/data_distribution/sample_stats_0.png" width="300" /> 
 </div>
 
 
 #### Non-IID partition 2
 
 <div align="left">
-    <img src="media/class_stats_1.png" width="300" />
-    <img src="media/sample_stats_1.png" width="300" />
+    <img src="media/data_distribution/class_stats_1.png" width="300" />
+    <img src="media/data_distribution/sample_stats_1.png" width="300" />
 </div>
 
 #### Non-IID partition 3
 
 <div align="left">
-    <img src="media/class_stats_2.png" width="300" />
-    <img src="media/sample_stats_2.png" width="300" />
+    <img src="media/data_distribution/class_stats_2.png" width="300" />
+    <img src="media/data_distribution/sample_stats_2.png" width="300" />
 </div>
 
-#### Non-IID partition 4
+<!-- #### Non-IID partition 4
 
 <div align="left">
     <img src="media/class_stats_3.png" width="300" />
@@ -179,7 +179,7 @@ Each client has same number of samples, and same distribution for all class samp
 <div align="left">
     <img src="media/class_stats_4.png" width="300" />
     <img src="media/sample_stats_4.png" width="300" />
-</div>
+</div> -->
 
 ### Datasets Supported
 
@@ -374,19 +374,19 @@ In Feder CodeCarbon[[1]](#1)  package is used to estimate the carbon emissions g
 ### Plotting the accuracy of some algorithms against different Non-IID distributions
 
 <div align="left">
-  <img src="media/Al_0.png" width="230" />
-  <img src="media/Al_1.png" width="230" /> 
-  <img src="media/Al_3.png" width="230" />
-  <img src="media/Al_4.png" width="230" />
+  <img src="media/accuracy/Al_0.png" width="230" />
+  <img src="media/accuracy/Al_1.png" width="230" /> 
+  <img src="media/accuracy/Al_3.png" width="230" />
+  <img src="media/accuracy/Al_4.png" width="230" />
 </div>
 
 ### Plotting accuracy on Non-IID distribution with different algorithms
 
 <div align="left">
-  <img src="media/niid_1.png" width="220" />
-  <img src="media/niid_2.png" width="220" />
-  <img src="media/niid_3.png" width="220" />
-  <img src="media/niid_4.png" width="220" />
+  <img src="media/accuracy/niid_1.png" width="220" />
+  <img src="media/accuracy/niid_2.png" width="220" />
+  <img src="media/accuracy/niid_3.png" width="220" />
+  <img src="media/accuracy/niid_4.png" width="220" />
 </div>
 <br/>
 
@@ -394,7 +394,7 @@ In Feder CodeCarbon[[1]](#1)  package is used to estimate the carbon emissions g
 ### Comparing accuracy of different algorithm with different Non-IID distributions
 
 <div align="center">
-  <img width="40%" alt="" src="media/Accuracy.png" >
+  <img width="40%" alt="" src="media/accuracy/Accuracy.png" >
 </div>
 
 ## References
