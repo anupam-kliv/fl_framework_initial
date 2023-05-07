@@ -252,7 +252,7 @@ In Feder CodeCarbon[[1]](#1)  package is used to estimate the carbon emissions g
 
 ## Performance Evaluation under different Non-IID setting
 
-The `accuracy.py` has functions defined needed to plot all the graphs show in this section.
+The `accuracy.py`  file has functions defined needed to plot all the graphs show in this section.
 
 ### Accuracy of various FL algorithms available in the framework with a few dataset
 
