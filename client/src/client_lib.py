@@ -14,7 +14,6 @@ from .get_data import get_data
 from .ClientConnection_pb2 import  EvalResponse, TrainResponse
 
 #create a new directory inside FL_checkpoints and store the aggragted models in each round
-# device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") #device id  of this should be same in net_lib device
 fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
 save_dir_path = f"client_checkpoints/{fl_timestamp}"
 os.makedirs(save_dir_path)
@@ -39,7 +38,7 @@ def evaluate(eval_order_message, device):
     #_, testloader, _ = load_data(config_dict)
 
 
-    eval_loss, eval_accuracy = test_model(model, testloader)
+    eval_loss, eval_accuracy = test_model(model, testloader, device)
 
     response_dict = {"eval_loss": eval_loss, "eval_accuracy": eval_accuracy}
     response_dict_bytes = json.dumps(response_dict).encode("utf-8")
@@ -73,17 +72,17 @@ def train(train_order_message, device):
     trainloader, testloader, _ = load_data(config_dict)
     print("Training started")
     if (config_dict['algorithm'] == 'mimelite'):
-        model, control_variate = train_mimelite(model, control_variate, trainloader, epochs, deadline)
+        model, control_variate = train_mimelite(model, control_variate, trainloader, epochs, device, deadline)
     elif (config_dict['algorithm'] == 'scaffold'):
-        model, control_variate = train_scaffold(model, control_variate, trainloader, epochs, deadline)
+        model, control_variate = train_scaffold(model, control_variate, trainloader, epochs, device, deadline)
     elif (config_dict['algorithm'] == 'mime'):
-        model, control_variate = train_mime(model, control_variate, control_variate2, trainloader, epochs, deadline)
+        model, control_variate = train_mime(model, control_variate, control_variate2, trainloader, epochs, device, deadline)
     elif (config_dict['algorithm'] == 'fedavg'):
-        model = train_fedavg(model, trainloader, epochs, deadline)
+        model = train_fedavg(model, trainloader, epochs, device, deadline)
     elif (config_dict['algorithm'] == 'feddyn'):
-        model = train_feddyn(model, trainloader, epochs, deadline)
+        model = train_feddyn(model, trainloader, epochs, device, deadline)
     else:
-        model = train_model(model, trainloader, epochs, deadline)
+        model = train_model(model, trainloader, epochs, device, deadline)
 
     if (carbon_tracker==1):
 	    emissions: float = tracker.stop()
