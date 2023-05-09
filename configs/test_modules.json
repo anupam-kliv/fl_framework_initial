@@ -8,7 +8,7 @@
             "initial_model_path":"initial_model.pt",
             "epochs":1,
             "accept_conn_after_FL_begin":0 ,
-            "verify": 0,
+            "verify": 1,
             "verification_threshold": 0.1,
             "timeout": null,
             "resize_size": 32,
