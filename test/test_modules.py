@@ -9,9 +9,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def create_train_test_for_verification_module():
-"""
-Verify the verification module using two clients by implementing the following function.
-"""
+    """
+    Verify the verification module using two clients by implementing the following function.
+    """
 
     class TrainerTest(unittest.TestCase):
         @classmethod
