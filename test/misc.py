@@ -1,7 +1,8 @@
+import os
+import sys
 import time
 import json
-import sys
-import os
+
 from torch.multiprocessing import Process
 from torch import multiprocessing
 
@@ -9,8 +10,12 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from server.src.server import server_start
 from client.src.client import client_start
 
-def get_config(action, action2, config_path=""):
 
+def get_config(action, action2, config_path=""):
+    """
+    Get the configuration file as json from it 
+    """
+    
     root_path = os.path.dirname(
         os.path.dirname(os.path.realpath(__file__)))
     config_path = os.path.join(root_path, 'configs')
@@ -21,11 +26,17 @@ def get_config(action, action2, config_path=""):
 
     return config
 
+
 def execute(process):
     os.system(f'{process}')
 
+    
 def tester(config , no_of_clients, late=None):
-
+    """
+    Return the tester to each test algorithm.
+    Late is introduced for intermediate connection
+    """
+    
     multiprocessing.set_start_method('spawn', force=True)
     if late:
         no_of_clients -= 1
@@ -48,7 +59,13 @@ def tester(config , no_of_clients, late=None):
         clients[i].join()
     server.join()
 
+    
 def get_result(dataset, algorithm):
+    """
+    Return the result to each test algorithm.
+    Dataset and algorithm defines as for which dataset the result is required
+    """
+    
     dir_path = './server_results/'+dataset+'/'+algorithm
     lst = os.listdir(dir_path)
     lst.sort()
