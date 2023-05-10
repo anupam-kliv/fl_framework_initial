@@ -1,11 +1,16 @@
-from server.src.server_lib import save_intial_model
-import unittest
 import os
+import unittest
+from server.src.server_lib import save_intial_model
 import sys
 from misc import get_config, tester
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+
 def create_train_test_for_verification_module():
+    '''
+    This function us used to verify the verification module using 
+    two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -13,12 +18,17 @@ def create_train_test_for_verification_module():
             save_intial_model(config['server'])
 
         def test_verification_module(self):
-            print("\n==========================Verfication Module Testing==========================")
+            print('\n======================Verfication Module Testing=====================')
             config = get_config('test_modules', 'verification')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_timeout_module():
+    '''
+    This function us used to verify the timeout module using 
+    two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -26,12 +36,17 @@ def create_train_test_for_timeout_module():
             save_intial_model(config['server'])
 
         def test_timeout_module(self):
-            print("\n==========================Timeout Module Testing==========================")
+            print('\n======================Timeout Module Testing======================')
             config = get_config('test_modules', 'timeout')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_intermediate_connection_module():
+    '''
+    This function us used to verify the intermediate timeout module using 
+    two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -39,9 +54,9 @@ def create_train_test_for_intermediate_connection_module():
             save_intial_model(config['server'])
 
         def test_intermediate_module(self):
-            print("\n==========================Intermediate Client Module Testing==========================")
+            print('\n======================Intermediate Client Module Testing======================')
             config = get_config('test_modules', 'intermediate')
-            tester(config,2,late=True)
+            tester(config, 2, late=True)
     return TrainerTest
 
 class TestTrainer_verification(create_train_test_for_verification_module()):
