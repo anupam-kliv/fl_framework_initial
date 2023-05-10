@@ -23,7 +23,8 @@ jobs:
       run: |
         pip install torch==1.13.1
         pip install torchvision==0.14.1
-        python -m test.test_algorithms.py
+        cd test
+        python test_algorithms.py
   
   cli: # from taskrunner.yml
     needs: [interactive-kvasir]
@@ -40,4 +41,5 @@ jobs:
           pip install -r requirements.txt
       - name: Test TaskRunner API
         run: |
-          python -m test.test_algorithms.py
+          cd test
+          python test_algorithms.py
