@@ -8,7 +8,8 @@ class fedavg():
         self.algorithm = "FedAvg"
 
     def aggregate(self,server_state_dict,state_dicts):
-        #server_state_dict is of no use in FedAvg, to maintain consistency with other algorithms; it is provided as an argument
+        #server_state_dict is of no use in FedAvg,
+        # to maintain consistency with other algorithms; it is provided as an argument
         result_state_dict = OrderedDict()
         for key in state_dicts[0].keys():
             current_key_tensors = [state_dict[key] for state_dict in state_dicts]

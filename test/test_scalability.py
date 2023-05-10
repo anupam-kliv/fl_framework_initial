@@ -1,10 +1,9 @@
+from server.src.server_lib import save_intial_model
 import unittest
 import os
 import sys
 from misc import get_config, tester
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))            
-from server.src.server_lib import save_intial_model
-
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def create_train_test_for_four_clients():
     class TrainerTest(unittest.TestCase):

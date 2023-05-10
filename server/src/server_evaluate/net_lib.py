@@ -1,12 +1,4 @@
-
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torchvision.datasets import ImageFolder
-from torch.utils.data import DataLoader
-from torchvision.transforms import ToTensor, Grayscale, Compose
-
-from .net import Net
 from tqdm import tqdm
 
 DEVICE = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")

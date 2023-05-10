@@ -1,10 +1,9 @@
-import torch.nn as nn
-import torch.nn.functional as F
-import torchvision.models as models
+from torch import nn
+from torchvision import models
 
 class LeNet(nn.Module):
     def __init__(self, in_channels=1, num_classes=10):
-        super(LeNet, self).__init__()
+        super().__init__()
         self.conv1 = nn.Conv2d(in_channels, 6, kernel_size=5)
         self.pool1 = nn.MaxPool2d(kernel_size=2,stride=2)
         self.conv2 = nn.Conv2d(6, 16, kernel_size=5)

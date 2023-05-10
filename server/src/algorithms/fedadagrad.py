@@ -23,7 +23,8 @@ class fedadagrad():
             current_key_average = current_key_sum / len(state_dicts)
             avg_delta_y[key] = current_key_average
 
-        if (not(self.state)): #If state = None, then the following line will execute. So only at first round, it'll execute
+        if not self.state: #If state = None, then the following line will execute.
+            #So only at first round, it'll execute
             self.state = [torch.zeros_like(server_state_dict[key]) for key in server_state_dict.keys()]
 
         #Updates the server_state_dict

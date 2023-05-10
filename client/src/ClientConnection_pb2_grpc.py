@@ -5,7 +5,7 @@ import grpc
 from . import ClientConnection_pb2 as ClientConnection__pb2
 
 
-class ClientConnectionStub(object):
+class ClientConnectionStub():
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -21,7 +21,7 @@ class ClientConnectionStub(object):
                 )
 
 
-class ClientConnectionServicer(object):
+class ClientConnectionServicer():
     """Missing associated documentation comment in .proto file."""
 
     def Connect(self, request_iterator, context):
@@ -45,7 +45,7 @@ def add_ClientConnectionServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class ClientConnection(object):
+class ClientConnection():
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod

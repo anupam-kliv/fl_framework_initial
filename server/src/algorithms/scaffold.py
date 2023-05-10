@@ -33,10 +33,8 @@ class scaffold():
         for key in keys:
             server_model_state_dict[key] += self.lr * delta_x[key]
 
-        for i in range(len(control_variate)):
-            '''print(control_variate[i])
-            print(self.fraction)
-            print(delta_c[i])'''
+        control_variate_list = list(range(len(control_variate)))
+        for i in control_variate_list:
             control_variate[i] += self.fraction * delta_c[i]
 
         return server_model_state_dict, control_variate

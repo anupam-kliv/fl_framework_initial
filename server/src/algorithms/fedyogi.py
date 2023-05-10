@@ -28,14 +28,18 @@ class fedyogi():
             current_key_average = current_key_sum / len(state_dicts)
             avg_delta_y[key] = current_key_average
 
-        if (not(self.m)): #If self.m = None, then the following line will execute. So only at first round, it'll execute
+        if not self.m: #If self.m = None, then the following line will execute.
+            #So only at first round, it'll execute
             self.m = [torch.zeros_like(server_state_dict[key]) for key in server_state_dict.keys()]
             self.v = [torch.zeros_like(server_state_dict[key]) for key in server_state_dict.keys()]
 
         #Updates the server_state_dict
         for key, m, v in zip(keys, self.m, self.v):
             m.data = self.beta1 * m.data + (1 - self.beta1) * avg_delta_y[key].data
-            v.data = v.data + (1 - self.beta2) * torch.sign( torch.square(avg_delta_y[key].data) - v.data) * torch.square(avg_delta_y[key].data)
+            v.data = v.data + (1 - self.beta2) * torch.sign(
+                                    torch.square(avg_delta_y[key].data) - v.data
+                                ) * torch.square(avg_delta_y[key].data)
+
             m_bias_corr = m / (1 - self.beta1**self.timestep)
             v_bias_corr = v / (1 - self.beta2**self.timestep)
             server_state_dict[key].data += self.lr * m_bias_corr / (torch.sqrt(v_bias_corr) + self.epsilon)

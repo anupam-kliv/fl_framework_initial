@@ -47,7 +47,9 @@ class ClientWrapper:
         train_response_message = client_message.trainResponse
         data_received_bytes = train_response_message.modelParameters
         data_received = torch.load( BytesIO(data_received_bytes), map_location="cpu" )
-        trained_model_parameters, updated_control_variate = data_received['model_parameters'], data_received['control_variate'] #updated_control_variate will become None when no control_variate is involved at all
+        #updated_control_variate will become None when no control_variate is involved at all
+        trained_model_parameters = data_received['model_parameters']
+        updated_control_variate = data_received['control_variate']
         response_dict_bytes = train_response_message.responseDict
         response_dict = json.loads( response_dict_bytes.decode("utf-8") )
         return trained_model_parameters, updated_control_variate, response_dict

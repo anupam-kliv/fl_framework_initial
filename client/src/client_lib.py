@@ -4,9 +4,9 @@ import json
 import time
 import os
 from datetime import datetime
-from codecarbon import EmissionsTracker, OfflineEmissionsTracker
+from codecarbon import  OfflineEmissionsTracker
 from .net import get_net
-from .net_lib import test_model, load_data, flush_memory
+from .net_lib import test_model, load_data
 from .net_lib import train_model, train_fedavg, train_scaffold, train_mimelite, train_mime, train_feddyn
 from torch.utils.data import DataLoader
 from .get_data import get_data
@@ -27,7 +27,7 @@ def evaluate(eval_order_message, device):
 
     state_dict = model_parameters
     print("Evaluation:",config_dict)
-    with open("config.json", "r") as jsonfile:
+    with open("config.json", "r", encoding='utf-8') as jsonfile:
         config_dict = json.load(jsonfile)
     model = get_net(config= config_dict).to(device)
     model.load_state_dict(state_dict)
@@ -49,8 +49,8 @@ def evaluate(eval_order_message, device):
 def train(train_order_message, device):
     data_bytes = train_order_message.modelParameters
     data = torch.load( BytesIO(data_bytes), map_location="cpu" )
-    model_parameters, control_variate, control_variate2 = data['model_parameters'], data['control_variate'], data['control_variate2']
-
+    model_parameters, control_variate,  = data['model_parameters'], data['control_variate']
+    control_variate2 = data['control_variate2']
     config_dict_bytes = train_order_message.configDict
     config_dict = json.loads( config_dict_bytes.decode("utf-8") )
     carbon_tracker = config_dict["carbon-tracker"]
@@ -65,35 +65,35 @@ def train(train_order_message, device):
         deadline = None
 
     #Run code carbon if the carbon-tracker flag is True
-    if (carbon_tracker==1):
-	    tracker = OfflineEmissionsTracker(country_iso_code="IND", output_dir = save_dir_path)
-	    tracker.start()
+    if carbon_tracker==1:
+        tracker = OfflineEmissionsTracker(country_iso_code="IND", output_dir = save_dir_path)
+        tracker.start()
 
     trainloader, testloader, _ = load_data(config_dict)
     print("Training started")
-    if (config_dict['algorithm'] == 'mimelite'):
+    if config_dict['algorithm'] == 'mimelite':
         model, control_variate = train_mimelite(model, control_variate, trainloader, epochs, device, deadline)
-    elif (config_dict['algorithm'] == 'scaffold'):
+    elif config_dict['algorithm'] == 'scaffold':
         model, control_variate = train_scaffold(model, control_variate, trainloader, epochs, device, deadline)
-    elif (config_dict['algorithm'] == 'mime'):
+    elif config_dict['algorithm'] == 'mime':
         model, control_variate = train_mime(model, control_variate, control_variate2, trainloader, epochs, device, deadline)
-    elif (config_dict['algorithm'] == 'fedavg'):
+    elif config_dict['algorithm'] == 'fedavg':
         model = train_fedavg(model, trainloader, epochs, device, deadline)
-    elif (config_dict['algorithm'] == 'feddyn'):
+    elif config_dict['algorithm'] == 'feddyn':
         model = train_feddyn(model, trainloader, epochs, device, deadline)
     else:
         model = train_model(model, trainloader, epochs, device, deadline)
 
-    if (carbon_tracker==1):
-	    emissions: float = tracker.stop()
-	    print(f"Emissions: {emissions} kg")
+    if carbon_tracker==1:
+        emissions: float = tracker.stop()
+        print(f"Emissions: {emissions} kg")
 
     myJSON = json.dumps(config_dict)
     json_path = save_dir_path + "/config.json"
-    with open(json_path, "w") as jsonfile:
+    with open(json_path, "w", encoding='utf-8') as jsonfile:
         jsonfile.write(myJSON)
     json_path = "config.json"
-    with open(json_path, "w") as jsonfile:
+    with open(json_path, "w", encoding='utf-8') as jsonfile:
         jsonfile.write(myJSON)
 
     trained_model_parameters = model.state_dict()
@@ -122,7 +122,7 @@ def train(train_order_message, device):
 def set_parameters(set_parameters_order_message, device):
     model_parameters_bytes = set_parameters_order_message.modelParameters
     model_parameters = torch.load( BytesIO(model_parameters_bytes), map_location="cpu" )
-    with open("config.json", "r") as jsonfile:
+    with open("config.json", "r", encoding='utf-8') as jsonfile:
         config_dict = json.load(jsonfile)
     model = get_net(config= config_dict).to(device)
     model.load_state_dict(model_parameters)

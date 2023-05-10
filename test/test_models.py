@@ -1,14 +1,10 @@
+from server.src.server_lib import save_intial_model
 import unittest
 import os
 import sys
 from misc import get_config, tester
-import multiprocessing
-import os    
 # add main directory to path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))            
-from server.src.server_lib import save_intial_model
-import time                                                                                                 
- 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 def create_train_test_for_LeNet():
     class TrainerTest(unittest.TestCase):
         @classmethod
@@ -20,7 +16,6 @@ def create_train_test_for_LeNet():
             print("\n==========================LeNet Testing==========================")
             config = get_config('test_models', 'LeNet')
             tester(config,1)
-
     return TrainerTest
 
 def create_train_test_for_resnet18():
@@ -34,10 +29,9 @@ def create_train_test_for_resnet18():
             print("\n==========================Resnet18 Testing==========================")
             config = get_config('test_models', 'resnet18')
             tester(config,1)
-
     return TrainerTest
 
-def create_train_test_for_resnet50(): 
+def create_train_test_for_resnet50():
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -48,7 +42,6 @@ def create_train_test_for_resnet50():
             print("\n==========================Resnet50 Testing==========================")
             config = get_config('test_models', 'resnet50')
             tester(config,1)
-
     return TrainerTest
 
 def create_train_test_for_vgg16():
@@ -62,7 +55,6 @@ def create_train_test_for_vgg16():
             print("\n==========================VGG 16 Testing==========================")
             config = get_config('test_models', 'vgg16')
             tester(config,1)
-
     return TrainerTest
 
 def create_train_test_for_AlexNet():
@@ -76,7 +68,6 @@ def create_train_test_for_AlexNet():
             print("\n==========================AlexNet Testing==========================")
             config = get_config('test_models', 'AlexNet')
             tester(config,1)
-
     return TrainerTest
 
 class TestTrainer_LeNet(create_train_test_for_LeNet()):

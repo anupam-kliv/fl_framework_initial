@@ -13,7 +13,6 @@ import json
 import threading
 import torch
 from datetime import datetime
-from .server_lib import get_net
 
 #the business logic of the server, i.e what interactions take place with the clients
 def server_runner(client_manager, configurations):
@@ -25,7 +24,7 @@ def server_runner(client_manager, configurations):
     num_of_clients = configurations["num_of_clients"]
     fraction_of_clients = configurations["fraction_of_clients"]
     clients = client_manager.random_select(num_of_clients, fraction_of_clients)
-    communication_rounds = configurations["num_of_rounds"]
+    communRound = configurations["num_of_rounds"]
     initial_model_path = configurations["initial_model_path"]
     server_model_state_dict = torch.load(initial_model_path, map_location="cpu")
     epochs = configurations["epochs"]
@@ -44,14 +43,14 @@ def server_runner(client_manager, configurations):
     fl_timestamp = f"{datetime.now().strftime('%Y-%m-%d %H-%M-%S')}"
     save_dir_path=f"server_results/{dataset}/{algorithm}/{niid}/{fl_timestamp}"
     if not os.path.exists(save_dir_path):
-    	os.makedirs(save_dir_path)
+        os.makedirs(save_dir_path)
     torch.save(server_model_state_dict, f"{save_dir_path}/initial_model.pt")
     myJSON = json.dumps(configurations)
     json_path = save_dir_path + "/information.json"
-    with open(json_path, "w") as jsonfile:
+    with open(json_path, "w", encoding='UTF-8') as jsonfile:
         jsonfile.write(myJSON)
     #create new file inside FL_results to store training results
-    with open(f"{save_dir_path}/FL_results.txt", "w") as file:
+    with open(f"{save_dir_path}/FL_results.txt", "w", encoding='UTF-8') as file:
         pass
 
     #Initialize the aggregation algorithm
@@ -60,10 +59,12 @@ def server_runner(client_manager, configurations):
 
 
     #If the algorithm is either scaffold or mimelite, then we need to make use of control variate
-    if (algorithm == 'scaffold' or algorithm == 'mimelite'):
-        control_variate = [torch.zeros_like(server_model_state_dict[key]) for key in server_model_state_dict.keys()] #At initialization, control variate should be zero as mentioned in the paper
+    if algorithm in ('scaffold', 'mimelite'):
+        control_variate = [torch.zeros_like(server_model_state_dict[key])
+                           for key in server_model_state_dict.keys()
+                           ] #At initialization, control variate should be zero as mentioned in the paper
         control_variate2 = None
-    elif (algorithm == 'mime'):
+    elif algorithm == 'mime':
         control_variate = [torch.zeros_like(server_model_state_dict[key]) for key in server_model_state_dict.keys()]
         control_variate2 = [torch.zeros_like(server_model_state_dict[key]) for key in server_model_state_dict.keys()]
     else:
@@ -72,16 +73,20 @@ def server_runner(client_manager, configurations):
 
     #run FL for given rounds
     client_manager.accepting_connections = accept_conn_after_FL_begin
-    config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train", "dataset":dataset, "net":net, "resize_size":resize_size, 	"batch_size":batch_size, "niid": niid, "carbon-tracker":carbon}
-    for round in range(1, communication_rounds + 1):
+    config_dict = {"epochs": epochs, "timeout": timeout, "algorithm":algorithm, "message":"train",
+                   "dataset":dataset, "net":net, "resize_size":resize_size, "batch_size":batch_size,
+                   "niid": niid, "carbon-tracker":carbon}
+    for round in range(1, communRound + 1):
         clients = client_manager.random_select(client_manager.num_connected_clients(), fraction_of_clients)
 
 
-        print(f"\nCommunication round {round}/{communication_rounds} is starting with {len(clients)}/{client_manager.num_connected_clients()} client(s).")
+        print(f"\nCR {round}/{communRound} with {len(clients)}/{client_manager.num_connected_clients()} client(s)")
         trained_model_state_dicts = []
         updated_control_variates = []
         with futures.ThreadPoolExecutor(max_workers=5) as executor:
-            result_futures = {executor.submit(client.train, server_model_state_dict, control_variate, control_variate2, config_dict) for client in clients}
+            result_futures = {executor.submit(
+                client.train, server_model_state_dict, control_variate, control_variate2, config_dict
+                ) for client in clients}
             for client_index, result_future in zip(range(len(clients)), futures.as_completed(result_futures)):
                 trained_model_state_dict, updated_control_variate, results = result_future.result()
                 trained_model_state_dicts.append(trained_model_state_dict)
@@ -90,16 +95,20 @@ def server_runner(client_manager, configurations):
 
         if verification:
             print("Performing verification round...")
-            selected_state_dicts = verify(clients, trained_model_state_dicts, save_dir_path, threshold=verification_threshold)
-            print(f"\nAggregating {len(selected_state_dicts)}/{len(trained_model_state_dicts)} clients that scored above the threshold.")
+            selected_state_dicts = verify(clients,
+                        trained_model_state_dicts, save_dir_path, threshold=verification_threshold)
+            print(f"\nAggregating {len(selected_state_dicts)}/{len(trained_model_state_dicts)} clients above threshold")
         else:
             selected_state_dicts = trained_model_state_dicts
 
-        #aggregate model, save it, then send to some client to evaluate#aggregate model, save it, then send to some client to evaluate
+        #aggregate model, save it, then send to some client to evaluate#aggregate model, save it,
+        # then send to some client to evaluate
         if control_variate2:
-            server_model_state_dict, control_variate, control_variate2 = aggregator.aggregate(server_model_state_dict, control_variate, selected_state_dicts, updated_control_variates)
+            server_model_state_dict, control_variate, control_variate2 = aggregator.aggregate(server_model_state_dict,
+                                                    control_variate, selected_state_dicts, updated_control_variates)
         elif control_variate:
-            server_model_state_dict, control_variate = aggregator.aggregate(server_model_state_dict, control_variate, selected_state_dicts, updated_control_variates)
+            server_model_state_dict, control_variate = aggregator.aggregate(server_model_state_dict,
+                                        control_variate, selected_state_dicts, updated_control_variates)
         else:
             server_model_state_dict = aggregator.aggregate(server_model_state_dict,selected_state_dicts)
 
@@ -111,7 +120,7 @@ def server_runner(client_manager, configurations):
         eval_result["round"] = round
         print("Eval results: ", eval_result)
         #store the results
-        with open(f"{save_dir_path}/FL_results.txt", "a") as file:
+        with open(f"{save_dir_path}/FL_results.txt", "a", encoding='UTF-8') as file:
             file.write( str(eval_result) + "\n" )
 
     #sync all connected clients with current global model and order them to disconnect

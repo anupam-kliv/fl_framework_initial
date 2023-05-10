@@ -1,6 +1,4 @@
 import torch
-import random
-import numpy as np
 
 #from PIL import Image
 from torch.utils import data
@@ -41,4 +39,3 @@ class distributionDataloader(data.Dataset):
         label = self.trainset[self.data_idxs[index]][1]
 
         return image, label
-

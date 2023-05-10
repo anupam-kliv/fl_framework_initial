@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   serialized_pb=b'\n\x16\x43lientConnection.proto\"\xa3\x01\n\rServerMessage\x12\x1f\n\ntrainOrder\x18\x01 \x01(\x0b\x32\x0b.TrainOrder\x12\x1d\n\tevalOrder\x18\x02 \x01(\x0b\x32\n.EvalOrder\x12)\n\x0f\x64isconnectOrder\x18\x03 \x01(\x0b\x32\x10.DisconnectOrder\x12\'\n\x0esetParamsOrder\x18\x04 \x01(\x0b\x32\x0f.SetParamsOrder\"\x8a\x01\n\rClientMessage\x12%\n\rtrainResponse\x18\x01 \x01(\x0b\x32\x0e.TrainResponse\x12#\n\x0c\x65valResponse\x18\x02 \x01(\x0b\x32\r.EvalResponse\x12-\n\x11setParamsResponse\x18\x03 \x01(\x0b\x32\x12.SetParamsResponse\"9\n\nTrainOrder\x12\x17\n\x0fmodelParameters\x18\x01 \x01(\x0c\x12\x12\n\nconfigDict\x18\x02 \x01(\x0c\">\n\rTrainResponse\x12\x17\n\x0fmodelParameters\x18\x01 \x01(\x0c\x12\x14\n\x0cresponseDict\x18\x02 \x01(\x0c\"8\n\tEvalOrder\x12\x17\n\x0fmodelParameters\x18\x01 \x01(\x0c\x12\x12\n\nconfigDict\x18\x02 \x01(\x0c\"$\n\x0c\x45valResponse\x12\x14\n\x0cresponseDict\x18\x01 \x01(\x0c\")\n\x0eSetParamsOrder\x12\x17\n\x0fmodelParameters\x18\x01 \x01(\x0c\"\x13\n\x11SetParamsResponse\"9\n\x0f\x44isconnectOrder\x12\x0f\n\x07message\x18\x01 \x01(\t\x12\x15\n\rreconnectTime\x18\x02 \x01(\x05\x32\x41\n\x10\x43lientConnection\x12-\n\x07\x43onnect\x12\x0e.ClientMessage\x1a\x0e.ServerMessage(\x01\x30\x01\x62\x06proto3'
 )
 
@@ -31,7 +31,7 @@ _SERVERMESSAGE = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='trainOrder', full_name='ServerMessage.trainOrder', index=0,
@@ -39,28 +39,28 @@ _SERVERMESSAGE = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='evalOrder', full_name='ServerMessage.evalOrder', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='disconnectOrder', full_name='ServerMessage.disconnectOrder', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='setParamsOrder', full_name='ServerMessage.setParamsOrder', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -84,7 +84,7 @@ _CLIENTMESSAGE = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='trainResponse', full_name='ClientMessage.trainResponse', index=0,
@@ -92,21 +92,21 @@ _CLIENTMESSAGE = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='evalResponse', full_name='ClientMessage.evalResponse', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='setParamsResponse', full_name='ClientMessage.setParamsResponse', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -130,7 +130,7 @@ _TRAINORDER = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='modelParameters', full_name='TrainOrder.modelParameters', index=0,
@@ -138,14 +138,14 @@ _TRAINORDER = _descriptor.Descriptor(
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='configDict', full_name='TrainOrder.configDict', index=1,
       number=2, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -169,7 +169,7 @@ _TRAINRESPONSE = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='modelParameters', full_name='TrainResponse.modelParameters', index=0,
@@ -177,14 +177,14 @@ _TRAINRESPONSE = _descriptor.Descriptor(
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='responseDict', full_name='TrainResponse.responseDict', index=1,
       number=2, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -208,7 +208,7 @@ _EVALORDER = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='modelParameters', full_name='EvalOrder.modelParameters', index=0,
@@ -216,14 +216,14 @@ _EVALORDER = _descriptor.Descriptor(
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='configDict', full_name='EvalOrder.configDict', index=1,
       number=2, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -247,7 +247,7 @@ _EVALRESPONSE = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='responseDict', full_name='EvalResponse.responseDict', index=0,
@@ -255,7 +255,7 @@ _EVALRESPONSE = _descriptor.Descriptor(
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -279,7 +279,7 @@ _SETPARAMSORDER = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='modelParameters', full_name='SetParamsOrder.modelParameters', index=0,
@@ -287,7 +287,7 @@ _SETPARAMSORDER = _descriptor.Descriptor(
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -311,7 +311,7 @@ _SETPARAMSRESPONSE = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
   ],
   extensions=[
@@ -336,7 +336,7 @@ _DISCONNECTORDER = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='message', full_name='DisconnectOrder.message', index=0,
@@ -344,14 +344,14 @@ _DISCONNECTORDER = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='reconnectTime', full_name='DisconnectOrder.reconnectTime', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -457,7 +457,7 @@ _CLIENTCONNECTION = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  create_key=_descriptor._internal_create_key,
+  #create_key=_descriptor._internal_create_key,
   serialized_start=675,
   serialized_end=740,
   methods=[
@@ -469,7 +469,7 @@ _CLIENTCONNECTION = _descriptor.ServiceDescriptor(
     input_type=_CLIENTMESSAGE,
     output_type=_SERVERMESSAGE,
     serialized_options=None,
-    create_key=_descriptor._internal_create_key,
+    #create_key=_descriptor._internal_create_key,
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_CLIENTCONNECTION)

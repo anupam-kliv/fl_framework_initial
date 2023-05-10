@@ -1,13 +1,6 @@
 import os
-import torch
-import torch.optim as optim
-from tqdm import tqdm
-import time
-import numpy as np
 from torchvision import transforms,datasets
-import torch.optim as optim
-import torch.utils.data as data
-import torchvision
+from torch.utils import data
 import numpy as np
 from PIL import Image
 
@@ -29,16 +22,22 @@ def get_data(config):
         testset = datasets.MNIST(root='client_dataset/MNIST', train=False, download=True, transform=apply_transform)
     elif config['dataset'] == 'FashionMNIST':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        trainset = datasets.FashionMNIST(root='client_dataset/FashionMNIST', train=True, download=True, transform=apply_transform)
-        testset = datasets.FashionMNIST(root='client_dataset/FashionMNIST', train=False, download=True, transform=apply_transform)
+        trainset = datasets.FashionMNIST(root='client_dataset/FashionMNIST',
+                                        train=True, download=True, transform=apply_transform)
+        testset = datasets.FashionMNIST(root='client_dataset/FashionMNIST',
+                                        train=False, download=True, transform=apply_transform)
     elif config['dataset'] == 'CIFAR10':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        trainset = datasets.CIFAR10(root='client_dataset/CIFAR10', train=True, download=True, transform=apply_transform)
-        testset = datasets.CIFAR10(root='client_dataset/CIFAR10', train=False, download=True, transform=apply_transform)
+        trainset = datasets.CIFAR10(root='client_dataset/CIFAR10',
+                                    train=True, download=True, transform=apply_transform)
+        testset = datasets.CIFAR10(root='client_dataset/CIFAR10',
+                                   train=False, download=True, transform=apply_transform)
     elif config['dataset'] == 'CIFAR100':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        trainset = datasets.CIFAR100(root='client_dataset/CIFAR100', train=True, download=True, transform=apply_transform)
-        testset = datasets.CIFAR100(root='client_dataset/CIFAR100', train=False, download=True, transform=apply_transform)
+        trainset = datasets.CIFAR100(root='client_dataset/CIFAR100',
+                                     train=True, download=True, transform=apply_transform)
+        testset = datasets.CIFAR100(root='client_dataset/CIFAR100',
+                                    train=False, download=True, transform=apply_transform)
     elif config['dataset'] == 'CUSTOM':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
         # Load the custom dataset
@@ -46,7 +45,8 @@ def get_data(config):
         testset = customDataset(root='client_custom_dataset/CUSTOM/test', transform=apply_transform)
     else:
         # Raise an error if an unsupported dataset is specified
-        raise ValueError("Unsupported dataset type: {}".format(config['dataset']))
+        raise ValueError(f"Unsupported dataset type: {config['dataset']}")
+
 
     # Return the train and test datasets
     return trainset, testset
@@ -57,7 +57,8 @@ class customDataset(data.Dataset):
         Custom dataset class for loading image and label data from a folder of .npy files.
         Args:
             root (str): Path to the folder containing the .npy files.
-            transform (callable, optional): A function/transform that takes in an PIL image and returns a transformed version.
+            transform (callable, optional): A function/transform that takes
+              an PIL image and returns a transformed version.
                                             E.g, `transforms.RandomCrop`
         """
 
@@ -111,4 +112,3 @@ def sample_return(root):
         newdataset.append(item)
     # Return the list of samples
     return newdataset
-

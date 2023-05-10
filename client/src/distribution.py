@@ -1,6 +1,7 @@
 import numpy as np
-import torch, random, os
-
+import torch
+import random
+import os
 def data_distribution(config, trainset):
     labels = []
     base_dir = os.getcwd()
@@ -10,7 +11,8 @@ def data_distribution(config, trainset):
     num_users = 5
 
     #Calculate the number of samples present per class
-    for i in range(len(trainset)):
+    trainset_list = list(range(len(trainset)))
+    for i in trainset_list:
         labels.append(trainset[i][1])
     unique_labels = np.unique(np.array(labels))
     label_index_list = {}
@@ -22,16 +24,19 @@ def data_distribution(config, trainset):
 
     #Calculate the value of the probability distribution. For K=1, it will be iid distribution
     K = config['niid']
-    if (K==1):
-    	q_step = (1 - (1/num_classes))
+    if K==1:
+        q_step = (1 - (1/num_classes))
     else:
-    	q_step = (1 - (1/num_classes))/(K-1)
+        q_step = (1 - (1/num_classes))/(K-1)
 
     #Shuffle the index position for all classes
-    for i in range(len(label_index_list)):
+    label_index_list_list = list(range(len(label_index_list)))
+    for i in label_index_list_list:
         random.shuffle(label_index_list[i])
 
-    #Generate the different non-iid distribution. Data_presence_indicator will help to reduce the number of classes among the clients as the non-iid increases
+    #Generate the different non-iid distribution.
+    # Data_presence_indicator will help to reduce the number of classes --
+    # among the clients as the non-iid increases
     for j in range(K):
         dist = np.random.uniform(q_step, (1+j)*q_step, (num_classes, num_users))
         if j != 0:
@@ -60,7 +65,8 @@ def data_distribution(config, trainset):
                     dist[digit, donor] = dist[digit, donor] - num_transfer
                     dist[digit, losers[index]] = num_transfer
 
-        #Logic to check if the summation of all the samples among the clients is equal to the total number of samples present for that class. If not it will adjust.
+        #Logic to check if the summation of all the samples among the clients is equal to
+        # # the total number of samples present for that class. If not it will adjust.
         for num in range(num_classes):
             while dist[num].sum() != len(label_index_list[num]):
                 index = random.randint(0,num_users-1)
@@ -85,7 +91,7 @@ def data_distribution(config, trainset):
             for num in range(num_classes):
                 datapoints[i] += split[num][i]
                 class_histogram[i].append(len(split[num][i]))
-                if(len(split[num][i])==0):
+                if len(split[num][i])==0:
                     class_stats[i].append(0)
                 else:
                     class_stats[i].append(1)
@@ -95,6 +101,5 @@ def data_distribution(config, trainset):
             os.makedirs(storepath)
         file_name = 'data_split_niid_'+ str(K)+'.pt'
 
-        torch.save({'datapoints': datapoints, 'histograms': class_histogram, 'class_statitics': class_stats}, storepath + file_name)
-
-
+        torch.save({'datapoints': datapoints, 'histograms': class_histogram,
+                    'class_statitics': class_stats}, storepath + file_name)

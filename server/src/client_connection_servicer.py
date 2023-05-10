@@ -11,7 +11,8 @@ class ClientConnectionServicer( ClientConnection_pb2_grpc.ClientConnectionServic
         self.client_manager = client_manager
 
     #called by every newly connected client. executes in a different thread for every client.
-    #creates a client wrapper object for the client, registers with client manager, and passes message from server to client
+    #creates a client wrapper object for the client, registers with client manager,
+    # and passes message from server to client
     #and vice-versa
     def Connect(self, request_iterator, context):
         client_id = context.peer()
@@ -35,7 +36,8 @@ class ClientConnectionServicer( ClientConnection_pb2_grpc.ClientConnectionServic
             finally:
                 client.is_connected = False
                 self.client_manager.deregister(client_index)
-                print(f"Client {client_id} has disconnected. Now {self.client_manager.num_connected_clients()} clients remain active.")
+                print(f"Client {client_id} has disconnected.")
+                print(f"{self.client_manager.num_connected_clients()} clients remain active.")
         #server is not accepting connections or registering failed
         else:
             client.disconnect()

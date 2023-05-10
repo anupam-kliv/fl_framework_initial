@@ -16,7 +16,8 @@ class feddyn():
 
         keys = server_model_state_dict.keys() #List of keys in a state_dict
 
-        if (not(self.h)): #If self.h = None, then the following line will execute. So only at first round, it'll execute
+        if not self.h: #If self.h = None, then the following line will execute.
+            #So only at first round, it'll execute
             self.h = [torch.zeros_like(server_model_state_dict[key]) for key in server_model_state_dict.keys()]
 
         sum_y = OrderedDict() #This will be our new server_model_state_dict

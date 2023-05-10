@@ -3,13 +3,14 @@ import os
 from tqdm import tqdm
 from torchvision import transforms,datasets
 from torch.utils.data import DataLoader
-import torch.nn as nn
-import torchvision.models as models
-import torch.utils.data as data
+from torch import nn
+from torchvision import models
+from torch.utils import data
 import numpy as np
 from PIL import Image
 
-device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu") #serverlib and eval_lib should be on the same device
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+#serverlib and eval_lib should be on the same device
 
 def load_data(config):
     testset = get_data(config)
@@ -21,21 +22,25 @@ def load_data(config):
 def get_data(config):
     dataset_path="./server_dataset"
     if not os.path.exists(dataset_path):
-            os.makedirs(dataset_path)
+        os.makedirs(dataset_path)
     if config['dataset'] == 'MNIST':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        testset = datasets.MNIST(root='./server_dataset/MNIST', train=False, download=True, transform=apply_transform)
+        testset = datasets.MNIST(root='./server_dataset/MNIST',
+                                train=False, download=True, transform=apply_transform)
     if config['dataset'] == 'FashionMNIST':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        testset = datasets.FashionMNIST(root='./server_dataset/FashionMNIST', train=False, download=True, transform=apply_transform)
+        testset = datasets.FashionMNIST(root='./server_dataset/FashionMNIST',
+                                        train=False, download=True, transform=apply_transform)
 
     if config['dataset'] == 'CIFAR10':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        testset = datasets.CIFAR10(root='./server_dataset/CIFAR10', train=False, download=True, transform=apply_transform)
+        testset = datasets.CIFAR10(root='./server_dataset/CIFAR10',
+                                   train=False, download=True, transform=apply_transform)
 
     if config['dataset'] == 'CIFAR100':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
-        testset = datasets.CIFAR100(root='./server_dataset/CIFAR100', train=False, download=True, transform=apply_transform)
+        testset = datasets.CIFAR100(root='./server_dataset/CIFAR100',
+                                    train=False, download=True, transform=apply_transform)
 
     if config['dataset'] == 'CUSTOM':
         apply_transform = transforms.Compose([transforms.Resize(config['resize_size']), transforms.ToTensor()])
@@ -87,7 +92,7 @@ def sample_return(root):
 
 class LeNet(nn.Module):
     def __init__(self, in_channels=1, num_classes=10):
-        super(LeNet, self).__init__()
+        super().__init__()
         self.conv1 = nn.Conv2d(in_channels, 6, kernel_size=5)
         self.pool1 = nn.MaxPool2d(kernel_size=2,stride=2)
         self.conv2 = nn.Conv2d(6, 16, kernel_size=5)

@@ -1,8 +1,5 @@
-
-import json
 from queue import Queue
 import torch
-from io import BytesIO
 import time
 
 import grpc
@@ -48,8 +45,8 @@ def client_start(config):
 
             if server_message.HasField("setParamsOrder"):
                 set_parameters_order_message = server_message.setParamsOrder
-                set_parameters_response_message = set_parameters(set_parameters_order_message, device)
-                message_to_server = ClientMessage(setParamsResponse = set_parameters_response_message)
+                set_parameters(set_parameters_order_message, device)
+                message_to_server = ClientMessage(setParamsResponse = None)
                 client_buffer.put(message_to_server)
 
             if server_message.HasField("disconnectOrder"):
@@ -62,4 +59,3 @@ def client_start(config):
                     keep_going = False
                     break
                 wait_time = reconnect_time
-

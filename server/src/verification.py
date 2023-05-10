@@ -16,11 +16,12 @@ def verify(clients, trained_model_state_dicts, save_dir_path, threshold = 0):
     with futures.ThreadPoolExecutor(max_workers = 20) as executor:
         result_futures = []
 
-        for client_id in verification_dict.keys():
-            assigned_client_id = verification_dict[client_id]["assigned_client_id"]
+        for client_id, client_info in verification_dict.items():
+            assigned_client_id = client_info["assigned_client_id"]
             assigned_client = verification_dict[assigned_client_id]["client_wrapper_object"]
-            model_to_verify = verification_dict[client_id]["model"]
-            result_futures.append( executor.submit(assigned_client.evaluate, model_to_verify, config_dict) )
+            model_to_verify = client_info["model"]
+            result_futures.append(executor.submit(assigned_client.evaluate, model_to_verify, config_dict))
+
 
         verification_results = [result_future.result() for result_future in futures.as_completed(result_futures)]
 
@@ -29,23 +30,26 @@ def verify(clients, trained_model_state_dicts, save_dir_path, threshold = 0):
 
 
     selected_client_models, ignored_client_models = [], []
-    for client_id in verification_dict.keys():
-        if verification_dict[client_id]["score"] >= threshold:
-            selected_client_models.append(verification_dict[client_id]["model"])
-            verification_dict[client_id]["selected"] = True
+    for client_id, client_info in verification_dict.items():
+        if client_info["score"] >= threshold:
+            selected_client_models.append(client_info["model"])
+            client_info["selected"] = True
+
         else:
             ignored_client_models.append(verification_dict[client_id]["model"])
             verification_dict[client_id]["selected"] = False
 
     #saves the client_id, its score, which client verified and fraction for the selected and ignored clients
     results_to_store = []
-    for client_id in verification_dict.keys():
-        dict_to_store = {}
-        dict_to_store["client_id"] = client_id
-        dict_to_store["assigned_client_id"] = verification_dict[client_id]["assigned_client_id"]
-        dict_to_store["score"] = verification_dict[client_id]["score"]
-        dict_to_store["selected"] = verification_dict[client_id]["selected"]
+    for client_id, client_info in verification_dict.items():
+        dict_to_store = {
+            "client_id": client_id,
+            "assigned_client_id": client_info["assigned_client_id"],
+            "score": client_info["score"],
+            "selected": client_info["selected"]
+        }
         results_to_store.append(dict_to_store)
+
     selected_clients = [ client_dict for client_dict in results_to_store if client_dict["selected"] ]
     ignored_clients = [ client_dict for client_dict in results_to_store if not client_dict["selected"] ]
     num_of_selected_clients = len(selected_clients)
@@ -62,9 +66,9 @@ def verify(clients, trained_model_state_dicts, save_dir_path, threshold = 0):
         "ignored": f"{num_of_ignored_clients}/{num_of_total_clients}",
         "results": ignored_clients
         }
-    with open(f"{save_dir_path}/verification_selected_stats.txt", "a") as file:
+    with open(f"{save_dir_path}/verification_selected_stats.txt", "a", encoding='UTF-8') as file:
         file.write( f"{selected_info_dict}\n" )
-    with open(f"{save_dir_path}/verification_ignored_stats.txt", "a") as file:
+    with open(f"{save_dir_path}/verification_ignored_stats.txt", "a", encoding='UTF-8') as file:
         file.write( f"{ignored_info_dict}\n" )
 
 

@@ -1,6 +1,5 @@
 import functools
 from collections import OrderedDict
-from copy import deepcopy
 
 #averages all of the given state dicts
 class mime():

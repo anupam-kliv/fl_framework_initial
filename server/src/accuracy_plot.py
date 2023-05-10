@@ -14,7 +14,7 @@ def read_values(txt_path):
     """
     accuracy = []
     rounds = []
-    with open(txt_path) as f:
+    with open(txt_path, encoding='UTF-8') as f:
         for line in f.readlines():
             line_data = line.split(',')
             acc = float(line_data[1].split(':')[1])
@@ -106,8 +106,8 @@ if __name__ == '__main__':
 
     # Check if the result directory exists
     results_path = '../server_results'
-    if os.path.exists(results_path)==False:
-    	raise Exception("The result directory is not found")
+    if not os.path.exists(results_path):
+        raise Exception("The result directory is not found")
     else:
 
         dataset_name = 'FashionMNIST'
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         niids = sorted([int(i) for i in os.listdir(os.path.join(results_path, dataset_name, algorithm_names[0]))])
 
         # Get the FL results for each algorithm and each number of clients
-        algorfithm_values = []
+        algorithm_values = []
         for algorithm_name in algorithm_names:
             algorithm_path = os.path.join(results_path, dataset_name, algorithm_name)
             algorithm_niids = os.listdir(algorithm_path)
@@ -128,10 +128,12 @@ if __name__ == '__main__':
                 niid_runs = os.listdir(niid_path)
                 latest_run = sorted(niid_runs, reverse=True)[0]
                 results_file_path = os.path.join(niid_path, latest_run, 'FL_results.txt')
-                values = read_values(results_ile_path)   # Assumes read_values function is defined elsewhere
+                values = read_values(results_file_path)   # Assumes read_values function is defined elsewhere
                 algorithm_values[-1].append((algorithm_name, values))
 
         # Plot the results
-        plot_round_vs_accuracy_1(algorithm_values, niids) # Assumes plot_round_vs_accuracy_1 function is defined elsewhere
-        plot_round_vs_accuracy_2(algorithm_values, niids) # Assumes plot_round_vs_accuracy_2 function is defined elsewhere
+        # Assumes plot_round_vs_accuracy_1 function is defined elsewhere
+        plot_round_vs_accuracy_1(algorithm_values, niids)
+        # Assumes plot_round_vs_accuracy_2 function is defined elsewhere
+        plot_round_vs_accuracy_2(algorithm_values, niids)
         plot_niid_vs_accuracy(algorithm_values, niids) # Assumes plot_round_vs_accuracy_2 function is defined elsewhere
