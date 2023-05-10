@@ -3,6 +3,10 @@ from misc import get_config, tester
 from server.src.server_lib import save_intial_model
 
 def create_train_test_for_fedavg():
+    '''
+    This function us used to verify the FedAvg aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -10,12 +14,17 @@ def create_train_test_for_fedavg():
             save_intial_model(config['server'])
 
         def test_fedavg(self):
-            print("\n==========================Fed Avg==========================")
+            print("\n======================Fed Avg=======================")
             config = get_config('test_algorithms', 'fedavg')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_fedadagrad():
+    '''
+    This function us used to verify the FedAdagrad aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -23,24 +32,34 @@ def create_train_test_for_fedadagrad():
             save_intial_model(config['server'])
 
         def test_fedadagrad(self):
-            print("\n==========================Fed Adagrad==========================")
+            print("\n======================Fed Adagrad======================")
             config = get_config('test_algorithms', 'fedadagrad')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_fedadam():
+    '''
+    This function us used to verify the FedAdam aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'fedadam')
             save_intial_model(config['server'])
         def test_fedadam(self):
-            print("\n==========================Fed Adam==========================")
+            print("\n======================Fed Adam======================")
             config = get_config('test_algorithms', 'fedadam')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_fedavgm():
+    '''
+    This function us used to verify the FedAvgM aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -48,12 +67,17 @@ def create_train_test_for_fedavgm():
             save_intial_model(config['server'])
 
         def test_fedavgm(self):
-            print("\n==========================Fed Avgm==========================")
+            print("\n======================Fed Avgm======================")
             config = get_config('test_algorithms', 'fedavgm')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_feddyn():
+    '''
+    This function us used to verify the FedDyn aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -61,24 +85,34 @@ def create_train_test_for_feddyn():
             save_intial_model(config['server'])
 
         def test_feddyn(self):
-            print("\n==========================Fed Dyn==========================")
+            print("\n======================Fed Dyn======================")
             config = get_config('test_algorithms', 'feddyn')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_fedyogi():
+    '''
+    This function us used to verify the FedYogi aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
             config = get_config('test_algorithms', 'fedyogi')
             save_intial_model(config['server'])
         def test_fedyogi(self):
-            print("\n==========================Fed Yogi==========================")
+            print("\n======================Fed Yogi======================")
             config = get_config('test_algorithms', 'fedyogi')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_mime():
+    '''
+    This function us used to verify the Mime aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -86,12 +120,17 @@ def create_train_test_for_mime():
             save_intial_model(config['server'])
 
         def test_mime(self):
-            print("\n==========================Mime==========================")
+            print("\n======================Mime======================")
             config = get_config('test_algorithms', 'mime')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_mimelite():
+    '''
+    This function us used to verify the MimeLite aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -99,12 +138,17 @@ def create_train_test_for_mimelite():
             save_intial_model(config['server'])
 
         def test_mimelite(self):
-            print("\n==========================MimeLite==========================")
+            print("\n======================MimeLite======================")
             config = get_config('test_algorithms', 'mimelite')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
+
 def create_train_test_for_scaffold():
+    '''
+    This function us used to verify the Scaffold aggregation algorithim 
+    using two clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -112,9 +156,9 @@ def create_train_test_for_scaffold():
             save_intial_model(config['server'])
 
         def test_scaffold(self):
-            print("\n==========================Scaffold==========================")
+            print("\n======================Scaffold======================")
             config = get_config('test_algorithms', 'scaffold')
-            tester(config,2)
+            tester(config, 2)
     return TrainerTest
 
 class TestTrainer_fedavg(create_train_test_for_fedavg()):
