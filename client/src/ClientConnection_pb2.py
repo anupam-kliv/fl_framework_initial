@@ -435,7 +435,8 @@ SetParamsOrder = _reflection.GeneratedProtocolMessageType('SetParamsOrder', (_me
   })
 _sym_db.RegisterMessage(SetParamsOrder)
 
-SetParamsResponse = _reflection.GeneratedProtocolMessageType('SetParamsResponse', (_message.Message,), {
+SetParamsResponse = _reflection.GeneratedProtocolMessageType('SetParamsResponse', (
+  _message.Message,),{
   'DESCRIPTOR' : _SETPARAMSRESPONSE,
   '__module__' : 'ClientConnection_pb2'
   # @@protoc_insertion_point(class_scope:SetParamsResponse)

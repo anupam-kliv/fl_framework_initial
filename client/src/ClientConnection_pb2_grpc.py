@@ -59,7 +59,8 @@ class ClientConnection():
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_stream(request_iterator, target, '/ClientConnection/Connect',
+        return grpc.experimental.stream_stream(request_iterator, target,
+            '/ClientConnection/Connect',
             ClientConnection__pb2.ClientMessage.SerializeToString,
             ClientConnection__pb2.ServerMessage.FromString,
             options, channel_credentials,
