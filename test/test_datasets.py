@@ -1,12 +1,17 @@
-from server.src.server_lib import save_intial_model
-import unittest
 import os
 import sys
+import unittest
+from server.src.server_lib import save_intial_model
 from misc import get_config, tester
 # add main directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+
 def create_train_test_for_MNIST():
+    '''
+    This function us used to verify the MNIST dataset 
+    using one clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -14,13 +19,18 @@ def create_train_test_for_MNIST():
             save_intial_model(config['server'])
 
         def test_MNIST(self):
-            print("\n==========================MNIST Testing==========================")
+            print("\n======================MNIST Testing======================")
             config = get_config('test_datasets', 'MNIST')
-            tester(config,1)
+            tester(config, 1)
 
     return TrainerTest
 
+
 def create_train_test_for_FashionMnist():
+    '''
+    This function us used to verify the FashionMNIST dataset 
+    using one clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -28,13 +38,17 @@ def create_train_test_for_FashionMnist():
             save_intial_model(config['server'])
 
         def test_FashionMnist(self):
-            print("\n==========================FashionMNIST Testing==========================")
+            print("\n======================FashionMNIST Testing======================")
             config = get_config('test_datasets', 'FashionMNIST')
-            tester(config,1)
+            tester(config, 1)
 
     return TrainerTest
 
 def create_train_test_for_CIFAR10():
+    '''
+    This function us used to verify the CIFAR10 dataset 
+    using one client
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -42,13 +56,18 @@ def create_train_test_for_CIFAR10():
             save_intial_model(config['server'])
 
         def test_CIFAR10(self):
-            print("\n==========================CIFAR10 Testing==========================")
+            print("\n======================CIFAR10 Testing======================")
             config = get_config('test_datasets', 'CIFAR10')
-            tester(config,1)
+            tester(config, 1)
 
     return TrainerTest
 
+
 def create_train_test_for_CIFAR100():
+    '''
+    This function us used to verify the CIFAR100 dataset 
+    using one client
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -56,13 +75,18 @@ def create_train_test_for_CIFAR100():
             save_intial_model(config['server'])
 
         def test_CIFAR100(self):
-            print("\n==========================CIFAR100 Testing==========================")
+            print("\n======================CIFAR100 Testing======================")
             config = get_config('test_datasets', 'CIFAR100')
-            tester(config,1)
+            tester(config, 1)
 
     return TrainerTest
 
+
 def create_train_test_for_CUSTOM():
+    '''
+    This function us used to verify the CUSTOM dataset 
+    using one client
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -70,9 +94,9 @@ def create_train_test_for_CUSTOM():
             save_intial_model(config['server'])
 
         def test_CUSTOM(self):
-            print("\n==========================CUSTOM Dataset Testing==========================")
+            print("\n=====================CUSTOM Dataset Testing======================")
             config = get_config('test_datasets', 'CUSTOM')
-            tester(config,1)
+            tester(config, 1)
 
     return TrainerTest
 
