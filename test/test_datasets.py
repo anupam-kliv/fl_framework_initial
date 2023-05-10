@@ -72,7 +72,7 @@ def create_train_test_for_CUSTOM():
             config = get_config('test_datasets', 'CUSTOM')
             save_intial_model(config['server'])
 
-        def test_CIFAR100(self):
+        def test_CUSTOM(self):
             print("\n==========================CUSTOM Dataset Testing==========================")
             config = get_config('test_datasets', 'CUSTOM')
             tester(config,1)
