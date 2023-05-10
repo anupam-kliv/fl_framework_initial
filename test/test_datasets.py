@@ -38,7 +38,7 @@ def create_train_test_for_FashionMnist():
             save_intial_model(config['server'])
 
         def test_FashionMnist(self):
-            print("\n======================FashionMNIST Testing======================")
+            print("\n==================FashionMNIST Testing=================")
             config = get_config('test_datasets', 'FashionMNIST')
             tester(config, 1)
 
@@ -56,7 +56,7 @@ def create_train_test_for_CIFAR10():
             save_intial_model(config['server'])
 
         def test_CIFAR10(self):
-            print("\n======================CIFAR10 Testing======================")
+            print("\n======================CIFAR10 Testing====================")
             config = get_config('test_datasets', 'CIFAR10')
             tester(config, 1)
 
