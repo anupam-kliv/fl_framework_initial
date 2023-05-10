@@ -1,11 +1,15 @@
-from server.src.server_lib import save_intial_model
-import unittest
 import os
 import sys
+import unittest
+from server.src.server_lib import save_intial_model
 from misc import get_config, tester
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def create_train_test_for_four_clients():
+    '''
+    This function us used to verify scalability of clients 
+    using four clients
+    '''  
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -13,13 +17,18 @@ def create_train_test_for_four_clients():
             save_intial_model(config['server'])
 
         def test_four_clients(self):
-            print("\n========================== Testing  for #client=4 ==========================")
+            print("\n====================== Testing  for #client=4 ======================")
             config = get_config('test_scalability', '4')
-            tester(config,4)
+            tester(config, 4)
 
     return TrainerTest
 
+
 def create_train_test_for_six_clients():
+    '''
+    This function us used to verify scalability of clients 
+    using six clients
+    '''  
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -27,13 +36,18 @@ def create_train_test_for_six_clients():
             save_intial_model(config['server'])
 
         def test_six_clients(self):
-            print("\n========================== Testing  for #client=6 ==========================")
+            print("\n====================== Testing  for #client=6 ======================")
             config = get_config('test_scalability', '6')
-            tester(config,6)
+            tester(config, 6)
 
     return TrainerTest
 
+
 def create_train_test_for_eight_clients():
+    '''
+    This function us used to verify scalability of clients 
+    using eight clients
+    '''
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -41,13 +55,18 @@ def create_train_test_for_eight_clients():
             save_intial_model(config['server'])
 
         def test_eight_clients(self):
-            print("\n========================== Testing  for #client=8 ==========================")
+            print("\n====================== Testing  for #client=8 ====================")
             config = get_config('test_scalability', '8')
-            tester(config,8)
+            tester(config, 8)
 
     return TrainerTest
 
+
 def create_train_test_for_ten_clients():
+    '''
+    This function us used to verify scalability of clients 
+    using ten clients
+    '''  
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -55,13 +74,18 @@ def create_train_test_for_ten_clients():
             save_intial_model(config['server'])
 
         def test_ten_clients(self):
-            print("\n========================== Testing  for #client=10 ==========================")
+            print("\n====================== Testing  for #client=10 ====================")
             config = get_config('test_scalability', '10')
-            tester(config,10)
+            tester(config, 10)
 
     return TrainerTest
 
+
 def create_train_test_for_five_rounds():
+    '''
+    This function us used to verify scalability of CR 
+    using five rounds
+    '''  
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -69,13 +93,18 @@ def create_train_test_for_five_rounds():
             save_intial_model(config['server'])
 
         def test_five_communication_rounds(self):
-            print("\n========================== Testing  for Communication Rounds=5 ==========================")
+            print("\n================= Testing  for Communication Rounds=5 ================")
             config = get_config('test_scalability', '5_rounds')
-            tester(config,2)
+            tester(config, 2)
 
     return TrainerTest
 
+
 def create_train_test_for_ten_rounds():
+    '''
+    This function us used to verify scalability of CR 
+    using ten rounds
+    '''  
     class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
@@ -83,25 +112,31 @@ def create_train_test_for_ten_rounds():
             save_intial_model(config['server'])
 
         def test_ten_communication_rounds(self):
-            print("\n========================== Testing  for Communication Rounds=10 ==========================")
+            print("\n=============== Testing  for Communication Rounds=10 ===============")
             config = get_config('test_scalability', '10_rounds')
-            tester(config,2)
+            tester(config, 2)
 
     return TrainerTest
 
+
 def create_train_test_for_twenty_rounds():
-    class TrainerTest(unittest.TestCase):
+    '''
+    This function us used to verify scalability of CR 
+    using twnety rounds
+    '''  
+        class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '20_rounds')
             save_intial_model(config['server'])
 
         def test_twenty_communication_rounds(self):
-            print("\n========================== Testing  for Communication Rounds=20 ==========================")
+            print("\n============ Testing  for Communication Rounds=20 ==============")
             config = get_config('test_scalability', '20_rounds')
-            tester(config,2)
+            tester(config, 2)
 
     return TrainerTest
+
 
 class TestTrainer_4(create_train_test_for_four_clients()):
     'Test case for four clients'
