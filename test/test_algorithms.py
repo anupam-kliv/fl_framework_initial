@@ -1,6 +1,7 @@
 import unittest
 from misc import get_config, tester
 from server.src.server_lib import save_intial_model
+
 def create_train_test_for_fedavg():
     class TrainerTest(unittest.TestCase):
         @classmethod

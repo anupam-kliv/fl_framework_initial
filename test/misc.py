@@ -1,12 +1,13 @@
 import time
-from torch.multiprocessing import Process
-from torch import multiprocessing
-from server.src.server import server_start
-from client.src.client import client_start
-import os
 import json
 import sys
+import os
+from torch.multiprocessing import Process
+from torch import multiprocessing
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from server.src.server import server_start
+from client.src.client import client_start
 
 def get_config(action, action2, config_path=""):
 
