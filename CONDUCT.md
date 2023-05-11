@@ -43,7 +43,7 @@ Reporting Guidelines
 If you experience or witness behavior that violates our standards of conduct, please report it to us by contacting [insert contact information here]. All reports will be kept confidential, and we will work with you to determine an appropriate course of action.
 Attribution
 
-This Contributor Code of Conduct is adapted from the Contributor Covenant, version 2.0, available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
+
 
 
 Thank you for your cooperation in maintaining a positive and inclusive community for everyone involved in the Federated Learning framework!
