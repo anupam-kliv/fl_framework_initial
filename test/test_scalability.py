@@ -126,7 +126,7 @@ def create_train_test_for_twenty_rounds():
     Verify the scalability of CR rounds using twenty round by implementing the following function
     """
     
-        class TrainerTest(unittest.TestCase):
+    class TrainerTest(unittest.TestCase):
         @classmethod
         def setUpClass(cls):
             config = get_config('test_scalability', '20_rounds')
