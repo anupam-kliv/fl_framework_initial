@@ -216,9 +216,9 @@ Each client has same number of samples, and same distribution for all class samp
 | Dataset                | Training samples         | Test samples       | Classes 
 | ---------------------- | ------------------------ | ------------------ | ------------------ |
 | MNIST                  | 60,000                   | 10,000             | 10                 |
+| FashionMnist           | 60,000                   | 10,000             | 10                 |
 | CIFAR-10               | 50,000                   | 10,000             | 10                 |
 | CIFAR-100              | 50,000                   | 10,000             | 100                |
-| FashionMnist           | 60,000                   | 10,000             | 10                 |
 
 ### Custom Dataset Support
 
