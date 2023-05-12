@@ -28,3 +28,9 @@ jobs:
       run: |
         coverage run -m pytest -rA
         coverage report
+    - name: Upload coverage report
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/.coverage
+          flags: trial_tests
