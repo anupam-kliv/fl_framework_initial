@@ -439,7 +439,7 @@ The `accuracy.py`  file has functions defined needed to plot all the graphs show
 
 ## Contact
 
-Project Investigator: [Prof. ](https://scholar.google.com/citations?user=gF0H9nEAAAAJ&hl=en) (xuzenglin@hit.edu.cn).
+Project Investigator: [Prof. ](https://scholar.google.com/citations?user=gF0H9nEAAAAJ&hl=ennjujbj) (abc@edu).
 
 For technical issues related to __Feder__ development, please contact our development team through Github issues or email:
 
