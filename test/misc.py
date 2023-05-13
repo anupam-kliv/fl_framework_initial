@@ -10,7 +10,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from server.src.server import server_start
 from client.src.client import client_start
 
-
 def get_config(action, action2, config_path=""):
     """
     Get the configuration file as json from it 

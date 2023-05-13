@@ -6,9 +6,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from server.src.server_lib import save_intial_model
 from misc import get_config, tester
 
-
-
-
 def create_train_test_for_MNIST():
     """Verify the MNIST dataset using one client 
     by implementing the following function"""
