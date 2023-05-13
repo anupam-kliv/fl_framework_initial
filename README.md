@@ -443,4 +443,4 @@ Project Investigator: [Prof. ](https://scholar.google.com/citations?user=gF0H9nE
 
 For technical issues related to __Feder__ development, please contact our development team through Github issues or email:
 
-- [Name Sirname](https://scholar.google.com/citations): _____@gmail.com
+- [Name Sirname](https://scholar.google.com/citations___): _____@gmail.com
