@@ -1,12 +1,12 @@
 import os
 import sys
 import unittest
-
+# add main directory to path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from server.src.server_lib import save_intial_model
 from misc import get_config, tester
 
-# add main directory to path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 
 def create_train_test_for_LeNet():
