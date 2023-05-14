@@ -8,22 +8,22 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--algorithm', type= str, default = 'scaffold', help= 'Aggregation algorithm')
 parser.add_argument('--clients', type= int, default = 1, help= '#of clients to start')
 parser.add_argument('--fraction', type = float, default = 1,
-                    help = 'Fraction of clients to select out of the
-                    number provided or those available. Float between 0 to 1 inclusive')
+                    help = '''Fraction of clients to select out of the
+                    number provided or those available. Float between 0 to 1 inclusive''')
 parser.add_argument('--rounds', type= int, default = 1,
                      help = 'Total number of CR')
 parser.add_argument('--model_path',  default = 'initial_model.pt',
-                     help = 'The path of the initial server model's state dict')
+                     help = "The path of the initial server model's state dict")
 parser.add_argument('--epochs', type = int, default = 1,
                      help= '#of epochs for training')
 parser.add_argument('--accept_conn',type = int, default = 1,
-                    help = '1, connections accpeted even after FL has begun,
-                     else 0.')
+                    help = '''1, connections accpeted even after FL has begun,
+                     else 0.''')
 parser.add_argument('--verify', type = int, default = 0,
                      help= '1 for True or 0')
 parser.add_argument('--threshold',type = float,default = 0,
-                     help = 'Minimum score clients must have in a verification round,
-                     .[0,1]')
+                     help = '''Minimum score clients must have in a verification round,
+                     .[0,1]''')
 parser.add_argument('--timeout', type = int, default=None,
                      help= 'Time limit for training. Specified in seconds')
 parser.add_argument('--resize_size', type = int, default = 32, help= 'resize dimension')
