@@ -1,0 +1,1 @@
+{"algorithm": "mimelite", "num_of_clients": 1, "fraction_of_clients": 1, "num_of_rounds": 1, "initial_model_path": "initial_model.pt", "epochs": 1, "accept_conn_after_FL_begin": 0, "verify": 0, "verification_threshold": 0, "timeout": null, "resize_size": 32, "batch_size": 32, "net": "LeNet", "dataset": "MNIST", "device": "cpu", "niid": 2, "carbon": 0}
