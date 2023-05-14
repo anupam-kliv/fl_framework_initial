@@ -1,6 +1,6 @@
 # Federated Learning Framework
 
-[![License](./media/license.svg)](https://opensource.org/licenses/Apache-2.0) [![Ubuntu CI status](./media/license.svg)](https://github.com/anupam-kliv/fl_framework_initial/actions/workflows/ubuntu.yml)[![Windows CI status](https://github.com/anupam-kliv/fl_framework_initial/actions/workflows/windows.yml/badge.svg)](https://github.com/anupam-kliv/fl_framework_initial/actions/workflows/windows.yml)
+[![License](./media/license.svg)](https://opensource.org/licenses/Apache-2.0) [![Ubuntu CI status](https://github.com/anupam-kliv/fl_framework_initial/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/anupam-kliv/fl_framework_initial/actions/workflows/ubuntu.yml)[![Windows CI status](https://github.com/anupam-kliv/fl_framework_initial/actions/workflows/windows.yml/badge.svg)](https://github.com/anupam-kliv/fl_framework_initial/actions/workflows/windows.yml)
 
 `FedERA` is a highly dynamic and customizable framework that can accommodate many use cases with flexibility by implementing several functionalities over different federated learning algorithms, and essentially creating a plug-and-play architecture to accommodate different use cases.
 
@@ -44,7 +44,7 @@ Website documentation has been made availbale for `FedERA`. Please visit [Feder 
 ## Starting server
 
 ```
-python -m server.start_server \
+python -m federa.server.start_server \
  --algorithm fedavg \
  --clients 2 \
  --rounds 10 \
