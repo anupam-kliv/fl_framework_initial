@@ -27,11 +27,8 @@ jobs:
           pip install -r requirements.txt
       - name: Test with pytest and report code coverage
         run: |
-          coverage run -m pytest -rA
-          coverage report
+          coverage run -m pytest -v test/unittest
       - name: Upload coverage report
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/.coverage
-          flags: trial_tests
