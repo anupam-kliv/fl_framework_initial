@@ -18,7 +18,6 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
-    # 'sphinxcontrib.napoleon',
     'sphinx.ext.autosectionlabel',  # allows referring sections its title, affects `ref`
     'sphinx_design',
     'sphinxcontrib.bibtex',
